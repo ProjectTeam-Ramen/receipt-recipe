@@ -1,0 +1,12 @@
+# Global code owners
+# All files in the repository require review from either @08falcon or @mkyUt321
+* @08falcon @mkyUt321
+
+# You can also specify more granular rules if needed:
+# Example: Documentation files
+# *.md @08falcon @mkyUt321
+# 
+# Example: Configuration files
+# *.json @08falcon @mkyUt321
+# *.yml @08falcon @mkyUt321
+# *.yaml @08falcon @mkyUt321
