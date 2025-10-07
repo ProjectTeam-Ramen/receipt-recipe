@@ -1,0 +1,22 @@
+{
+  "name": "Receipt Recipe Dev Env (Remote GPU)",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.override.yml",
+    "../docker-compose.gpu.yml"
+  ],
+  "service": "api",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "njpwerner.autodocstring"
+      ]
+    }
+  },
+  "postCreateCommand": "echo 'Container is ready for development'"
+}
