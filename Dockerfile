@@ -33,9 +33,9 @@ ARG INSTALL_DEV=true
 
 # pyproject.tomlから依存関係をインストール
 RUN if [ "$INSTALL_DEV" = "true" ]; then \
-    uv sync --dev; \
+    uv sync --extra dev --frozen; \
     else \
-    uv sync; \
+    uv sync --frozen; \
     fi
 
 # 非ルートユーザーを作成
