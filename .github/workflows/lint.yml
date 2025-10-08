@@ -1,36 +1,41 @@
-name: Lint
+name: Lint Fix
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - main  # メインブランチへのプッシュ時にトリガー
+  pull_request:
+    branches:
+      - main  # メインブランチへのプルリクエスト時にトリガー
+  workflow_dispatch:  # 手動トリガー
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
+  lint-fix:
+    runs-on: ubuntu-latest  # 最新のUbuntu環境でジョブを実行
 
     steps:
-      # リポジトリをチェックアウト
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # リポジトリのコードをチェックアウト
 
-      # Pythonをセットアップ
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4  # Python環境をセットアップ
         with:
-          python-version: 3.8
+          python-version: 3.8  # 使用するPythonのバージョンを指定
 
-      # 依存関係をインストール
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install uv
-          uv sync --dev
+          python -m pip install --upgrade pip  # pipを最新バージョンにアップグレード
+          pip install uv  # 必要な依存関係をインストール
+          uv sync --dev  # 開発用依存関係を同期
 
-      # Ruffでコードをチェック
-      - name: Run Ruff
+      - name: Run Ruff with Fix
         run: |
-          ruff check .
+          ruff check . --fix  # Ruffを実行してコードスタイルを修正
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions"  # コミットユーザー名を設定
+          git config --global user.email "actions@github.com"  # コミットユーザーのメールを設定
+          git add .  # 修正されたファイルをステージング
+          git commit -m "style: Apply Ruff fixes"  # 修正内容をコミット
+          git push  # 修正をリモートリポジトリにプッシュ
