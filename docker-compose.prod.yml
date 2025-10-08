@@ -1,0 +1,16 @@
+# docker-compose.prod.yml
+services:
+  api:
+    restart: unless-stopped
+    environment:
+      - PYTHONPATH=/workspace
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./app.db}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes: []  # 開発用ボリュームマウントを無効化
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

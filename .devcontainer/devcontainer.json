@@ -1,22 +1,53 @@
 {
-  "name": "Receipt Recipe Dev Env (Remote GPU)",
+  "name": "Receipt Recipe Dev Env (Local)",
   "dockerComposeFile": [
     "../docker-compose.yml",
-    "../docker-compose.override.yml",
-    "../docker-compose.gpu.yml"
+    "../docker-compose.override.yml"
   ],
   "service": "api",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
+  
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",
         "charliermarsh.ruff",
-        "njpwerner.autodocstring"
-      ]
+        "njpwerner.autodocstring",
+        "ms-azuretools.vscode-docker",
+        "GitHub.vscode-pull-request-github",
+        "ms-python.black-formatter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.ruffEnabled": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true,
+          "**/.pytest_cache": true
+        },
+        "python.terminal.activateEnvironment": false,
+        "ruff.organizeImports": true
+      }
     }
   },
-  "postCreateCommand": "echo 'Container is ready for development'"
+  
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "FastAPI Server",
+      "onAutoForward": "notify"
+    }
+  },
+  
+  "postCreateCommand": "echo 'Local development container is ready'",
+  "remoteUser": "appuser"
 }
