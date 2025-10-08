@@ -11,6 +11,12 @@ Receipt Recipe プロジェクトのチーム開発ガイドです。
 - **uv**: Pythonパッケージマネージャー（高速）
 - **GitHub アカウント**: ProjectTeam-Ramen組織メンバー
 
+### VS Code拡張機能（推奨）
+- **Dev Containers**: コンテナ内開発環境
+- **Docker**: Docker管理
+- **Python**: Python開発支援
+- **GitHub Pull Requests**: PR管理
+
 ### 初回セットアップ
 ```bash
 # プロジェクトをクローン
@@ -61,7 +67,25 @@ docker-compose up -d
 
 ### 開発環境の利用
 
-#### Docker環境（推奨）
+#### Dev Container環境（推奨）
+```bash
+# VS Codeでプロジェクトを開く
+code .
+
+# コマンドパレット（Ctrl+Shift+P）で以下を実行
+# > Dev Containers: Reopen in Container
+
+# またはフォルダ左下の青いアイコンをクリック
+# 「Reopen in Container」を選択
+```
+
+**Dev Containerの利点:**
+- 統一された開発環境
+- 拡張機能の自動インストール
+- デバッグ機能の完全対応
+- ホットリロード機能
+
+#### Docker環境（コマンドライン）
 ```bash
 # 開発環境の起動（ホットリロード有効）
 docker-compose up -d
@@ -190,6 +214,17 @@ docker-compose exec api bash
 docker-compose logs api
 ```
 
+### Dev Container関連
+```bash
+# VS Code でDev Container が起動しない場合
+# 1. Docker Desktop が起動していることを確認
+# 2. VS Code の Dev Containers 拡張機能をインストール
+# 3. コマンドパレット > "Dev Containers: Rebuild Container"
+
+# コンテナ内でのデバッグ
+# VS Code のターミナル（Ctrl+`）はコンテナ内で実行される
+```
+
 ### uv関連
 ```bash
 # キャッシュのクリア
@@ -203,6 +238,8 @@ uv sync --reinstall
 
 ```
 receipt-recipe/
+├── .devcontainer/          # VS Code Dev Container設定
+│   └── devcontainer.json  # コンテナ設定ファイル
 ├── app/                    # FastAPIアプリケーション
 │   ├── __init__.py        # メインアプリケーション
 │   └── ...
@@ -216,6 +253,19 @@ receipt-recipe/
 └── CONTRIBUTING.md      # この開発ガイド
 ```
 
+## 🔧 Dev Container設定
+
+### 必要なファイル
+- `.devcontainer/devcontainer.json`: VS Code Dev Container設定
+- 自動的にdocker-compose環境を利用
+
+### Dev Container使用時の利点
+- **統一開発環境**: チーム全員が同じ環境で開発
+- **自動拡張機能**: Python、Docker関連の拡張が自動インストール  
+- **デバッグ対応**: VS Codeのデバッガーが完全動作
+- **インテリセンス**: コード補完とエラー検出
+- **ターミナル統合**: コンテナ内で直接コマンド実行
+
 ## 📋 現在の開発状況
 
 ### ✅ 完了項目
@@ -224,6 +274,7 @@ receipt-recipe/
 - [x] FastAPI基本実装
 - [x] uv による依存関係管理
 - [x] 開発環境のホットリロード
+- [x] Dev Container設定（予定）
 
 ### 🔄 開発中
 - [ ] レシート画像アップロード機能
@@ -242,6 +293,11 @@ receipt-recipe/
 - GitHub Issues で質問を投稿
 - チームメンバーとの相談
 - 技術的な問題は開発者に相談
+
+### 開発環境のトラブル
+- Dev Container が起動しない → Docker Desktop の確認
+- Python拡張機能が動作しない → Dev Container内で開発しているかを確認
+- ホットリロードが効かない → docker-compose.override.yml の設定確認
 
 ## 📚 更新履歴
 

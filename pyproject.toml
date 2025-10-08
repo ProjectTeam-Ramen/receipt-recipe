@@ -25,6 +25,7 @@ dev = [
     "black>=23.0.0",
     "flake8>=6.0.0",
     "mypy>=1.5.0",
+    "ruff>=0.0.289"
 ]
 
 [build-system]
@@ -42,3 +43,9 @@ target-version = ['py38']
 python_version = "3.8"
 warn_return_any = true
 warn_unused_configs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "F", "W", "C90"]  # 適用するルールセット
+ignore = ["E501"]  # 無視するルール（例: 行の長さ制限）
