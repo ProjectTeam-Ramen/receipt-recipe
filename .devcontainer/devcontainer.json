@@ -1,9 +1,8 @@
 {
-  "name": "Receipt Recipe Dev Env (Remote GPU)",
+  "name": "Receipt Recipe Dev Env (Local)",
   "dockerComposeFile": [
     "../docker-compose.yml",
-    "../docker-compose.override.yml",
-    "../docker-compose.gpu.yml"
+    "../docker-compose.override.yml"
   ],
   "service": "api",
   "workspaceFolder": "/workspace",
@@ -49,6 +48,6 @@
     }
   },
   
-  "postCreateCommand": "echo 'GPU-enabled container is ready for AI/ML development'",
+  "postCreateCommand": "echo 'Local development container is ready'",
   "remoteUser": "appuser"
 }
