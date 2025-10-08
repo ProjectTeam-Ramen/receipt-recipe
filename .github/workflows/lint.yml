@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --dev  # 開発用依存関係を同期
+          uv sync --extra dev --frozen  # 開発用依存関係を同期
 
       - name: Run Ruff Check
         run: |
