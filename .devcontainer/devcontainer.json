@@ -24,16 +24,19 @@
         "python.defaultInterpreterPath": "/usr/local/bin/python",
         "python.linting.enabled": true,
         "python.linting.ruffEnabled": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-          "source.organizeImports": true
+          "source.organizeImports": "explicit"
         },
         "files.exclude": {
           "**/__pycache__": true,
           "**/*.pyc": true,
           "**/.pytest_cache": true
         },
-        "python.terminal.activateEnvironment": false
+        "python.terminal.activateEnvironment": false,
+        "ruff.organizeImports": true
       }
     }
   },
