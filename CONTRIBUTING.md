@@ -15,6 +15,7 @@ Receipt Recipe プロジェクトのチーム開発ガイドです。
 - **Dev Containers**: コンテナ内開発環境
 - **Docker**: Docker管理
 - **Python**: Python開発支援
+- **Ruff**: Pythonリンター・フォーマッター
 - **GitHub Pull Requests**: PR管理
 
 ### 初回セットアップ
@@ -36,7 +37,7 @@ docker-compose up --build -d
 ### Backend
 - **FastAPI**: 高速なPython Webフレームワーク
 - **SQLAlchemy**: ORMライブラリ
-- **SQLite**: データベース（開発環境）
+- **SQLite**: データベース（開発環境）  
 - **Pydantic**: データバリデーション
 
 ### AI/機械学習
@@ -47,7 +48,9 @@ docker-compose up --build -d
 ### 開発・デプロイ
 - **Docker**: コンテナ化
 - **uv**: パッケージ管理
+- **ruff**: Pythonリンター・フォーマッター（高速）
 - **VS Code Dev Containers**: 統一開発環境
+- **GitHub Actions**: CI/CD自動化
 
 ## 🔄 日常の作業フロー
 
@@ -100,7 +103,7 @@ docker-compose down
 #### ローカル環境
 ```bash
 # 依存関係のインストール
-uv sync
+uv sync --dev
 
 # アプリケーションの起動
 uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
@@ -111,11 +114,41 @@ uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 - **Swagger UI**: http://localhost:8000/docs
 - **ヘルスチェック**: http://localhost:8000/health
 
+### コード品質チェック
+
+#### ruffによるリンティング
+```bash
+# コードスタイルのチェック
+ruff check .
+
+# 自動修正を適用
+ruff check . --fix
+
+# VS Codeでは保存時に自動フォーマット
+```
+
+#### 開発用依存関係
+```bash
+# 開発用パッケージをインストール
+uv sync --dev
+
+# インストールされる開発ツール:
+# - ruff: 高速リンター・フォーマッター
+# - pytest: テストフレームワーク
+# - mypy: 型チェッカー
+```
+
 ### 作業中
 ```bash
 # ファイルを編集後、変更を確認
 git status
 git diff
+
+# ruffでコードスタイルをチェック
+ruff check .
+
+# 問題があれば自動修正
+ruff check . --fix
 
 # 変更をコミット
 git add .
@@ -128,6 +161,7 @@ git commit -m "feat: レシート画像アップロード機能を追加"
 git push origin feature/機能名
 
 # その後、GitHub上でプルリクエストを作成
+# GitHub Actionsが自動でコード品質をチェック
 ```
 
 ## ⚡ よく使うGitコマンド
@@ -167,13 +201,15 @@ type: 日本語で簡潔な説明
 - `refactor`: コードの整理
 - `test`: テストを追加・修正
 - `docker`: Docker関連の設定
+- `ci`: CI/CD設定の変更
 
 ### 良い例 ✅
 ```bash
 git commit -m "feat: レシート画像アップロード機能を追加"
 git commit -m "fix: 画像処理時のメモリリークを修正"
 git commit -m "docs: API仕様書を更新"
-git commit -m "docker: CUDA対応のベースイメージに変更"
+git commit -m "style: ruffによるコードフォーマット適用"
+git commit -m "ci: GitHub Actionsにruffリントを追加"
 ```
 
 ### 悪い例 ❌
@@ -191,13 +227,36 @@ git commit -m "FIX: バグ修正"     # 大文字はNG
 3. タイトルと説明を入力
 4. 「Create pull request」をクリック
 
-### 2. PR のタイトル例
+### 2. GitHub Actionsによる自動チェック
+- **コード品質**: ruffによるリンティングが自動実行
+- **チェック結果**: PRページで成功/失敗を確認
+- **修正が必要**: ローカルで`ruff check . --fix`を実行してプッシュ
+
+### 3. PR のタイトル例
 ```
 feat: レシート画像アップロード機能を追加
 fix: Docker環境でのuvicorn起動エラーを修正
 docs: 開発ガイドとREADMEを更新
-docker: GPU対応とマルチステージビルドを実装
+style: ruffによるコードフォーマット統一
+ci: GitHub Actionsワークフロー追加
 ```
+
+## 🚀 GitHub Actions
+
+### 自動実行される処理
+- **リンティング**: プルリクエスト時にruffが自動実行
+- **コード品質チェック**: コーディング規約の自動検証
+- **手動修正**: Actions画面から手動でコード修正を実行可能
+
+### GitHub Actions確認方法
+1. リポジトリの「Actions」タブにアクセス
+2. 最新のワークフロー実行結果を確認
+3. 失敗した場合はログを確認してローカルで修正
+
+### 手動でのコード修正実行
+1. 「Actions」タブ → 「Lint Fix」ワークフローを選択
+2. 「Run workflow」ボタンをクリック
+3. ブランチを選択して実行
 
 ## 🐛 トラブルシューティング
 
@@ -225,19 +284,40 @@ docker-compose logs api
 # VS Code のターミナル（Ctrl+`）はコンテナ内で実行される
 ```
 
-### uv関連
+### uv・ruff関連
 ```bash
 # キャッシュのクリア
 uv cache clean
 
 # 依存関係の再インストール
-uv sync --reinstall
+uv sync --reinstall --dev
+
+# ruffが見つからない場合
+uv sync --dev  # 開発用依存関係をインストール
+
+# ruffの設定確認
+ruff check . --show-settings  # 現在の設定を表示
+```
+
+### GitHub Actions関連
+```bash
+# ローカルでGitHub Actionsと同じチェックを実行
+ruff check .
+
+# 修正を適用
+ruff check . --fix
+
+# 設定ファイルを確認
+cat pyproject.toml  # [tool.ruff]セクションを確認
 ```
 
 ## 📁 プロジェクト構造
 
 ```
 receipt-recipe/
+├── .github/                # GitHub設定
+│   └── workflows/         # GitHub Actionsワークフロー
+│       └── lint.yml       # ruffリンティング設定
 ├── .devcontainer/          # VS Code Dev Container設定
 │   └── devcontainer.json  # コンテナ設定ファイル
 ├── app/                    # FastAPIアプリケーション
@@ -247,7 +327,7 @@ receipt-recipe/
 ├── docker-compose.override.yml  # 開発環境設定
 ├── docker-compose.gpu.yml # GPU環境設定
 ├── Dockerfile            # Dockerイメージ定義
-├── pyproject.toml        # Python プロジェクト設定
+├── pyproject.toml        # Python プロジェクト設定（ruff設定含む）
 ├── uv.lock              # 依存関係ロックファイル
 ├── README.md            # プロジェクト概要
 └── CONTRIBUTING.md      # この開発ガイド
@@ -261,7 +341,7 @@ receipt-recipe/
 
 ### Dev Container使用時の利点
 - **統一開発環境**: チーム全員が同じ環境で開発
-- **自動拡張機能**: Python、Docker関連の拡張が自動インストール  
+- **自動拡張機能**: Python、Docker、Ruff関連の拡張が自動インストール  
 - **デバッグ対応**: VS Codeのデバッガーが完全動作
 - **インテリセンス**: コード補完とエラー検出
 - **ターミナル統合**: コンテナ内で直接コマンド実行
@@ -273,8 +353,10 @@ receipt-recipe/
 - [x] Docker環境構築
 - [x] FastAPI基本実装
 - [x] uv による依存関係管理
+- [x] ruff による自動コード品質管理
+- [x] GitHub Actions CI/CD設定
 - [x] 開発環境のホットリロード
-- [x] Dev Container設定（予定）
+- [x] Dev Container設定
 
 ### 🔄 開発中
 - [ ] レシート画像アップロード機能
@@ -289,18 +371,15 @@ receipt-recipe/
 
 ## 📞 サポート
 
-### 質問・相談
-- GitHub Issues で質問を投稿
-- チームメンバーとの相談
-- 技術的な問題は開発者に相談
-
 ### 開発環境のトラブル
 - Dev Container が起動しない → Docker Desktop の確認
 - Python拡張機能が動作しない → Dev Container内で開発しているかを確認
 - ホットリロードが効かない → docker-compose.override.yml の設定確認
+- ruffが動作しない → `uv sync --dev`で開発用依存関係をインストール
+- GitHub Actionsが失敗 → ローカルで`ruff check .`を実行して問題を確認
 
 ## 📚 更新履歴
 
-- **2025/10/07**: Docker環境構築完了、技術スタック決定
+- **2025/10/07**: Docker環境構築完了、技術スタック決定、ruff・GitHub Actions導入
 - **2025/10/03**: 初版作成
 - プロジェクトの成長に合わせて随時更新予定
