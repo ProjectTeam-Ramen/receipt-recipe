@@ -6,7 +6,7 @@ FROM nvcr.io/nvidia/pytorch:22.07-py3 AS builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # ワーキングディレクトリを設定
-WORKDIR /app
+WORKDIR /workspace
 
 # ビルドに必要なファイルをすべてコピー
 COPY pyproject.toml README.md ./
@@ -28,21 +28,15 @@ WORKDIR /workspace
 # プロジェクトファイルをコピー
 COPY . .
 
-# uvを使用してpyproject.tomlから依存関係をシステムにインストール
-RUN uv pip install --system --no-deps -e .
+# 開発環境かどうかを判定するARG
+ARG INSTALL_DEV=true
 
-# 依存関係を個別にインストール（pyproject.tomlの依存関係）
-RUN uv pip install --system \
-    "fastapi>=0.104.0" \
-    "uvicorn[standard]>=0.24.0" \
-    "sqlalchemy>=2.0.0" \
-    "aiosqlite>=0.19.0" \
-    "pydantic>=2.4.0" \
-    "python-multipart>=0.0.6" \
-    "pillow>=10.0.0" \
-    "opencv-python>=4.8.0" \
-    "numpy>=1.24.0" \
-    "python-dotenv>=1.0.0"
+# pyproject.tomlから依存関係をインストール
+RUN if [ "$INSTALL_DEV" = "true" ]; then \
+    uv sync --dev; \
+    else \
+    uv sync; \
+    fi
 
 # 非ルートユーザーを作成
 RUN useradd --create-home --shell /bin/bash appuser && \
@@ -52,4 +46,5 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# devcontainer用: コンテナを起動したままにする
+CMD ["tail", "-f", "/dev/null"]

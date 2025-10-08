@@ -1,8 +1,14 @@
-version: '3.9'
-
 services:
   api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_DEV: "true"
     volumes:
-      # ローカルのコードをコンテナにマウントしてライブリロードを可能にする
-      - .:/workspace:cached
-    command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+      - .:/workspace
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/workspace
+    # devcontainer用: コンテナを起動したままにする
+    command: tail -f /dev/null

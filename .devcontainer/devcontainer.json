@@ -7,7 +7,6 @@
   "service": "api",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
-  
   "customizations": {
     "vscode": {
       "extensions": [
@@ -16,13 +15,10 @@
         "charliermarsh.ruff",
         "njpwerner.autodocstring",
         "ms-azuretools.vscode-docker",
-        "GitHub.vscode-pull-request-github",
-        "ms-python.black-formatter"
+        "GitHub.vscode-pull-request-github"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.linting.enabled": true,
-        "python.linting.ruffEnabled": true,
+        "python.defaultInterpreterPath": "/opt/conda/bin/python",
         "python.analysis.typeCheckingMode": "basic",
         "python.analysis.autoImportCompletions": true,
         "editor.formatOnSave": true,
@@ -35,11 +31,17 @@
           "**/.pytest_cache": true
         },
         "python.terminal.activateEnvironment": false,
-        "ruff.organizeImports": true
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+          }
+        }
       }
     }
   },
-  
   "forwardPorts": [8000],
   "portsAttributes": {
     "8000": {
@@ -47,7 +49,6 @@
       "onAutoForward": "notify"
     }
   },
-  
-  "postCreateCommand": "echo 'Local development container is ready'",
+  "postCreateCommand": "uv sync --dev",
   "remoteUser": "appuser"
 }
