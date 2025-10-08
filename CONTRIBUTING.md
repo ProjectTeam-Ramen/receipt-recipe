@@ -26,10 +26,63 @@ cd receipt-recipe
 
 # 自分の名前を設定（初回のみ）
 git config user.name "あなたの名前"
-git config user.email "あなのメール"
+git config user.email "あなたのメール"
+```
 
-# 開発環境の起動
+### 開発環境の選択
+
+このプロジェクトでは、**Dev Container環境（推奨）** または **Docker環境** のいずれかで開発できます。
+
+#### 方法1: Dev Container環境（✅ 推奨）
+
+**特徴:**
+- VS Code内で完結した開発環境
+- 依存関係が自動的にインストールされる
+- 拡張機能が自動的にセットアップされる
+- デバッグ機能がすぐに使える
+
+**セットアップ手順:**
+```bash
+# 1. VS Codeでプロジェクトを開く
+code .
+
+# 2. VS Codeの左下の青いアイコン（><）をクリックするか、
+#    コマンドパレット（Ctrl+Shift+P / Cmd+Shift+P）で以下を実行:
+#    > Dev Containers: Reopen in Container
+
+# 3. コンテナのビルドと起動が自動的に実行されます（初回は数分かかります）
+
+# 4. コンテナが起動すると、以下が自動的に実行されます:
+#    - 開発用依存関係のインストール（ruff, pytest等）
+#    - VS Code拡張機能のインストール
+#    - Python環境の設定
+```
+
+**Dev Container起動後の確認:**
+```bash
+# ターミナルを開く（Ctrl+` / Cmd+`）
+# コンテナ内で実行されることを確認（プロンプトにappuser@...と表示される）
+
+# ruffが使えることを確認
+uv run ruff --version
+# 出力例: ruff 0.14.0
+
+# 依存関係を確認
+uv pip list
+```
+
+#### 方法2: Docker環境（コマンドライン）
+
+**セットアップ手順:**
+```bash
+# 開発環境を起動
 docker-compose up --build -d
+
+# コンテナ内に入る
+docker-compose exec api bash
+
+# 依存関係をインストール
+uv sync --extra dev --frozen
 ```
 
 ## 🛠️ 技術スタック
@@ -71,22 +124,69 @@ docker-compose up -d
 ### 開発環境の利用
 
 #### Dev Container環境（推奨）
+
+**起動方法:**
 ```bash
 # VS Codeでプロジェクトを開く
 code .
 
-# コマンドパレット（Ctrl+Shift+P）で以下を実行
+# 左下の青いアイコン（><）をクリック → 「Reopen in Container」
+# または、コマンドパレット（Ctrl+Shift+P）で:
 # > Dev Containers: Reopen in Container
-
-# またはフォルダ左下の青いアイコンをクリック
-# 「Reopen in Container」を選択
 ```
 
 **Dev Containerの利点:**
-- 統一された開発環境
-- 拡張機能の自動インストール
-- デバッグ機能の完全対応
-- ホットリロード機能
+- ✅ **統一された開発環境**: チーム全員が同じ環境で開発
+- ✅ **自動セットアップ**: コンテナ起動時に開発ツール（ruff等）が自動インストール
+- ✅ **拡張機能の自動インストール**: Python、Ruff、Docker等の拡張が自動設定
+- ✅ **デバッグ機能の完全対応**: ブレークポイントやステップ実行が使える
+- ✅ **ホットリロード機能**: コード変更が即座に反映される
+- ✅ **Git統合**: VS Code内でGit操作が完結
+
+**Dev Container内での作業:**
+```bash
+# ターミナルを開く（Ctrl+` / Cmd+`）
+# コンテナ内でコマンドが実行されます
+
+# コードのチェック
+uv run ruff check .
+
+# コードの自動修正
+uv run ruff check . --fix
+
+# フォーマット
+uv run ruff format .
+
+# テストの実行
+uv run pytest
+
+# アプリケーションの起動（通常は自動起動）
+uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
+
+**Dev Containerの再ビルド:**
+
+設定ファイルやDockerfileを変更した場合は、コンテナを再ビルドする必要があります。
+
+```bash
+# コマンドパレット（Ctrl+Shift+P）で:
+# > Dev Containers: Rebuild Container
+
+# または、完全に再ビルドする場合:
+# > Dev Containers: Rebuild Container Without Cache
+```
+
+**安全なリポジトリ設定:**
+
+Dev Container内でGitコマンドを初めて実行する際、以下のエラーが出る場合があります:
+```
+fatal: unsafe repository ('/workspace' is owned by someone else)
+```
+
+この場合、以下のコマンドを実行してください:
+```bash
+git config --global --add safe.directory /workspace
+```
 
 #### Docker環境（コマンドライン）
 ```bash
@@ -100,14 +200,24 @@ docker-compose logs -f api
 docker-compose down
 ```
 
-#### ローカル環境
+#### ローカル環境（非推奨）
+
+**前提条件:**
+- Python 3.8以上がインストールされていること
+- uvがインストールされていること
+
 ```bash
-# 依存関係のインストール
-uv sync --dev
+# uvのインストール（未インストールの場合）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# 依存関係のインストール（開発ツール含む）
+uv sync --extra dev --frozen
 
 # アプリケーションの起動
 uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 ```
+
+**注意:** ローカル環境は環境差異が発生しやすいため、Dev Container環境の使用を推奨します。
 
 #### API確認方法
 - **ルートエンドポイント**: http://localhost:8000
@@ -116,27 +226,54 @@ uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
 ### コード品質チェック
 
-#### ruffによるリンティング
+#### ruffによるリンティング（自動実行）
+
+**Dev Container環境では:**
+- ファイル保存時に自動的にフォーマットが適用されます
+- リアルタイムでコードの問題が表示されます
+- VS Codeの拡張機能により、問題箇所に波線が表示されます
+
+**手動でのチェック:**
 ```bash
 # コードスタイルのチェック
-ruff check .
+uv run ruff check .
 
 # 自動修正を適用
-ruff check . --fix
+uv run ruff check . --fix
 
-# VS Codeでは保存時に自動フォーマット
+# コードフォーマット
+uv run ruff format .
+
+# チェックとフォーマットを一度に実行
+uv run ruff check . --fix && uv run ruff format .
 ```
 
 #### 開発用依存関係
+
+**自動インストール（Dev Container）:**
+Dev Containerを使用する場合、以下のツールが自動的にインストールされます:
+- `ruff`: 高速リンター・フォーマッター
+- `pytest`: テストフレームワーク
+- `pytest-asyncio`: 非同期テスト対応
+- `httpx`: HTTPクライアント（テスト用）
+- `black`: コードフォーマッター
+- `flake8`: リンター
+- `mypy`: 型チェッカー
+
+**手動インストール（必要な場合）:**
 ```bash
 # 開発用パッケージをインストール
-uv sync --dev
+uv sync --extra dev --frozen
 
-# インストールされる開発ツール:
-# - ruff: 高速リンター・フォーマッター
-# - pytest: テストフレームワーク
-# - mypy: 型チェッカー
+# 特定のパッケージのみ追加
+uv pip install --system <package-name>
 ```
+
+**重要な注意:**
+- `uv sync --dev` は**動作しません**
+- 正しいコマンドは `uv sync --extra dev --frozen` です
+- `--extra dev` により、pyproject.tomlの`[project.optional-dependencies]`セクションの`dev`グループがインストールされます
+- `--frozen` により、uv.lockファイルからの厳密なバージョンでインストールされます
 
 ### 作業中
 ```bash
@@ -144,11 +281,17 @@ uv sync --dev
 git status
 git diff
 
+# Dev Container内でGitを初めて使う場合
+git config --global --add safe.directory /workspace
+
 # ruffでコードスタイルをチェック
-ruff check .
+uv run ruff check .
 
 # 問題があれば自動修正
-ruff check . --fix
+uv run ruff check . --fix
+
+# コードフォーマット
+uv run ruff format .
 
 # 変更をコミット
 git add .
@@ -229,8 +372,16 @@ git commit -m "FIX: バグ修正"     # 大文字はNG
 
 ### 2. GitHub Actionsによる自動チェック
 - **コード品質**: ruffによるリンティングが自動実行
+- **自動修正**: コードスタイルの問題が検出されると自動的に修正コミットが作成される
 - **チェック結果**: PRページで成功/失敗を確認
-- **修正が必要**: ローカルで`ruff check . --fix`を実行してプッシュ
+- **ローカルで修正**: エラーが出た場合は`uv run ruff check . --fix`を実行してプッシュ
+
+**GitHub Actionsで実行される内容:**
+1. `uv sync --extra dev --frozen` - 開発用依存関係をインストール
+2. `uv run ruff check .` - コードスタイルをチェック
+3. `uv run ruff check . --fix` - 自動修正を適用
+4. `uv run ruff format .` - コードフォーマット
+5. 変更があれば自動的にコミット&プッシュ
 
 ### 3. PR のタイトル例
 ```
@@ -289,27 +440,47 @@ docker-compose logs api
 # キャッシュのクリア
 uv cache clean
 
-# 依存関係の再インストール
-uv sync --reinstall --dev
+# 依存関係の再インストール（正しいコマンド）
+uv sync --extra dev --frozen --reinstall
 
-# ruffが見つからない場合
-uv sync --dev  # 開発用依存関係をインストール
+# ruffが見つからない場合（Dev Containerを再ビルド）
+# コマンドパレット > "Dev Containers: Rebuild Container"
+
+# または手動でインストール
+uv sync --extra dev --frozen
 
 # ruffの設定確認
-ruff check . --show-settings  # 現在の設定を表示
+uv run ruff check . --show-settings  # 現在の設定を表示
+
+# ruffのバージョン確認
+uv run ruff --version
 ```
+
+**よくある問題:**
+- `uv sync --dev` は動作しません → `uv sync --extra dev --frozen` を使用
+- `ruff: command not found` → `uv run ruff` を使用するか、Dev Containerを再ビルド
+- Dev Container内でruffが見つからない → Dockerfileの設定を確認し、コンテナを再ビルド
 
 ### GitHub Actions関連
 ```bash
 # ローカルでGitHub Actionsと同じチェックを実行
-ruff check .
+uv run ruff check .
 
 # 修正を適用
-ruff check . --fix
+uv run ruff check . --fix
+
+# フォーマットも適用
+uv run ruff format .
 
 # 設定ファイルを確認
 cat pyproject.toml  # [tool.ruff]セクションを確認
+cat .github/workflows/lint.yml  # ワークフロー設定を確認
 ```
+
+**GitHub Actionsのトラブルシューティング:**
+- ワークフローが失敗する場合、ローカルで同じコマンドを実行して問題を確認
+- `Failed to spawn: ruff` エラー → `.github/workflows/lint.yml`で`uv sync --extra dev --frozen`が実行されているか確認
+- 自動修正コミットが作成されない → PRの権限設定を確認
 
 ## 📁 プロジェクト構造
 
@@ -333,11 +504,79 @@ receipt-recipe/
 └── CONTRIBUTING.md      # この開発ガイド
 ```
 
-## 🔧 Dev Container設定
+## 🔧 Dev Container設定の詳細
+
+### 自動セットアップの仕組み
+
+Dev Containerは、以下のファイルによって自動的に構成されます:
+
+**1. `.devcontainer/devcontainer.json`**
+```json
+{
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "api",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        // その他の拡張機能
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        // その他の設定
+      }
+    }
+  }
+}
+```
+
+**2. `docker-compose.override.yml`**
+```yaml
+services:
+  api:
+    build:
+      args:
+        INSTALL_DEV: "true"  # 開発用依存関係をインストール
+```
+
+**3. `Dockerfile`**
+```dockerfile
+ARG INSTALL_DEV=false
+
+RUN if [ "$INSTALL_DEV" = "true" ]; then \
+    uv sync --extra dev --frozen; \
+    else \
+    uv sync --frozen; \
+    fi
+```
+
+### Dev Containerの起動フロー
+
+1. **コンテナのビルド**: Dockerfileに基づいてイメージを構築
+2. **環境変数の設定**: `INSTALL_DEV=true`により開発モードを指定
+3. **依存関係のインストール**: `uv sync --extra dev --frozen`を実行
+4. **VS Code拡張機能のインストール**: Python、Ruff等の拡張を自動インストール
+5. **設定の適用**: フォーマット、リンティングの設定を適用
+6. **開発環境の準備完了**: ターミナルとエディタが使用可能に
+
+### 本番環境との違い
+
+| 項目 | Dev Container（開発） | 本番環境 |
+|------|----------------------|----------|
+| 依存関係 | 開発ツール含む（ruff, pytest等） | 本番用のみ |
+| Docker Compose | `docker-compose.override.yml`使用 | `docker-compose.prod.yml`使用 |
+| `INSTALL_DEV` | `true` | `false` |
+| uvコマンド | `uv sync --extra dev --frozen` | `uv sync --frozen` |
+| ホットリロード | 有効 | 無効 |
 
 ### 必要なファイル
 - `.devcontainer/devcontainer.json`: VS Code Dev Container設定
-- 自動的にdocker-compose環境を利用
+- `docker-compose.override.yml`: 開発環境用のビルド設定（`INSTALL_DEV=true`）
+- `Dockerfile`: 環境に応じた依存関係インストール
 
 ### Dev Container使用時の利点
 - **統一開発環境**: チーム全員が同じ環境で開発
@@ -345,6 +584,7 @@ receipt-recipe/
 - **デバッグ対応**: VS Codeのデバッガーが完全動作
 - **インテリセンス**: コード補完とエラー検出
 - **ターミナル統合**: コンテナ内で直接コマンド実行
+- **依存関係の自動管理**: コンテナビルド時にruff等が自動インストール
 
 ## 📋 現在の開発状況
 
@@ -372,14 +612,37 @@ receipt-recipe/
 ## 📞 サポート
 
 ### 開発環境のトラブル
-- Dev Container が起動しない → Docker Desktop の確認
-- Python拡張機能が動作しない → Dev Container内で開発しているかを確認
-- ホットリロードが効かない → docker-compose.override.yml の設定確認
-- ruffが動作しない → `uv sync --dev`で開発用依存関係をインストール
-- GitHub Actionsが失敗 → ローカルで`ruff check .`を実行して問題を確認
+- **Dev Container が起動しない** 
+  - Docker Desktop が起動しているか確認
+  - Dev Containers 拡張機能がインストールされているか確認
+  - コマンドパレット > "Dev Containers: Rebuild Container"を実行
+  
+- **Python拡張機能が動作しない** 
+  - Dev Container内で開発しているか確認（左下の青いアイコンで確認）
+  - コンテナを再ビルド
+  
+- **ホットリロードが効かない** 
+  - `docker-compose.override.yml`の設定確認
+  - コンテナを再起動: `docker-compose restart api`
+  
+- **ruffが動作しない** 
+  - Dev Containerを再ビルド（推奨）
+  - または手動インストール: `uv sync --extra dev --frozen`
+  - `uv run ruff --version`でインストール確認
+  
+- **GitHub Actionsが失敗** 
+  - ローカルで`uv run ruff check .`を実行して問題を確認
+  - `.github/workflows/lint.yml`で`uv sync --extra dev --frozen`が使われているか確認
+  - 修正後、`uv run ruff check . --fix`を実行してコミット
+  
+- **Git操作でエラー（unsafe repository）**
+  ```bash
+  git config --global --add safe.directory /workspace
+  ```
 
 ## 📚 更新履歴
 
+- **2025/10/08**: Dev Container詳細設定を追加、開発環境セットアップ手順を大幅更新、uvコマンド修正（`--dev` → `--extra dev --frozen`）
 - **2025/10/07**: Docker環境構築完了、技術スタック決定、ruff・GitHub Actions導入
 - **2025/10/03**: 初版作成
 - プロジェクトの成長に合わせて随時更新予定
