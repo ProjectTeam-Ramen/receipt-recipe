@@ -47,5 +47,7 @@ warn_unused_configs = true
 [tool.ruff]
 line-length = 88
 target-version = "py38"
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "C90"]
 ignore = ["E501"]
