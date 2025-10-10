@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  api:
+    volumes:
+      # ローカルのコードをコンテナにマウントしてライブリロードを可能にする
+      - .:/workspace:cached
+    command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
