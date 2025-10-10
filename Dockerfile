@@ -30,19 +30,6 @@ COPY . .
 # uvを使用してpyproject.tomlから依存関係をシステムにインストール
 RUN uv pip install --system --no-deps -e .
 
-# 依存関係を個別にインストール（pyproject.tomlの依存関係）
-RUN uv pip install --system \
-    "fastapi>=0.104.0" \
-    "uvicorn[standard]>=0.24.0" \
-    "sqlalchemy>=2.0.0" \
-    "aiosqlite>=0.19.0" \
-    "pydantic>=2.4.0" \
-    "python-multipart>=0.0.6" \
-    "pillow>=10.0.0" \
-    "opencv-python>=4.8.0" \
-    "numpy>=1.24.0" \
-    "python-dotenv>=1.0.0"
-
 # 非ルートユーザーを作成
 RUN useradd --create-home --shell /bin/bash appuser && \
     chown -R appuser:appuser /workspace
