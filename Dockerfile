@@ -6,7 +6,7 @@ FROM nvcr.io/nvidia/pytorch:22.07-py3 AS builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # ワーキングディレクトリを設定
-WORKDIR /app
+WORKDIR /workspace
 
 # ビルドに必要なファイルをすべてコピー
 COPY pyproject.toml README.md ./
@@ -14,6 +14,7 @@ COPY uv.lock* ./
 
 # 仮想環境を作成し、依存関係を同期
 RUN --mount=type=cache,target=/root/.cache/uv \
+    uv venv /opt/venv && \
     uv sync --frozen
 
 # Stage 2: final - 実行環境を構築する
@@ -27,8 +28,15 @@ WORKDIR /workspace
 # プロジェクトファイルをコピー
 COPY . .
 
-# uvを使用してpyproject.tomlから依存関係をシステムにインストール
-RUN uv pip install --system --no-deps -e .
+# 開発環境かどうかを判定するARG
+ARG INSTALL_DEV=true
+
+# pyproject.tomlから依存関係をインストール
+RUN if [ "$INSTALL_DEV" = "true" ]; then \
+    uv sync --extra dev --frozen; \
+    else \
+    uv sync --frozen; \
+    fi
 
 # 非ルートユーザーを作成
 RUN useradd --create-home --shell /bin/bash appuser && \
@@ -38,4 +46,5 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# devcontainer用: コンテナを起動したままにする
+CMD ["tail", "-f", "/dev/null"]

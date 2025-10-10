@@ -14,7 +14,7 @@ dependencies = [
     "pillow>=10.0.0",
     "opencv-python>=4.8.0",
     "numpy>=1.24.0",
-    "python-dotenv>=1.0.0",
+    "python-dotenv>=1.0.0"
 ]
 
 [project.optional-dependencies]
@@ -25,6 +25,7 @@ dev = [
     "black>=23.0.0",
     "flake8>=6.0.0",
     "mypy>=1.5.0",
+    "ruff>=0.0.289"
 ]
 
 [build-system]
@@ -42,3 +43,11 @@ target-version = ['py38']
 python_version = "3.8"
 warn_return_any = true
 warn_unused_configs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "C90"]
+ignore = ["E501"]

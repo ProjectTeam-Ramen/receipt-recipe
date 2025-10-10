@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     title="Receipt Recipe API",
     description="Convert receipts to recipes using AI",
-    version="0.1.0"
+    version="0.1.0",
 )
 
 # CORS設定
@@ -20,9 +20,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
     return {"message": "Receipt Recipe API is running!"}
+
 
 @app.get("/health")
 async def health_check():
