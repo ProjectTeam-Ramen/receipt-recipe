@@ -19,7 +19,7 @@ cd receipt-recipe
 
 # 自分の名前を設定（初回のみ）
 git config user.name "あなたの名前"
-git config user.email "あなのメール"
+git config user.email "あなたのメール"
 
 # 開発環境の起動
 docker-compose up --build -d
