@@ -14,7 +14,6 @@ COPY uv.lock* ./
 
 # 仮想環境を作成し、依存関係を同期
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv venv /opt/venv && \
     uv sync --frozen
 
 # Stage 2: final - 実行環境を構築する
