@@ -42,13 +42,15 @@
       }
     }
   },
-  "forwardPorts": [8000],
+  "forwardPorts": [
+    8000
+  ],
   "portsAttributes": {
     "8000": {
       "label": "FastAPI Server",
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "uv sync --dev",
+  "postCreateCommand": "uv sync --extra dev --frozen",
   "remoteUser": "appuser"
 }
