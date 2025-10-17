@@ -10,5 +10,36 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/workspace
-    # devcontainer用: コンテナを起動したままにする
+      - DATABASE_URL=mysql+pymysql://user:password@db:3306/receipt_recipe
     command: tail -f /dev/null
+    depends_on:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: receipt_recipe
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    networks:
+      - default
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_dev_data:
+
+
+networks:
+  default:
+    name: receipt-recipe-dev
