@@ -38,6 +38,9 @@ RUN if [ "$INSTALL_DEV" = "true" ]; then \
     uv sync --frozen; \
     fi
 
+# 開発環境では常にdev依存関係をインストール
+RUN uv sync --extra dev --frozen
+
 # 非ルートユーザーを作成
 RUN useradd --create-home --shell /bin/bash appuser && \
     chown -R appuser:appuser /workspace
