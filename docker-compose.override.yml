@@ -10,7 +10,9 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/workspace
-      - DATABASE_URL=mysql+pymysql://user:password@db:3306/receipt_recipe
+      - DATABASE_URL_INGREDIENTS=mysql+pymysql://user:password@db:3306/ingredients_db
+      - DATABASE_URL_USERS=mysql+pymysql://user:password@db:3306/users_db
+      - DATABASE_URL_RECIPES=mysql+pymysql://user:password@db:3306/recipes_db
     command: tail -f /dev/null
     depends_on:
       - db
@@ -21,13 +23,13 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: receipt_recipe
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     volumes:
       - mysql_dev_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - default
     healthcheck:
