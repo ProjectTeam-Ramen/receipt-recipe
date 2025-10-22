@@ -4,7 +4,9 @@ services:
     restart: unless-stopped
     environment:
       PYTHONPATH: /workspace
-      DATABASE_URL: ${DATABASE_URL:-sqlite:///./app.db}
+      DATABASE_URL_INGREDIENTS: ${DATABASE_URL_INGREDIENTS:-mysql+pymysql://user:password@db:3306/ingredients_db}
+      DATABASE_URL_USERS: ${DATABASE_URL_USERS:-mysql+pymysql://user:password@db:3306/users_db}
+      DATABASE_URL_RECIPES: ${DATABASE_URL_RECIPES:-mysql+pymysql://user:password@db:3306/recipes_db}
       LOG_LEVEL: ${LOG_LEVEL:-info}
     command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
     volumes: []  # 開発用ボリュームマウントを無効化
@@ -16,6 +18,27 @@ services:
       start_period: 40s
     networks:
       - default
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_USER: ${MYSQL_USER:-user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
+
 
 networks:
   default:
