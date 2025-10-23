@@ -10,5 +10,38 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/workspace
-    # devcontainer用: コンテナを起動したままにする
+      - DATABASE_URL_INGREDIENTS=mysql+pymysql://user:password@db:3306/ingredients_db
+      - DATABASE_URL_USERS=mysql+pymysql://user:password@db:3306/users_db
+      - DATABASE_URL_RECIPES=mysql+pymysql://user:password@db:3306/recipes_db
     command: tail -f /dev/null
+    depends_on:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_dev_data:
+
+
+networks:
+  default:
+    name: receipt-recipe-dev
