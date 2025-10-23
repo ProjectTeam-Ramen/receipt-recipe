@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン画面(TEST用)</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="login-container">
+    <h1>ログイン</h1>
+    <form id="loginForm">
+      <label for="username">ユーザー名</label>
+      <input type="text" id="username" required>
+<br>
+      <label for="password">パスワード</label>
+      <input type="password" id="password" required>
+<br>
+      <button type="submit">ログイン</button>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // 仮の認証処理（実際はサーバ側で行う）
+      if (username === "admin" && password === "1234") {
+        window.location.href = "home.html"; // ✅ ホーム画面へ移動
+      } else {
+        document.getElementById("message").textContent = "ユーザー名またはパスワードが間違っています。";
+      }
+    });
+  </script>
+</body>
+</html>
