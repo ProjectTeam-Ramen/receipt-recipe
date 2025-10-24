@@ -350,3 +350,35 @@ footer {
 .delete-btn:hover {
   background-color: #e04646;
 }
+/* ==============================
+   冷蔵庫：食材一覧ページ
+============================== */
+.fridge-check-main {
+  text-align: center;
+}
+
+.fridge-check-main h2 {
+  color: #0078d7;
+  margin-bottom: 1.5em;
+}
+
+/* 食材一覧全体 */
+.check-list {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* 各食材カード */
+.check-item {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 500;
+}
