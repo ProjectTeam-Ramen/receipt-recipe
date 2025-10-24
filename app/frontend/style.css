@@ -274,3 +274,79 @@ footer {
 .check-btn:hover {
   background-color: #138496;
 }
+/* ==============================
+   冷蔵庫：食材追加・削除ページ
+============================== */
+.fridge-main {
+  text-align: center;
+}
+
+.fridge-main h2 {
+  color: #0078d7;
+  margin-bottom: 1em;
+}
+
+/* 追加フォーム */
+.fridge-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2em;
+}
+
+.fridge-form input {
+  width: 50%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+}
+
+/* 食材リスト */
+.ingredient-list {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.ingredient-item {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 削除ボタン */
+.delete-btn {
+  background-color: #ff5757;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #e04646;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食材の追加・削除</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Fridge Control</h1>
+    <button class="logout-btn" id="backBtn">戻る</button>
+  </header>
+
+  <main class="fridge-main">
+    <h2>食材の追加・削除</h2>
+
+    <!-- 食材追加フォーム -->
+    <form id="addForm" class="fridge-form">
+      <input type="text" id="ingredientInput" placeholder="食材名を入力" required>
+      <button type="submit" class="add-btn">追加</button>
+    </form>
+
+    <!-- 登録済み食材一覧 -->
+    <div id="ingredientList" class="ingredient-list">
+      <p>現在、登録されている食材はありません。</p>
+    </div>
+  </main>
+
+  <script src="fridge-control.js"></script>
+</body>
+</html>
