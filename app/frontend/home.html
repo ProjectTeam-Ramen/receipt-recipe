@@ -8,17 +8,19 @@
 </head>
 <body>
   <header>
-    <h1>ホーム画面</h1>
+    <h1>HOME</h1>
     <button class="logout-btn" id="logoutBtn">ログアウト</button>
   </header>
 
   <main>
-    <h2>ようこそ!!!!!!</h2>
-    <p>これはログイン後のホーム画面です。</p>
+    <h2>Menu</h2>
 
-    <!-- ▼ レシピ検索ページへ移動するボタンを追加 -->
+    <!-- ▼ ボタンを縦に並べる -->
     <div class="center-container">
-      <button class="recipe-btn" id="recipeBtn">レシピ検索ページへ</button>
+      <div class="menu-buttons">
+        <button class="recipe-btn" id="recipeBtn">レシピ検索</button>
+        <button class="fridge-btn" id="fridgeBtn">冷蔵庫管理メニュー</button>
+      </div>
     </div>
   </main>
 
@@ -31,6 +33,11 @@
     // レシピ検索ページへ移動
     document.getElementById("recipeBtn").addEventListener("click", function() {
       window.location.href = "recipe.html";
+    });
+
+    // 冷蔵庫管理ページへ移動
+    document.getElementById("fridgeBtn").addEventListener("click", function() {
+      window.location.href = "fridge-home.html";
     });
   </script>
 </body>

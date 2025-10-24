@@ -203,3 +203,74 @@ footer {
   text-align: center;
   font-size: 1.1em;
 }
+/* ==============================
+   ホーム画面：冷蔵庫管理ボタン追加
+============================== */
+
+/* ボタンを縦に整列 */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* 冷蔵庫管理ボタン */
+.fridge-btn {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 225px;
+}
+
+.fridge-btn:hover {
+  background-color: #138496;
+}
+/* ==============================
+   冷蔵庫ホーム画面専用
+============================== */
+
+/* 中央に縦並びボタン配置 */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 食材追加・削除ボタン */
+.control-btn {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 260px;
+}
+.control-btn:hover {
+  background-color: #e0a800;
+}
+
+/* 食材一覧ボタン */
+.check-btn {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 260px;
+}
+.check-btn:hover {
+  background-color: #138496;
+}
