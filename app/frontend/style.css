@@ -308,9 +308,10 @@ footer {
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 205px;
 }
 
 .add-btn:hover {
@@ -340,11 +341,12 @@ footer {
   background-color: #ff5757;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 10px 20px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 205px;
 }
 
 .delete-btn:hover {
@@ -381,4 +383,93 @@ footer {
   justify-content: space-between;
   font-size: 16px;
   font-weight: 500;
+}
+/* ==============================
+   冷蔵庫：レシート追加ページ
+============================== */
+
+.receipt-add-main {
+  text-align: center;
+}
+
+.receipt-add-main h2 {
+  color: #0078d7;
+  margin-bottom: 20px;
+}
+
+.upload-area {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.upload-area input[type="file"] {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.analyze-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.analyze-btn:hover {
+  background-color: #218838;
+}
+
+.result-area {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.confirm-btn {
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.confirm-btn:hover {
+  background-color: #005fa3;
+}
+
+/* 冷蔵庫管理ページボタン追加 */
+.receipt-btn {
+  background-color: #ffc107;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 205px;
+}
+
+.receipt-btn:hover {
+  background-color: #e0a800;
+}
+
+/* ボタンを縦に整列 */
+.control-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
