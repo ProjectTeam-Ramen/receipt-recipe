@@ -13,16 +13,24 @@
   </header>
 
   <main>
-    <h2>ようこそ!!!!!!
-    </h2>
+    <h2>ようこそ!!!!!!</h2>
     <p>これはログイン後のホーム画面です。</p>
+
+    <!-- ▼ レシピ検索ページへ移動するボタンを追加 -->
+    <div class="center-container">
+      <button class="recipe-btn" id="recipeBtn">レシピ検索ページへ</button>
+    </div>
   </main>
 
   <script>
     // ログアウトボタン押下時の処理
     document.getElementById("logoutBtn").addEventListener("click", function() {
-      // 簡易的にログイン情報をクリアしてログイン画面に戻る
       window.location.href = "index.html";
+    });
+
+    // レシピ検索ページへ移動
+    document.getElementById("recipeBtn").addEventListener("click", function() {
+      window.location.href = "recipe.html";
     });
   </script>
 </body>

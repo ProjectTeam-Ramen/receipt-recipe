@@ -131,3 +131,75 @@ footer {
   font-size: 1.1em;
   margin-top: 0.5em;
 }
+/* ==============================
+   ホーム画面：レシピ検索ボタン追加
+============================== */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* 画面の中央付近に配置 */
+}
+
+.recipe-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.recipe-btn:hover {
+  background-color: #218838;
+}
+/* ==============================
+   レシピ検索ページ専用
+============================== */
+.recipe-main {
+  text-align: center;
+}
+
+.recipe-main h2 {
+  color: #0078d7;
+  margin-bottom: 1.5em;
+}
+
+.recipe-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2em;
+}
+
+.recipe-form input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-btn {
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #005a9e;
+}
+
+.recipe-results {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.1em;
+}
