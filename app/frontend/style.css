@@ -9,7 +9,6 @@ body {
   padding: 0;
 }
 
-/* ヘッダー */
 header {
   background-color: #0078d7;
   color: white;
@@ -24,7 +23,6 @@ header h1 {
   font-size: 20px;
 }
 
-/* メインコンテンツ共通 */
 main {
   max-width: 800px;
   margin: 40px auto;
@@ -34,7 +32,6 @@ main {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* フッター */
 footer {
   text-align: center;
   padding: 10px;
@@ -44,7 +41,22 @@ footer {
 }
 
 /* ==============================
-   ログイン画面専用
+   共通ボタンスタイル
+============================== */
+.btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ==============================
+   ログイン画面
 ============================== */
 .login-container {
   width: 320px;
@@ -81,13 +93,10 @@ footer {
 .login-container button {
   background-color: #0078d7;
   color: white;
-  border: none;
   padding: 0.7em 1.2em;
   font-size: 1em;
   border-radius: 8px;
-  cursor: pointer;
   margin-top: 1.2em;
-  transition: 0.3s;
   width: 100%;
 }
 
@@ -102,25 +111,18 @@ footer {
 }
 
 /* ==============================
-   ホーム画面専用
+   ホーム画面
 ============================== */
 .logout-btn {
   background-color: #ff5757;
   color: white;
-  border: none;
   border-radius: 6px;
   padding: 8px 16px;
   font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .logout-btn:hover {
   background-color: #e04646;
-}
-
-.app-main {
-  text-align: center;
 }
 
 .app-main h2 {
@@ -131,37 +133,45 @@ footer {
   font-size: 1.1em;
   margin-top: 0.5em;
 }
-/* ==============================
-   ホーム画面：レシピ検索ボタン追加
-============================== */
-.center-container {
+
+/* 中央に縦並びボタン配置 */
+.menu-buttons {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 50vh; /* 画面の中央付近に配置 */
+  gap: 20px;
 }
 
+/* レシピ検索ボタン */
 .recipe-btn {
   background-color: #28a745;
   color: white;
-  border: none;
   padding: 15px 30px;
   border-radius: 10px;
   font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .recipe-btn:hover {
   background-color: #218838;
 }
-/* ==============================
-   レシピ検索ページ専用
-============================== */
-.recipe-main {
-  text-align: center;
+
+/* 冷蔵庫管理ボタン */
+.fridge-btn {
+  background-color: #17a2b8;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  width: 230px;
 }
 
+.fridge-btn:hover {
+  background-color: #138496;
+}
+
+/* ==============================
+   レシピ検索ページ
+============================== */
 .recipe-main h2 {
   color: #0078d7;
   margin-bottom: 1.5em;
@@ -180,18 +190,13 @@ footer {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 16px;
 }
 
 .search-btn {
   background-color: #0078d7;
   color: white;
-  border: none;
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .search-btn:hover {
@@ -200,93 +205,59 @@ footer {
 
 .recipe-results {
   margin-top: 20px;
-  text-align: center;
   font-size: 1.1em;
 }
+
 /* ==============================
-   ホーム画面：冷蔵庫管理ボタン追加
+   冷蔵庫ホーム・管理ページ
 ============================== */
-
-/* ボタンを縦に整列 */
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-/* 冷蔵庫管理ボタン */
-.fridge-btn {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 225px;
-}
-
-.fridge-btn:hover {
-  background-color: #138496;
-}
-/* ==============================
-   冷蔵庫ホーム画面専用
-============================== */
-
-/* 中央に縦並びボタン配置 */
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-/* 食材追加・削除ボタン */
 .control-btn {
   background-color: #ffc107;
   color: #333;
-  border: none;
   padding: 15px 30px;
   border-radius: 10px;
   font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
   width: 260px;
 }
+
 .control-btn:hover {
   background-color: #e0a800;
 }
 
-/* 食材一覧ボタン */
 .check-btn {
   background-color: #17a2b8;
   color: white;
-  border: none;
   padding: 15px 30px;
   border-radius: 10px;
   font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
   width: 260px;
 }
+
 .check-btn:hover {
   background-color: #138496;
 }
+
+.receipt-btn {
+  background-color: #ffc107;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  width: 205px;
+}
+
+.receipt-btn:hover {
+  background-color: #e0a800;
+}
+
 /* ==============================
    冷蔵庫：食材追加・削除ページ
 ============================== */
-.fridge-main {
-  text-align: center;
-}
-
 .fridge-main h2 {
   color: #0078d7;
   margin-bottom: 1em;
 }
 
-/* 追加フォーム */
 .fridge-form {
   display: flex;
   justify-content: center;
@@ -299,18 +270,14 @@ footer {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 16px;
 }
 
 .add-btn {
   background-color: #28a745;
   color: white;
-  border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
   width: 205px;
 }
 
@@ -318,7 +285,19 @@ footer {
   background-color: #218838;
 }
 
-/* 食材リスト */
+.delete-btn {
+  background-color: #ff5757;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 18px;
+  width: 205px;
+}
+
+.delete-btn:hover {
+  background-color: #e04646;
+}
+
 .ingredient-list {
   max-width: 500px;
   margin: 0 auto;
@@ -336,42 +315,20 @@ footer {
   align-items: center;
 }
 
-/* 削除ボタン */
-.delete-btn {
-  background-color: #ff5757;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 205px;
-}
-
-.delete-btn:hover {
-  background-color: #e04646;
-}
 /* ==============================
    冷蔵庫：食材一覧ページ
 ============================== */
-.fridge-check-main {
-  text-align: center;
-}
-
 .fridge-check-main h2 {
   color: #0078d7;
   margin-bottom: 1.5em;
 }
 
-/* 食材一覧全体 */
 .check-list {
   max-width: 500px;
   margin: 0 auto;
   text-align: left;
 }
 
-/* 各食材カード */
 .check-item {
   background-color: #ffffff;
   border-radius: 8px;
@@ -379,19 +336,15 @@ footer {
   padding: 10px 15px;
   margin-bottom: 10px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   font-size: 16px;
   font-weight: 500;
 }
+
 /* ==============================
    冷蔵庫：レシート追加ページ
 ============================== */
-
-.receipt-add-main {
-  text-align: center;
-}
-
 .receipt-add-main h2 {
   color: #0078d7;
   margin-bottom: 20px;
@@ -407,19 +360,14 @@ footer {
 }
 
 .upload-area input[type="file"] {
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin: 10px 0 15px;
 }
 
 .analyze-btn {
   background-color: #28a745;
   color: white;
-  border: none;
-  border-radius: 8px;
   padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 8px;
 }
 
 .analyze-btn:hover {
@@ -437,39 +385,24 @@ footer {
 .confirm-btn {
   background-color: #0078d7;
   color: white;
-  border: none;
-  border-radius: 8px;
   padding: 10px 20px;
-  margin-top: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 8px;
 }
 
 .confirm-btn:hover {
   background-color: #005fa3;
 }
-
-/* 冷蔵庫管理ページボタン追加 */
-.receipt-btn {
-  background-color: #ffc107;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 205px;
-}
-
-.receipt-btn:hover {
-  background-color: #e0a800;
-}
-
-/* ボタンを縦に整列 */
-.control-menu {
+.check-item {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
+  justify-content: space-between; /* 左右に分ける */
+  padding: 6px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.item-name {
+  /* 左揃えはデフォルトでOK */
+}
+
+.item-amount {
+  text-align: right; /* 右揃え */
 }

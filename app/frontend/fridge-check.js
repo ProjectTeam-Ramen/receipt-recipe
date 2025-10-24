@@ -10,8 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "fridge-home.html";
   });
 
-  // 仮データ（今後localStorage連携可能）
-  let ingredients = ["卵", "牛乳", "トマト", "レタス"];
+  // 仮データ（name: 食材名, amount: g単位）
+  let ingredients = [
+    { name: "卵", amount: 300 },
+    { name: "牛乳", amount: 1000 },
+    { name: "トマト", amount: 500 },
+    { name: "レタス", amount: 250 }
+  ];
 
   // 食材一覧を描画
   function renderList() {
@@ -24,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .map(
         (item) => `
         <div class="check-item">
-          <span>${item}</span>
+          <span class="item-name">${item.name}</span>
+          <span class="item-amount">${item.amount}g</span>
         </div>`
       )
       .join("");
@@ -32,3 +38,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderList();
 });
+
