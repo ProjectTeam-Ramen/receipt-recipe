@@ -30,11 +30,15 @@ class RecipeProposer:
     # --- 食材カバー率計算 (在庫スコア) ---
     def _calculate_inventory_coverage(self, recipe: Recipe) -> Tuple[float, Set[str]]:
         """数量ベースの食材カバー率を計算 (99g/100g -> 0.99)"""
+        SEASONING_NAMES = {'醤油', '塩', '砂糖', 'みりん', '酒', '料理酒', '胡椒', 'ごま油', 'オリーブオイル'}
         total_required_amount = 0.0
         total_covered_amount = 0.0
         missing_ingredients = set() # 不足している食材のリスト
 
         for name, required_qty in recipe.required_qty.items():
+            if name in SEASONING_NAMES:
+                continue
+
             stock_qty = self.inventory_dict.get(name, 0.0) # 在庫がなければ 0
             
             # (1) 必要総量に加算
