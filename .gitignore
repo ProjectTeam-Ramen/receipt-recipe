@@ -258,4 +258,7 @@ $RECYCLE.BIN/
 output/
 
 # Development scripts (manual testing/debugging)
-scripts/
+# Note: Utility scripts like verify_cuda_packages.py are version controlled
+scripts/dev/
+scripts/test_*.py
+scripts/tmp_*.py
