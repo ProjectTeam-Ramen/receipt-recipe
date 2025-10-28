@@ -41,6 +41,13 @@ RUN if [ "$INSTALL_DEV" = "true" ]; then \
     uv sync --frozen; \
     fi
 
+# PyTorch Geometric の CUDA 11.7 対応版を再インストール
+# uv sync で CPU版がインストールされる可能性があるため、
+# 計算機サーバーの CUDA 11.7 環境用に拡張パッケージを明示的に再インストール
+RUN uv pip install --force-reinstall --no-deps \
+    torch-scatter torch-sparse torch-cluster torch-spline-conv \
+    -f https://data.pyg.org/whl/torch-1.12.0+cu117.html
+
 # 開発環境では常にdev依存関係をインストール
 RUN uv sync --extra dev --frozen
 

@@ -153,7 +153,8 @@ Dev Containerが起動すると、以下の処理が自動的に実行されま�
 📦 1. Dockerイメージのビルド
    ├─ ベースイメージのダウンロード (nvcr.io/nvidia/pytorch:22.07-py3)
    ├─ システムパッケージのインストール
-   └─ Python依存関係のインストール (uv sync --extra dev)
+   ├─ Python依存関係のインストール (uv sync --extra dev)
+   └─ PyTorch Geometric CUDA拡張のインストール (CUDA 11.7対応)
 
 🔧 2. VS Code拡張機能のインストール
    ├─ Python拡張機能
@@ -169,6 +170,11 @@ Dev Containerが起動すると、以下の処理が自動的に実行されま�
 ✅ 4. MySQLデータベースの起動
    └─ docker-compose.override.ymlに基づいて起動
 ```
+
+**重要: CUDA環境について**
+- このプロジェクトは計算機サーバーの **CUDA 11.7** 環境に最適化されています
+- PyTorch Geometric の拡張パッケージ (torch-scatter, torch-sparse など) は自動的に CUDA 11.7 対応版がインストールされます
+- GPU を使用しない場合でも、ビルドは正常に完了します
 
 #### ビルド進行状況の確認
 

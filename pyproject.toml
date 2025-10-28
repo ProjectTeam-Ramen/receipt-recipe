@@ -21,8 +21,11 @@ dependencies = [
     "scipy>=1.10.0",
     "pyyaml>=6.0",
     "scikit-learn>=1.3.0",
-    "torch-geometric>=2.3.0",
+    "torch-geometric>=2.3.0",  # CUDA拡張は Dockerfile で別途インストール
 ]
+# Note: torch-geometric の CUDA 対応拡張パッケージ (torch-scatter, torch-sparse, 
+# torch-cluster, torch-spline-conv) は、計算機サーバーの CUDA 11.7 環境との
+# 互換性を確保するため、Dockerfile 内で別途インストールされます。
 
 [project.optional-dependencies]
 dev = [

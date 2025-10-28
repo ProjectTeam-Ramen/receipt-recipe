@@ -152,6 +152,13 @@ pandas>=2.0.0             # データ分析
 scipy>=1.10.0             # 科学技術計算
 ```
 
+**PyTorch Geometric の CUDA 対応について:**
+- `torch-geometric` 本体は `pyproject.toml` に記載されていますが、
+- CUDA 依存の拡張パッケージ (`torch-scatter`, `torch-sparse`, `torch-cluster`, `torch-spline-conv`) は、
+- 計算機サーバーの CUDA 11.7 環境との互換性を確保するため、
+- Dockerfile 内で PyTorch 1.12.0 + CUDA 11.7 用のプリビルドホイールから明示的に再インストールされます。
+- データソース: https://data.pyg.org/whl/torch-1.12.0+cu117.html
+
 ### データベース
 ```toml
 pymysql>=1.1.0       # MySQL Pythonドライバ
@@ -220,6 +227,10 @@ FROM nvcr.io/nvidia/pytorch:22.07-py3 AS builder
 - uvのインストール
 - 仮想環境の作成
 - 依存関係の同期（キャッシュマウント活用）
+- **PyTorch Geometric と CUDA 11.7 対応拡張パッケージのインストール**
+  - torch-scatter, torch-sparse, torch-cluster, torch-spline-conv を
+  - PyTorch 1.12.0 + CUDA 11.7 用のプリビルドホイールからインストール
+  - データソース: https://data.pyg.org/whl/torch-1.12.0+cu117.html
 
 #### Stage 2: final
 ```dockerfile
