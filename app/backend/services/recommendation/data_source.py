@@ -1,14 +1,14 @@
 from .data_models import Ingredient, Recipe
 import numpy as np
-from typing import List, Dict
+from typing import List, Dict 
 
 # 最終的なレシピ特徴ベクトルの次元定義 (18次元)
 FEATURE_DIMENSIONS = [
     '和食', '洋食', '中華', 
     '主菜', '副菜', '汁物', 'デザート',
     '肉類', '魚介類', 'ベジタリアン', '複合', 'その他', 
-    '辛味', '甘味', '酸味', # 旨味を削除
-    '煮込み', '揚げ物', '炒め物' # 生食を削除
+    '辛味', '甘味', '酸味', 
+    '煮込み', '揚げ物', '炒め物' 
 ]
 
 class RecipeDataSource:
