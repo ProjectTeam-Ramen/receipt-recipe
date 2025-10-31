@@ -12,8 +12,8 @@ class RecipeProposer:
         self.WEIGHT_INVENTORY = 0.7
         self.WEIGHT_PREFERENCE = 0.3
 
-        # 提案の最低ライン (在庫カバー率が50%未満のものは提案から除外)
-        # self.MIN_COVERAGE_THRESHOLD = 0.5 <- 迷い中
+        # 提案の最低ライン (在庫カバー率が20%未満のものは提案から除外)
+        self.MIN_COVERAGE_THRESHOLD = 0.2
 
     # --- コサイン類似度計算 (好みスコア) ---
     def _calculate_cosine_similarity(self, recipe_vector: np.ndarray) -> float:
@@ -30,7 +30,7 @@ class RecipeProposer:
     # --- 食材カバー率計算 (在庫スコア) ---
     def _calculate_inventory_coverage(self, recipe: Recipe) -> Tuple[float, Set[str]]:
         """数量ベースの食材カバー率を計算 (99g/100g -> 0.99)"""
-        SEASONING_NAMES = {'醤油', '塩', '砂糖', 'みりん', '酒', '料理酒', '胡椒', 'ごま油', 'オリーブオイル'}
+        SEASONING_NAMES = {'醤油', '塩', '砂糖', 'みりん', '酒', '料理酒', '胡椒', 'ごま油', 'オリーブオイル', '酢', '味噌', 'だし', '鶏ガラスープの素', '片栗粉', '小麦粉', '豆板醤'} # 調味料リスト
         total_required_amount = 0.0
         total_covered_amount = 0.0
         missing_ingredients = set() # 不足している食材のリスト
@@ -71,8 +71,8 @@ class RecipeProposer:
             coverage_score, missing = self._calculate_inventory_coverage(recipe)
 
             # 1.1 最低カバー率チェック  <- 迷い中
-            #if coverage_score < self.MIN_COVERAGE_THRESHOLD:
-            #   continue 
+            if coverage_score < self.MIN_COVERAGE_THRESHOLD:
+               continue 
                         
             # 2.1 アレルギーチェック 
             is_allergic = any(ing in params.allergies for ing in recipe.required_qty.keys())
