@@ -3,30 +3,27 @@
 // ==============================
 document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("backBtn");
-  const addPageBtn = document.getElementById("addPageBtn");
-  const deletePageBtn = document.getElementById("deletePageBtn");
-  const receiptBtn = document.getElementById("receiptBtn");
+  const addFoodBtn = document.getElementById("addFoodBtn");
+  const deleteFoodBtn = document.getElementById("deleteFoodBtn");
+  const receiptAddBtn = document.getElementById("receiptAddBtn");
 
-  // 冷蔵庫ホーム画面へ戻る
+  // 戻るボタン → fridge-home.htmlへ戻る
   backBtn.addEventListener("click", () => {
     window.location.href = "fridge-home.html";
   });
 
   // 食材追加ページへ移動
-  addPageBtn.addEventListener("click", () => {
-    // ここは今後 "fridge-add.html" などのページを作成した際に変更可能
-    alert("食材追加ページへ移動（今後実装予定）");
-    // window.location.href = "fridge-add.html";
+  addFoodBtn.addEventListener("click", () => {
+    window.location.href = "food-add.html";
   });
 
   // 食材削除ページへ移動
-  deletePageBtn.addEventListener("click", () => {
-    alert("食材削除ページへ移動（今後実装予定）");
-    // window.location.href = "fridge-delete.html";
+  deleteFoodBtn.addEventListener("click", () => {
+    window.location.href = "food-delete.html";
   });
 
-  // レシートから追加ページへ移動
-  receiptBtn.addEventListener("click", () => {
+  // レシート読み取りページへ移動
+  receiptAddBtn.addEventListener("click", () => {
     window.location.href = "receipt-add.html";
   });
 });
