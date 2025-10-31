@@ -1,47 +1,149 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>レシピ検索</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header>
+  <header class="app-header">
     <h1>レシピ検索</h1>
-    <button class="logout-btn" id="backBtn">ホームに戻る</button>
+    <button class="logout-btn" id="backBtn" aria-label="ホームに戻る">ホームに戻る</button>
   </header>
 
   <main class="recipe-main">
-    <h2>食材からレシピを検索</h2>
-    <form id="recipeForm" class="recipe-form">
-      <input type="text" id="ingredientInput" placeholder="例：トマト、卵など" required>
-      <button type="submit" class="search-btn">検索</button>
-    </form>
+    <!-- おすすめ -->
+    <section aria-labelledby="recommend-title" class="section">
+      <h2 id="recommend-title">おすすめレシピ</h2>
+      <div id="suggestGrid" class="card-grid" role="list"></div>
+    </section>
 
-    <div id="resultArea" class="recipe-results">
-      <!-- 検索結果がここに表示されます -->
-    </div>
+    <!-- 検索 -->
+    <section aria-labelledby="search-title" class="section">
+      <h2 id="search-title">食材からレシピを検索</h2>
+      <form id="recipeForm" class="recipe-form" autocomplete="off">
+        <input type="text" id="ingredientInput" placeholder="例：トマト、卵など" required/>
+        <button type="submit" class="search-btn">検索</button>
+      </form>
+
+      <div id="resultArea" class="recipe-results" aria-live="polite"></div>
+    </section>
   </main>
 
   <script>
-    // ホーム画面に戻る
-    document.getElementById("backBtn").addEventListener("click", function() {
-      window.location.href = "home.html";
-    });
+  // ---------- 安全ガード: 要素取得ヘルパ ----------
+  const $ = (id) => document.getElementById(id);
 
-    // 仮の検索動作
-    document.getElementById("recipeForm").addEventListener("submit", function(e) {
+  // ---------- 冷蔵庫データ ----------
+  function getFridgeItems() {
+    try { return JSON.parse(localStorage.getItem("fridgeItems")) || []; }
+    catch { return []; }
+  }
+
+  // ---------- レシピカタログ（ダミー） ----------
+  const catalog = [
+    { id:"caprese", title:"トマトとモッツァレラのカプレーゼ",
+      image:"https://picsum.photos/seed/caprese/600/400",
+      url:"recipe_detail.html?id=caprese",
+      ingredients:["トマト","モッツァレラ","バジル","オリーブオイル","塩","こしょう"] },
+    { id:"omelette", title:"ふわとろオムレツ",
+      image:"https://picsum.photos/seed/omelette/600/400",
+      url:"recipe_detail.html?id=omelette",
+      ingredients:["卵","バター","牛乳","塩","こしょう"] },
+    { id:"miso", title:"具だくさん味噌汁",
+      image:"https://picsum.photos/seed/miso/600/400",
+      url:"recipe_detail.html?id=miso",
+      ingredients:["味噌","だし","豆腐","わかめ","長ねぎ"] },
+    { id:"yakitori", title:"ねぎま焼き鳥",
+      image:"https://picsum.photos/seed/yakitori/600/400",
+      url:"recipe_detail.html?id=yakitori",
+      ingredients:["鶏もも肉","長ねぎ","塩"] },
+    { id:"pasta", title:"ツナとトマトの簡単パスタ",
+      image:"https://picsum.photos/seed/pasta/600/400",
+      url:"recipe_detail.html?id=pasta",
+      ingredients:["スパゲッティ","ツナ缶","トマト","にんにく","オリーブオイル","塩"] },
+    { id:"salad", title:"チキンシーザーサラダ",
+      image:"https://picsum.photos/seed/salad/600/400",
+      url:"recipe_detail.html?id=salad",
+      ingredients:["鶏むね肉","レタス","クルトン","粉チーズ","マヨネーズ"] },
+  ];
+
+  // ---------- 同義語ゆる正規化 ----------
+  const aliasMap = { "ねぎ":"長ねぎ", "ネギ":"長ねぎ", "オリーブ油":"オリーブオイル", "胡椒":"こしょう", "醤油":"しょうゆ" };
+  const norm = s => (aliasMap[s] || s).trim().toLowerCase();
+
+  // ---------- 採点 ----------
+  function scoreRecipe(recipe, fridge) {
+    const haveSet = new Set(fridge.map(norm));
+    const need = recipe.ingredients.map(norm);
+    const have = need.filter(x => haveSet.has(x));
+    const missing = need.filter(x => !haveSet.has(x));
+    const ratio = have.length / need.length;
+    return { ...recipe, have, missing, ratio, sortKey:[-(ratio), missing.length, need.length, recipe.title] };
+  }
+
+  // ---------- UI描画 ----------
+  function badgeHTML(r) {
+    if (r.missing?.length === 0) return `<div class="badge ok">全部そろってる</div>`;
+    return `<div class="badgeGroup">
+      <span class="badge good">${r.have.length}/${r.have.length + r.missing.length} そろってる</span>
+      <span class="badge warn">不足: ${r.missing.join("、")}</span>
+    </div>`;
+  }
+  function renderCards(list, container, showBadges=true) {
+    if (!container) return; // ないページでも落ちない
+    if (!list.length) { container.innerHTML = `<p class="muted">該当するレシピが見つからなかった。</p>`; return; }
+    container.innerHTML = list.map(r => `
+      <article class="card" role="listitem">
+        <a href="${r.url}" class="card-link" aria-label="${r.title}">
+          <figure class="card-figure"><img src="${r.image}" alt="${r.title}" loading="lazy"></figure>
+          <div class="card-body">
+            <h3 class="card-title">${r.title}</h3>
+            ${showBadges ? badgeHTML(r) : ""}
+          </div>
+        </a>
+      </article>
+    `).join("");
+  }
+
+  // ---------- 起動 ----------
+  document.addEventListener("DOMContentLoaded", () => {
+    // ホームへ戻る（ボタンが無いページでもOKに）
+    $("#backBtn")?.addEventListener("click", () => { window.location.href = "home.html"; });
+
+    // おすすめ（suggestGrid があるページだけ描画）
+    const grid = $("#suggestGrid");
+    if (grid) {
+      const fridge = getFridgeItems();
+      const scored = catalog.map(r => scoreRecipe(r, fridge))
+                            .sort((a,b) => a.sortKey > b.sortKey ? 1 : -1);
+      renderCards(scored, grid);
+    }
+
+    // 検索（フォームがあるページだけ有効化）
+    $("#recipeForm")?.addEventListener("submit", (e) => {
       e.preventDefault();
-      const ingredient = document.getElementById("ingredientInput").value.trim();
-      const resultArea = document.getElementById("resultArea");
+      const q = $("#ingredientInput")?.value.trim() || "";
+      const area = $("#resultArea");
+      if (!area) return;
 
-      if (ingredient) {
-        resultArea.innerHTML = `<p>「${ingredient}」を使ったレシピを検索中...</p>`;
-      } else {
-        resultArea.innerHTML = `<p style="color:red;">食材を入力してください。</p>`;
-      }
+      if (!q) { area.innerHTML = `<p class="error">食材を入力してください。</p>`; return; }
+
+      const keys = q.split(/[、,]\s*/).filter(Boolean).map(norm);
+      const hit = catalog.filter(r => {
+        const hay = (r.title + " " + r.ingredients.join(" ")).toLowerCase();
+        return keys.every(k => hay.includes(k));
+      });
+
+      const scoredHit = hit.map(r => scoreRecipe(r, getFridgeItems()))
+                           .sort((a,b) => a.sortKey > b.sortKey ? 1 : -1);
+
+      area.innerHTML = `<h3 class="result-title">検索結果</h3><div id="resultGrid" class="card-grid"></div>`;
+      renderCards(scoredHit, $("#resultGrid"));
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
