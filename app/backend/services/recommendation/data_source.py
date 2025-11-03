@@ -1,6 +1,7 @@
 from .data_models import Ingredient, Recipe
 import numpy as np
 from typing import List, Dict 
+from datetime import date, timedelta # ★追加: 日付操作のためにインポート★
 
 # 最終的なレシピ特徴ベクトルの次元定義 (18次元)
 FEATURE_DIMENSIONS = [
@@ -77,14 +78,19 @@ class InventoryManager:
     """データベースから在庫データを取得するクラス"""
     def get_current_inventory(self, user_id: int = 1) -> List[Ingredient]:
         # --- 実際はDBのinventory_summary_viewを参照するAPIコールなど ---
+
+        TODAY = date.today()
         
         # サンプル在庫データ
         return [
-            Ingredient(name='豚肉', quantity=400.0),    
-            Ingredient(name='玉ねぎ', quantity=150.0),   
-            Ingredient(name='じゃがいも', quantity=1000.0),
-            Ingredient(name='かぼちゃ', quantity=2000.0), 
-            Ingredient(name='エビ', quantity=50.0),      
-            Ingredient(name='豆腐', quantity=300.0),
-            Ingredient(name='豚ひき肉', quantity=400.0), 
+            Ingredient(name='豚肉', quantity=400.0, expiration_date=TODAY + timedelta(days=2)), 
+            Ingredient(name='玉ねぎ', quantity=150.0, expiration_date=TODAY + timedelta(days=15)), 
+            Ingredient(name='じゃがいも', quantity=1000.0, expiration_date=TODAY + timedelta(days=30)),
+            Ingredient(name='かぼちゃ', quantity=2000.0, expiration_date=TODAY + timedelta(days=1)), 
+            Ingredient(name='エビ', quantity=50.0, expiration_date=TODAY + timedelta(days=10)), 
+            Ingredient(name='豆腐', quantity=300.0, expiration_date=None), 
+            Ingredient(name='豚ひき肉', quantity=400.0, expiration_date=TODAY + timedelta(days=4)), 
+            Ingredient(name='レタス', quantity=500.0, expiration_date=TODAY + timedelta(days=2)), 
+            Ingredient(name='合いびき肉', quantity=500.0, expiration_date=TODAY + timedelta(days=7)),
+            Ingredient(name='キャベツ', quantity=500.0, expiration_date=TODAY + timedelta(days=5)),
         ]

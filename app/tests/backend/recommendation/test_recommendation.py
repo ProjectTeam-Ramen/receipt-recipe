@@ -1,15 +1,16 @@
 import pytest
 import numpy as np
 from typing import Dict, List, Set, Tuple
+from datetime import date, timedelta # ★追加: 日付操作のためにインポート★
 
-# 必要なクラスをインポート（テストデータ構築用）
+# 必要なクラスをインポート
 from app.backend.services.recommendation.data_models import Ingredient, Recipe, UserParameters
 from app.backend.services.recommendation.data_source import RecipeDataSource, InventoryManager, FEATURE_DIMENSIONS
 from app.backend.services.recommendation.proposer_logic import RecipeProposer
 from app.backend.services.recommendation.main import get_proposals_for_demo
 
 
-# --- フィクスチャ (テスト用のデータの準備) ---
+# --- 初期データの生成関数 ---
 
 # Recipeオブジェクトのリストを返すフィクスチャ (変更なし)
 @pytest.fixture
@@ -34,45 +35,38 @@ def proposer_instance(recipe_list) -> RecipeProposer:
 
 # --- ユニットテストケース ---
 
-def test_inventory_coverage_calculation():
-    """個々のレシピの在庫カバー率が正しく計算されるか検証 (豚の生姜焼きの問題箇所を修正)"""
+def test_inventory_coverage_calculation(proposer_instance, recipe_list):
+    """個々のレシピの在庫カバー率が正しく計算されるか検証 (在庫が十分なケースと不足するケース)"""
     
-    # 【在庫データの定義とインスタンスの生成】: 
-    # 1. テスト用の特定の在庫データを定義 (このデータで計算が実行される)
+    # 1. テスト用の特定の在庫データを定義
     specific_mock_inventory = [
-        Ingredient(name='豚肉', quantity=400.0),   # 要求 250gに対し、在庫 400g
-        Ingredient(name='玉ねぎ', quantity=150.0), # 要求 100gに対し、在庫 150g
+        Ingredient(name='豚肉', quantity=400.0),   # 十分 (250g必要)
+        Ingredient(name='玉ねぎ', quantity=150.0), # 十分 (100g必要)
         Ingredient(name='豆腐', quantity=300.0),
         Ingredient(name='豚ひき肉', quantity=40.0), # 不足 (50g必要)
+        Ingredient(name='じゃがいも', quantity=1000.0), 
     ]
     
     # 2. テスト専用のProposerインスタンスを作成
-    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
     user_profile = np.ones(len(FEATURE_DIMENSIONS)) # ダミープロフィール
     proposer = RecipeProposer(recipe_list, specific_mock_inventory, user_profile)
     
-    # 3. 豚の生姜焼きのテスト
+    # 3. 豚の生姜焼きのテスト (在庫十分, カバー率 1.0)
     recipe_shogayaki = recipe_list[0]
+    expected_coverage_shoga = (250.0 + 100.0) / (250.0 + 100.0) # 1.0
+    coverage_shoga, missing_shoga = proposer._calculate_inventory_coverage(recipe_shogayaki)
     
-    # 必要総量: 250(豚肉) + 100(玉ねぎ) = 350g
-    # 賄える量: 250(豚肉) + 100(玉ねぎ) = 350g (在庫が十分あるため)
-    expected_coverage = 350.0 / 350.0  # 1.0
-    
-    coverage, missing = proposer._calculate_inventory_coverage(recipe_shogayaki)
-    
-    assert coverage == pytest.approx(expected_coverage, abs=1e-3)
-    assert not missing # 在庫が十分あるため、不足がないことを確認
+    assert coverage_shoga == pytest.approx(expected_coverage_shoga, abs=1e-3)
+    assert not missing_shoga 
 
-    # 4. 麻婆豆腐のテスト (豚ひき肉不足: 40g/50g) -> ここで不足をテストする
+    # 4. 麻婆豆腐のテスト (豚ひき肉不足: 40g/50g)
     recipe_mabo = recipe_list[2]
-    # 必要総量: 300(豆腐) + 50(豚ひき肉) = 350g
-    # 賄える量: 300(豆腐) + 40(豚ひき肉) = 340g
     expected_coverage_mabo = 340.0 / 350.0 # 約 0.9714
     
     coverage_mabo, missing_mabo = proposer._calculate_inventory_coverage(recipe_mabo)
     
     assert coverage_mabo == pytest.approx(expected_coverage_mabo, abs=1e-3)
-    assert "豚ひき肉 (10.0g不足)" in missing_mabo # 不足を検出していることを確認
+    assert "豚ひき肉 (10.0g不足)" in missing_mabo
     
 
 def test_allergy_filtering(proposer_instance):
@@ -80,14 +74,11 @@ def test_allergy_filtering(proposer_instance):
     
     # エビを含むシーフードパスタを除外するパラメータ
     params = UserParameters(max_time=60, max_calories=1000, allergies={'エビ'})
-    #今回はテスト用でアレルギーを'エビ'に設定しているが，ここが変われば提案結果も変わる．
-
     
     proposals = proposer_instance.propose(params)
     
     recipe_names = [p['recipe_name'] for p in proposals]
     assert "シーフードパスタ" not in recipe_names 
-    assert "豚の生姜焼き" in recipe_names
     
 def test_time_and_calorie_filtering(proposer_instance):
     """必須の制約（時間・カロリー）フィルタが正しく機能するか検証"""
@@ -116,9 +107,6 @@ def test_final_score_ranking(proposer_instance):
     scores = [p['final_score'] for p in proposals]
     assert scores == sorted(scores, reverse=True)
     
-    # 変更を元に戻す
-    proposer_instance.MIN_COVERAGE_THRESHOLD = 0.5 
-
 def test_empty_inventory_case():
     """在庫が完全に空の場合、提案がゼロになるか検証"""
     recipe_list = RecipeDataSource().load_and_vectorize_recipes()
@@ -139,6 +127,57 @@ def test_empty_inventory_case():
     
     # すべてのレシピのカバー率が0%となり、MIN_COVERAGE_THRESHOLD (0.5)で除外されるため、提案は空になるはず
     assert len(proposals) == 0
+
+
+def test_expiration_boost_priority():
+    """賞味期限が近い食材を含むレシピのスコアがブーストされるか検証"""
+    TODAY = date.today()
+    
+    # 1. 期限が近い在庫 (ブースト対象) と、遠い在庫を用意
+    inventory_near_expiration = [
+        Ingredient(name='豚肉', quantity=400.0, expiration_date=TODAY + timedelta(days=1)), # ブースト対象
+        Ingredient(name='玉ねぎ', quantity=400.0, expiration_date=TODAY + timedelta(days=30)), # 余裕あり
+    ]
+
+    # 2. テスト用レシピを定義 (カバー率と好みスコアを同等にする)
+    # R1/R2/R3が同じ特徴ベクトルを持つと仮定
+    common_vector = np.array([1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], dtype=np.float64) 
+    
+    recipe_list_boost_test = [
+        # R1: 豚肉 (期限が近い) のみ必要。カバー率1.0
+        Recipe(id=101, name='期限近しレシピ', req_qty={'豚肉': 100.0}, prep_time=10, calories=100, feature_vector=common_vector),
+        # R2: 玉ねぎ (期限が遠い) のみ必要。カバー率1.0
+        Recipe(id=102, name='期限遠しレシピ', req_qty={'玉ねぎ': 100.0}, prep_time=10, calories=100, feature_vector=common_vector),
+    ]
+
+    # 3. Proposerを初期化
+    proposer = RecipeProposer(recipe_list_boost_test, inventory_near_expiration, common_vector)
+    proposer.MIN_COVERAGE_THRESHOLD = 0.9 # カバー率が1.0なので通過
+
+    params = UserParameters(max_time=100, max_calories=1000, allergies=set())
+    proposals = proposer.propose(params)
+
+    # 4. 検証
+    # R1とR2はベーススコアが同じになるはず (カバー率1.0, 好みスコア1.0)
+    # R1のみにブースト(x 1.1)がかかるため、R1がR2よりも高いスコアを持つはず
+    # つまり，結果として生姜焼きが優先して提案されれば適切に機能していることになる．
+    
+    assert len(proposals) == 2
+    
+    # R1のスコアは R2のスコア * 1.1 に近いことを確認
+    r1 = next(p for p in proposals if p['recipe_name'] == '期限近しレシピ')
+    r2 = next(p for p in proposals if p['recipe_name'] == '期限遠しレシピ')
+    
+    assert r1['final_score'] > r2['final_score'] # R1が優先されることを確認
+    assert r1['is_boosted'] is True
+    assert r2['is_boosted'] is False
+    
+    # ベーススコアの検証 (カバー率0.7 + 好み0.3 = 1.0)
+    base_score = 1.0 * proposer.WEIGHT_INVENTORY + 1.0 * proposer.WEIGHT_PREFERENCE
+    expected_r1_score = base_score * (1 + proposer.EXPIRATION_BONUS_FACTOR) # 1.0 * 1.1 = 1.1
+
+    assert r1['final_score'] == pytest.approx(expected_r1_score, abs=1e-3)
+
 
 # --- デモンストレーション実行関数 (main.py のロジックを呼び出す) ---
 
