@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 from typing import Dict, List, Set, Tuple
 
-# 必要なクラスをインポート
+# 必要なクラスをインポート（テストデータ構築用）
 from app.backend.services.recommendation.data_models import Ingredient, Recipe, UserParameters
 from app.backend.services.recommendation.data_source import RecipeDataSource, InventoryManager, FEATURE_DIMENSIONS
 from app.backend.services.recommendation.proposer_logic import RecipeProposer
@@ -34,41 +34,36 @@ def proposer_instance(recipe_list) -> RecipeProposer:
 
 # --- ユニットテストケース ---
 
-def test_inventory_coverage_calculation(proposer_instance, recipe_list):
+def test_inventory_coverage_calculation():
     """個々のレシピの在庫カバー率が正しく計算されるか検証 (豚の生姜焼きの問題箇所を修正)"""
     
     # 【在庫データの定義とインスタンスの生成】: 
-    #   テストに必要な特定の在庫状況を再現するため、ここでInventoryManagerのデータとは異なる
-    #   特定の在庫データを持つ新しいProposerインスタンスを生成する。
-    
-    # 1. テスト用の特定の在庫データを定義
+    # 1. テスト用の特定の在庫データを定義 (このデータで計算が実行される)
     specific_mock_inventory = [
-        Ingredient(name='豚肉', quantity=400.0),    
-            Ingredient(name='玉ねぎ', quantity=150.0),   
-            Ingredient(name='じゃがいも', quantity=1000.0),
-            Ingredient(name='かぼちゃ', quantity=2000.0), 
-            Ingredient(name='エビ', quantity=50.0),      
-            Ingredient(name='豆腐', quantity=300.0),
-            Ingredient(name='豚ひき肉', quantity=400.0),
+        Ingredient(name='豚肉', quantity=400.0),   # 要求 250gに対し、在庫 400g
+        Ingredient(name='玉ねぎ', quantity=150.0), # 要求 100gに対し、在庫 150g
+        Ingredient(name='豆腐', quantity=300.0),
+        Ingredient(name='豚ひき肉', quantity=40.0), # 不足 (50g必要)
     ]
     
     # 2. テスト専用のProposerインスタンスを作成
-    proposer = RecipeProposer(recipe_list, specific_mock_inventory, proposer_instance.user_profile_vector)
+    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
+    user_profile = np.ones(len(FEATURE_DIMENSIONS)) # ダミープロフィール
+    proposer = RecipeProposer(recipe_list, specific_mock_inventory, user_profile)
     
-    # 3. 豚の生姜焼きのテスト (豚肉不足: 10g/250g)
+    # 3. 豚の生姜焼きのテスト
     recipe_shogayaki = recipe_list[0]
     
     # 必要総量: 250(豚肉) + 100(玉ねぎ) = 350g
-    # 賄える量: 10(豚肉) + 100(玉ねぎ) = 110g
-    expected_coverage = 110.0 / 350.0  # 約 0.314
+    # 賄える量: 250(豚肉) + 100(玉ねぎ) = 350g (在庫が十分あるため)
+    expected_coverage = 350.0 / 350.0  # 1.0
     
     coverage, missing = proposer._calculate_inventory_coverage(recipe_shogayaki)
     
     assert coverage == pytest.approx(expected_coverage, abs=1e-3)
-    assert "豚肉 (240.0g不足)" in missing
-    assert "玉ねぎ" not in missing 
+    assert not missing # 在庫が十分あるため、不足がないことを確認
 
-    # 4. 麻婆豆腐のテスト (豚ひき肉不足: 40g/50g)
+    # 4. 麻婆豆腐のテスト (豚ひき肉不足: 40g/50g) -> ここで不足をテストする
     recipe_mabo = recipe_list[2]
     # 必要総量: 300(豆腐) + 50(豚ひき肉) = 350g
     # 賄える量: 300(豆腐) + 40(豚ひき肉) = 340g
@@ -77,7 +72,7 @@ def test_inventory_coverage_calculation(proposer_instance, recipe_list):
     coverage_mabo, missing_mabo = proposer._calculate_inventory_coverage(recipe_mabo)
     
     assert coverage_mabo == pytest.approx(expected_coverage_mabo, abs=1e-3)
-    assert "豚ひき肉 (10.0g不足)" in missing_mabo
+    assert "豚ひき肉 (10.0g不足)" in missing_mabo # 不足を検出していることを確認
     
 
 def test_allergy_filtering(proposer_instance):
@@ -85,6 +80,8 @@ def test_allergy_filtering(proposer_instance):
     
     # エビを含むシーフードパスタを除外するパラメータ
     params = UserParameters(max_time=60, max_calories=1000, allergies={'エビ'})
+    #今回はテスト用でアレルギーを'エビ'に設定しているが，ここが変われば提案結果も変わる．
+
     
     proposals = proposer_instance.propose(params)
     
@@ -129,7 +126,11 @@ def test_empty_inventory_case():
     # 在庫ゼロのリスト
     empty_inventory = []
     
-    proposer = RecipeProposer(recipe_list, empty_inventory, np.ones(len(FEATURE_DIMENSIONS)))
+    # ダミーの好みベクトル (np.onesを使用)
+    dummy_profile = np.ones(len(FEATURE_DIMENSIONS)) 
+    
+    # 在庫ゼロのProposerインスタンスを作成
+    proposer = RecipeProposer(recipe_list, empty_inventory, dummy_profile)
     
     # アレルギー、時間制限なし
     params = UserParameters(max_time=999, max_calories=9999, allergies=set())
@@ -163,7 +164,7 @@ def test_demonstration_run():
         print(f"  > 最終スコア: {p['final_score']:.4f}")
         print(f"  > 内訳: (カバー率: {p['coverage_score']:.2f} x 0.7) + (好みスコア: {p['preference_score']:.2f} x 0.3)")
         if p['missing_items']:
-            print(f"  ⚠️ 不足食材: {', '.join(p['missing_items'])}")
+            print(f"   不足食材: {', '.join(p['missing_items'])}")
         else:
-            print("  ✅ 食材は全て揃っています！")
+            print("   食材は全て揃っています！")
     print("=" * 60)

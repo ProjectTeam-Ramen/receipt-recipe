@@ -90,6 +90,7 @@ class RecipeProposer:
             final_score = (coverage_score * self.WEIGHT_INVENTORY) + (preference_score * self.WEIGHT_PREFERENCE)
             
             final_proposals.append({
+                'recipe_id': recipe.id,
                 'recipe_name': recipe.name,
                 'final_score': final_score,
                 'coverage_score': coverage_score,
