@@ -1,7 +1,7 @@
 from .data_models import Ingredient, Recipe
 import numpy as np
 from typing import List, Dict 
-from datetime import date, timedelta # ★追加: 日付操作のためにインポート★
+from datetime import date, timedelta # 追加: 日付操作のためにインポート
 
 # 最終的なレシピ特徴ベクトルの次元定義 (18次元)
 FEATURE_DIMENSIONS = [

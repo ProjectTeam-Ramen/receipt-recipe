@@ -1,13 +1,13 @@
 from .data_models import Recipe, Ingredient, UserParameters
 from typing import List, Dict, Set, Tuple, Union
 import numpy as np
-from datetime import date, timedelta # ★追加: 日付操作のためにインポート★
+from datetime import date, timedelta # 追加: 日付操作のためにインポート
 
 class RecipeProposer:
     def __init__(self, all_recipes: List[Recipe], user_inventory: List[Ingredient], user_profile_vector: np.ndarray):
         self.all_recipes = all_recipes
         
-        # ★修正: 在庫を辞書に変換 {食材名: (残量, 期限)} のタプルを持たせる ★
+        # 修正: 在庫を辞書に変換 {食材名: (残量, 期限)} のタプルを持たせる 
         self.inventory_dict = {
             ing.name: (ing.quantity, ing.expiration_date) 
             for ing in user_inventory
@@ -22,7 +22,7 @@ class RecipeProposer:
         self.EXPIRATION_BOOST_DAYS = 3 
         self.EXPIRATION_BONUS_FACTOR = 0.1 # スコアに10%のボーナス
 
-        # ★修正: 調味料リストを__init__で定義し、self.SEASONING_NAMESとしてクラス全体で利用可能にする★
+        # 修正: 調味料リストを__init__で定義し、self.SEASONING_NAMESとしてクラス全体で利用可能にする
         self.SEASONING_NAMES = {'醤油', '塩', '砂糖', 'みりん', '酒', '料理酒', '胡椒', 'ごま油', 'オリーブオイル', '酢', '味噌', 'だし', '鶏ガラスープの素', '片栗粉', '小麦粉', '豆板醤'}
 
 
