@@ -1,226 +1,130 @@
-// ==============================
-// レシピ検索：雛形（データ未完成でも動く）
-// ==============================
-
 document.addEventListener("DOMContentLoaded", () => {
-  // ====== 1) 画面要素 ======
-  const backBtn     = document.getElementById("backBtn");
-  const listEl      = document.getElementById("list");
-  const emptyEl     = document.getElementById("empty");
-  const qEl         = document.getElementById("q");
+  // 要素
+  const backBtn = document.getElementById("backBtn");
+  const grid = document.getElementById("suggestGrid");
+  const empty = document.getElementById("empty");
   const canMakeOnly = document.getElementById("canMakeOnly");
-  const maxMissing  = document.getElementById("maxMissing");
+  const maxMissing = document.getElementById("maxMissing");
   const maxMissingVal = document.getElementById("maxMissingVal");
-  const sortByEl    = document.getElementById("sortBy");
-  const excludeEl   = document.getElementById("exclude");
-  const pantryInfo  = document.getElementById("pantryInfo");
+  const sortByEl = document.getElementById("sortBy");
+  const pantryInfo = document.getElementById("pantryInfo");
 
-  backBtn.addEventListener("click", () => {
-    window.location.href = "home.html";
-  });
-
-  maxMissing.addEventListener("input", () => {
+  if (backBtn) backBtn.addEventListener("click", () => (location.href = "home.html"));
+  if (maxMissing) maxMissing.addEventListener("input", () => {
     maxMissingVal.textContent = maxMissing.value;
     render();
   });
+  [canMakeOnly, sortByEl].forEach(el => el && el.addEventListener("change", render));
 
-  [qEl, canMakeOnly, sortByEl, excludeEl].forEach(el => {
-    el.addEventListener("input", render);
-    el.addEventListener("change", render);
-  });
-
-  // ====== 2) モックデータ（あとで差し替え） ======
-  // 冷蔵庫データは localStorage("fridgeItems") を優先。無ければ仮データ。
-  const pantry = readPantry();
-  // レシピは仮配列。あとでデータセットに置き換えOK。
-  const RECIPES = [
-    {
-      id: "r1",
-      title: "シンプル野菜スープ",
-      ingredients: ["たまねぎ", "にんじん", "じゃがいも", "塩", "こしょう", "水"],
-      optionals: ["コンソメ", "ベーコン"]
-    },
-    {
-      id: "r2",
-      title: "親子丼",
-      ingredients: ["鶏もも肉", "たまご", "たまねぎ", "だし", "しょうゆ", "みりん", "砂糖", "ごはん"],
-      optionals: ["三つ葉"]
-    },
-    {
-      id: "r3",
-      title: "和風パスタ",
-      ingredients: ["パスタ", "しめじ", "ベーコン", "にんにく", "オリーブオイル", "しょうゆ"],
-      optionals: ["刻みのり", "バター"]
-    },
-    {
-      id: "r4",
-      title: "カレー（簡易）",
-      ingredients: ["カレールウ", "たまねぎ", "にんじん", "じゃがいも", "水"],
-      optionals: ["豚こま", "にんにく"]
-    },
-  ];
-
-  // 常備品：不足計算からは外す（※好みに応じて調整してね）
-  const STAPLES = new Set(["塩", "こしょう", "砂糖", "しょうゆ", "みりん", "酒", "水", "油", "オリーブオイル", "だし"]);
-
-  // 表記ゆれ対策（最低限）
-  const SYNONYMS = {
-    "玉ねぎ": "たまねぎ",
-    "長ネギ": "長ねぎ",
-    "ねぎ": "長ねぎ",
-    "ニンジン": "にんじん",
-    "ジャガイモ": "じゃがいも",
-    "卵": "たまご",
-    "にく": "肉",
-    // 必要になったら増やす
-  };
-
-  const normalize = (s) =>
-    s.trim().toLowerCase()
-      .replace(/\s+/g, " ")
-      .replace(/（.*?）|\(.*?\)/g, "");
-
-  const normName = (s) => SYNONYMS[normalize(s)] ?? normalize(s);
-
-  function readPantry() {
-    // localStorageに "fridgeItems" があればそれを使う（["たまねぎ","にんじん",...] の配列想定）
+  // 手持ち食材（LocalStorageが無ければ仮の配列）
+  function getFridgeItems() {
     try {
       const raw = localStorage.getItem("fridgeItems");
-      if (raw) {
-        const arr = JSON.parse(raw);
-        if (Array.isArray(arr)) return arr;
-      }
-    } catch (_) {}
-    // 無ければ仮の手持ち（あとで自由に差し替え）
-    return ["たまねぎ", "にんじん", "じゃがいも", "ベーコン", "しょうゆ", "ごはん", "オリーブオイル"];
+      const arr = raw ? JSON.parse(raw) : null;
+      return Array.isArray(arr) ? arr : ["たまねぎ","にんじん","じゃがいも","しょうゆ","オリーブオイル"];
+    } catch {
+      return ["たまねぎ","にんじん","じゃがいも","しょうゆ","オリーブオイル"];
+    }
   }
 
-  // ====== 3) スコア計算 ======
-  function scoreRecipe(recipe, pantryArr) {
-    const have = new Set(pantryArr.map(normName));
-    const req  = recipe.ingredients.map(normName);
-    const opt  = (recipe.optionals ?? []).map(normName);
+  // レシピ（ダミー）
+  const catalog = [
+    { id:"caprese", title:"トマトとモッツァレラのカプレーゼ", image:"https://picsum.photos/seed/caprese/600/400", url:"#",
+      ingredients:["トマト","モッツァレラ","バジル","オリーブオイル","塩","こしょう"] },
+    { id:"omelette", title:"ふわとろオムレツ", image:"https://picsum.photos/seed/omelette/600/400", url:"#",
+      ingredients:["卵","バター","牛乳","塩","こしょう"] },
+    { id:"miso", title:"具だくさん味噌汁", image:"https://picsum.photos/seed/miso/600/400", url:"#",
+      ingredients:["味噌","だし","豆腐","わかめ","長ねぎ"] },
+    { id:"yakitori", title:"ねぎま焼き鳥", image:"https://picsum.photos/seed/yakitori/600/400", url:"#",
+      ingredients:["鶏もも肉","長ねぎ","塩"] },
+    { id:"pasta", title:"ツナとトマトの簡単パスタ", image:"https://picsum.photos/seed/pasta/600/400", url:"#",
+      ingredients:["スパゲッティ","ツナ缶","トマト","にんにく","オリーブオイル","塩"] },
+    { id:"salad", title:"チキンシーザーサラダ", image:"https://picsum.photos/seed/salad/600/400", url:"#",
+      ingredients:["鶏むね肉","レタス","クルトン","粉チーズ","マヨネーズ"] }
+  ];
 
-    const missing = req.filter(x => !have.has(x) && !STAPLES.has(x));
-    const covered = req.length - missing.length;
-    const coverage = req.length === 0 ? 1 : covered / req.length;
+  // 表記ゆれ（最低限）
+  const aliasMap = { "ねぎ":"長ねぎ", "ネギ":"長ねぎ", "オリーブ油":"オリーブオイル", "胡椒":"こしょう", "醤油":"しょうゆ" };
+  const norm = s => (aliasMap[s] || s).trim().toLowerCase();
 
-    // オプションを持っていたら少し加点、足りない数は少し減点（雛形なので単純に）
-    const optHit = opt.filter(x => have.has(x)).length;
-    const score  = coverage + 0.05 * optHit - 0.01 * missing.length;
+  // 常備品（不足判定から外す）
+  const STAPLES = new Set(["塩","こしょう","砂糖","しょうゆ","みりん","酒","水","油","オリーブオイル","だし"]);
+
+  // 採点
+  function scoreRecipe(recipe, fridge) {
+    const haveSet = new Set(fridge.map(norm));
+    const need = recipe.ingredients.map(norm);
+    const missing = need.filter(x => !haveSet.has(x) && !STAPLES.has(x));
+    const haveCount = need.length - missing.length;
+    const coverage = need.length ? haveCount / need.length : 1;
+    const score = coverage - 0.01 * missing.length; // シンプル指標
 
     return {
-      score,
-      coverage,
+      ...recipe,
       missing,
-      haveOptional: optHit,
+      haveCount,
+      needCount: need.length,
+      coverage,
+      score,
       canMake: missing.length === 0
     };
   }
 
-  // ====== 4) フィルタ＆ソート ======
-  function applyFilter(recipes) {
-    const q = normalize(qEl.value || "");
-    const excludes = (excludeEl.value || "")
-      .split(",")
-      .map(s => s.trim())
-      .filter(Boolean)
-      .map(normName);
-
-    const pantryNorm = pantry.map(normName);
-
-    // まずスコアを付ける
-    let rows = recipes.map(r => {
-      const s = scoreRecipe(r, pantryNorm);
-      return { recipe: r, ...s };
-    });
-
-    // キーワード（タイトル or 食材）マッチ
-    if (q) {
-      rows = rows.filter(({ recipe }) => {
-        const t = normalize(recipe.title);
-        const ing = recipe.ingredients.map(normalize).join(" ");
-        return t.includes(q) || ing.includes(q);
-      });
+  function renderCards(list) {
+    if (!grid) return;
+    if (!list.length) {
+      empty.style.display = "";
+      grid.innerHTML = "";
+      return;
     }
+    empty.style.display = "none";
+    grid.innerHTML = list.map(r => `
+      <article class="card" role="listitem">
+        <a href="${r.url}" class="card-link">
+          <figure class="card-figure"><img src="${r.image}" alt="${r.title}" loading="lazy"></figure>
+          <div class="card-body">
+            <h3 class="card-title">${r.title}</h3>
+            ${
+              r.canMake
+                ? `<span class="badge ok">作れる</span>`
+                : `<div class="badgeGroup">
+                     <span class="badge">${r.haveCount}/${r.needCount} そろってる</span>
+                     <span class="badge warn">不足: ${r.missing.join("、")}</span>
+                   </div>`
+            }
+          </div>
+        </a>
+      </article>
+    `).join("");
+  }
 
-    // 除外食材が含まれているレシピは落とす
-    if (excludes.length) {
-      rows = rows.filter(({ recipe }) => {
-        const all = recipe.ingredients.concat(recipe.optionals ?? []).map(normName);
-        return !excludes.some(ex => all.includes(ex));
-      });
-    }
+  function render() {
+    const pantry = getFridgeItems();
+    pantryInfo.textContent = `手持ち: ${pantry.length} 点（localStorage参照。未設定なら仮データ）`;
 
-    // 「作れるだけ」
-    if (canMakeOnly.checked) {
-      rows = rows.filter(r => r.canMake);
-    }
+    // 採点 → 絞り込み → ソート
+    let rows = catalog.map(r => scoreRecipe(r, pantry));
 
-    // 「不足最大数」
+    // 作れるだけ
+    if (canMakeOnly.checked) rows = rows.filter(r => r.canMake);
+
+    // 不足最大数
     const maxM = Number(maxMissing.value);
     rows = rows.filter(r => r.missing.length <= maxM);
 
-    // 並べ替え
+    // ソート
     const key = sortByEl.value;
     rows.sort((a, b) => {
       if (key === "score")    return b.score - a.score;
       if (key === "coverage") return b.coverage - a.coverage;
       if (key === "missing")  return a.missing.length - b.missing.length;
-      if (key === "title")    return a.recipe.title.localeCompare(b.recipe.title, "ja");
+      if (key === "title")    return a.title.localeCompare(b.title, "ja");
       return 0;
     });
 
-    return rows;
+    renderCards(rows);
   }
 
-  // ====== 5) 表示 ======
-  function render() {
-    // パントリー情報
-    pantryInfo.innerHTML = `現在の手持ち食材（推定）: <span class="pill">${pantry.length} 点</span>　<span class="small">（localStorageの "fridgeItems" を参照。無ければ仮データ）</span>`;
-
-    const rows = applyFilter(RECIPES);
-
-    listEl.innerHTML = "";
-    if (!rows.length) {
-      emptyEl.style.display = "";
-      return;
-    }
-    emptyEl.style.display = "none";
-
-    for (const row of rows) {
-      const { recipe, score, coverage, missing, haveOptional, canMake } = row;
-
-      const badge =
-        canMake ? `<span class="badge ok">作れる</span>` :
-        missing.length === 1 ? `<span class="badge warn">あと1個</span>` :
-        `<span class="badge danger">不足 ${missing.length} 個</span>`;
-
-      const optBadge = haveOptional > 0 ? `<span class="badge">オプション ${haveOptional} あり</span>` : "";
-
-      const missingList = missing.length
-        ? `<div class="small muted">不足: <ul class="list">${missing.map(x => `<li>${x}</li>`).join("")}</ul></div>`
-        : "";
-
-      const el = document.createElement("article");
-      el.className = "card";
-      el.innerHTML = `
-        <div class="row">
-          <h3 class="grow">${recipe.title}</h3>
-          <div class="badges">
-            ${badge}
-            ${optBadge}
-            <span class="badge">カバー率 ${(coverage*100).toFixed(0)}%</span>
-            <span class="badge">スコア ${score.toFixed(2)}</span>
-          </div>
-        </div>
-        <div class="small muted">材料: ${recipe.ingredients.join(" / ")}</div>
-        ${missingList}
-      `;
-      listEl.appendChild(el);
-    }
-  }
-
-  // 初回表示
+  // 初回
   render();
 });
