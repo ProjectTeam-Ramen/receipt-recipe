@@ -1,41 +1,40 @@
-// ==============================
-// 冷蔵庫：食材一覧ページ用スクリプト
-// ==============================
-document.addEventListener("DOMContentLoaded", () => {
-  const backBtn = document.getElementById("backBtn");
-  const checkList = document.getElementById("checkList");
+document.addEventListener("DOMContentLoaded", async () => {
+  const foodList = document.getElementById("foodList");
 
-  // 冷蔵庫ホームに戻る
-  backBtn.addEventListener("click", () => {
-    window.location.href = "fridge-home.html";
-  });
+  try {
+    // ★ ログイン中ユーザー（仮設定）
+    const userId = 1;
 
-  // 仮データ（name: 食材名, amount: g単位）
-  let ingredients = [
-    { name: "卵", amount: 300 },
-    { name: "牛乳", amount: 1000 },
-    { name: "トマト", amount: 500 },
-    { name: "レタス", amount: 250 }
-  ];
+    // APIからデータ取得
+    const response = await fetch(`http://localhost:3001/api/user-foods?user_id=${userId}`);
 
-  // 食材一覧を描画
-  function renderList() {
-    if (ingredients.length === 0) {
-      checkList.innerHTML = `<p>現在、冷蔵庫に登録されている食材はありません。</p>`;
+    if (!response.ok) {
+      throw new Error(`サーバーエラー: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // データが空の場合
+    if (!data || data.length === 0) {
+      foodList.innerHTML = `<tr><td colspan="5">冷蔵庫に食材が登録されていません。</td></tr>`;
       return;
     }
 
-    checkList.innerHTML = ingredients
+    // テーブル出力
+    foodList.innerHTML = data
       .map(
         (item) => `
-        <div class="check-item">
-          <span class="item-name">${item.name}</span>
-          <span class="item-amount">${item.amount}g</span>
-        </div>`
+        <tr>
+          <td>${item.food_name}</td>
+          <td>${item.quantity}</td>
+          <td>${item.purchase_date || "-"}</td>
+          <td>${item.expiration_date || "-"}</td>
+        </tr>`
       )
       .join("");
+  } catch (error) {
+    console.error("データ取得エラー:", error);
+    foodList.innerHTML = `<tr><td colspan="5">データの取得に失敗しました。</td></tr>`;
   }
-
-  renderList();
-});
-
+}
+);

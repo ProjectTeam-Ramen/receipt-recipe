@@ -403,34 +403,91 @@ footer {
 }
 
 /* ==============================
-   冷蔵庫：食材一覧ページ
-============================== */
-.fridge-check-main {
-  text-align: center;
+   冷蔵庫一覧ページ専用スタイル
+   ============================== */
+
+.fridge-check-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
 }
-.fridge-check-main h2 {
+
+.fridge-check-container h2 {
   color: #0078d7;
-  margin-bottom: 1.5em;
+  text-align: center;
+  margin-bottom: 25px;
 }
-.check-list {
-  max-width: 500px;
-  margin: 0 auto;
+
+/* テーブル全体 */
+.fridge-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.fridge-table th,
+.fridge-table td {
+  padding: 12px 15px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-.check-item {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 10px 15px;
-  margin-bottom: 10px;
+
+.fridge-table th {
+  background-color: #0078d7;
+  color: white;
+  font-weight: bold;
+}
+
+.fridge-table tr:hover {
+  background-color: #f1f7ff;
+  transition: 0.2s;
+}
+
+/* データがないとき */
+.fridge-table td[colspan="5"] {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* ボタンエリア */
+.fridge-btn-area {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 500;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
 }
-.item-amount {
-  text-align: right;
+
+/* ボタン */
+.fridge-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fridge-btn.refresh {
+  background-color: #0078d7;
+  color: white;
+}
+
+.fridge-btn.refresh:hover {
+  background-color: #005fa3;
+}
+
+.fridge-btn.back {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.fridge-btn.back:hover {
+  background-color: #ccc;
 }
 
 /* ==============================
