@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userId = 1;
 
     // APIからデータ取得
-    const response = await fetch(`http://localhost:3001/api/user-foods?user_id=${userId}`);
+    const response = await fetch(`http://localhost:5502/api/user-foods?user_id=${userId}`);
 
     if (!response.ok) {
       throw new Error(`サーバーエラー: ${response.status}`);
@@ -36,5 +36,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("データ取得エラー:", error);
     foodList.innerHTML = `<tr><td colspan="5">データの取得に失敗しました。</td></tr>`;
   }
-}
-);
+});
