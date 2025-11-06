@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レシピ検索</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Recipe Search</h1>
+    <button class="logout-btn" id="backBtn">back home</button>
+  </header>
+
+  <main class="recipe-main">
+    <h2>食材からレシピを検索</h2>
+    <form id="recipeForm" class="recipe-form">
+      <input type="text" id="ingredientInput" placeholder="例：トマト、卵など" required>
+      <button type="submit" class="search-btn">検索</button>
+    </form>
+
+    <div id="resultArea" class="recipe-results">
+      <!-- 検索結果がここに表示されます -->
+    </div>
+  </main>
+
+  <script>
+    // ホーム画面に戻る
+    document.getElementById("backBtn").addEventListener("click", function() {
+      window.location.href = "home.html";
+    });
+
+    // 仮の検索動作
+    document.getElementById("recipeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const ingredient = document.getElementById("ingredientInput").value.trim();
+      const resultArea = document.getElementById("resultArea");
+
+      if (ingredient) {
+        resultArea.innerHTML = `<p>「${ingredient}」を使ったレシピを検索中...</p>`;
+      } else {
+        resultArea.innerHTML = `<p style="color:red;">食材を入力してください。</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

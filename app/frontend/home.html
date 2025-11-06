@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホーム画面</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>HOME</h1>
+    <button class="logout-btn" id="logoutBtn">Log out</button>
+  </header>
+
+  <main>
+    <h2>Menu</h2>
+
+    <!-- ▼ ボタンを縦に並べる -->
+    <div class="center-container">
+      <div class="menu-buttons">
+        <button class="recipe-btn" id="recipeBtn">レシピ検索</button>
+        <button class="fridge-btn" id="fridgeBtn">冷蔵庫管理メニュー</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // ログアウトボタン押下時の処理
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      window.location.href = "index.html";
+    });
+
+    // レシピ検索ページへ移動
+    document.getElementById("recipeBtn").addEventListener("click", function() {
+      window.location.href = "recipe.html";
+    });
+
+    // 冷蔵庫管理ページへ移動
+    document.getElementById("fridgeBtn").addEventListener("click", function() {
+      window.location.href = "fridge-home.html";
+    });
+  </script>
+</body>
+</html>
