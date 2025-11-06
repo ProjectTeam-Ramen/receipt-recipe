@@ -172,15 +172,26 @@ requests>=2.31.0          # HTTPライブラリ
 
 ### API・Web
 ```toml
-fastapi>=0.100.0                      # Webフレームワーク
-uvicorn[standard]>=0.23.0             # ASGIサーバー
-pydantic>=2.0.0                       # データバリデーション
-pydantic-settings>=2.0.0              # 設定管理
+fastapi>=0.104.0                      # Webフレームワーク
+uvicorn[standard]>=0.24.0             # ASGIサーバー
+pydantic>=2.4.0                       # データバリデーション
 python-multipart>=0.0.6               # マルチパート解析
-python-jose[cryptography]>=3.3.0      # JWT処理
-passlib[bcrypt]>=1.7.4                # パスワードハッシュ
-httpx>=0.24.0                         # 非同期HTTPクライアント
+python-jose[cryptography]>=3.3.0      # JWT処理（JWTトークン生成・検証）
+passlib[bcrypt]>=1.7.4                # パスワードハッシュ化（bcrypt暗号化）
+httpx>=0.25.0                         # 非同期HTTPクライアント
 ```
+
+#### 認証ライブラリの詳細
+
+**python-jose[cryptography]**
+- JWTトークンの生成と検証を行うライブラリ
+- `[cryptography]`エクストラにより、より安全な暗号化アルゴリズム（RS256, ES256等）をサポート
+- OAuth2、JWT認証の実装に使用
+
+**passlib[bcrypt]**
+- パスワードの安全なハッシュ化を提供
+- `[bcrypt]`エクストラにより、業界標準のbcryptアルゴリズムを使用可能
+- パスワードのソルト化とハッシュ化、検証機能を提供
 
 ### 非同期処理・タスク管理
 ```toml
@@ -613,5 +624,37 @@ watch -n 1 nvidia-smi
 
 ---
 
-**最終更新日**: 2025年10月16日  
-**バージョン**: 1.0.0
+**最終更新日**: 2025年11月6日  
+**バージョン**: 1.1.0  
+**変更内容**: 認証ライブラリ追加（python-jose[cryptography]>=3.3.0, passlib[bcrypt]>=1.7.4）、API・Webパッケージのバージョン更新  
+**更新者**: fmt
+
+---
+
+## 更新履歴
+
+### Version 1.1.0 (2025年11月6日)
+**変更内容:**
+- 認証ライブラリの追加
+  - `python-jose[cryptography]>=3.3.0` - JWT認証機能
+  - `passlib[bcrypt]>=1.7.4` - パスワードハッシュ化機能
+- 認証ライブラリの詳細説明セクションを追加
+- API・Webパッケージのバージョン更新
+  - FastAPI: 0.100.0 → 0.104.0
+  - uvicorn[standard]: 0.23.0 → 0.24.0
+  - pydantic: 2.0.0 → 2.4.0
+  - httpx: 0.24.0 → 0.25.0
+- 不要な`pydantic-settings`の削除
+
+**更新者:** fmt
+
+### Version 1.0.0 (2025年10月16日)
+**変更内容:**
+- 初版作成
+- 開発環境構築手順の完全ドキュメント化
+- システム要件、ベースイメージ、依存関係の詳細記載
+- トラブルシューティングガイドの追加
+- 本番環境デプロイ手順の記載
+
+**更新者:** U+
+
