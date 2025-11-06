@@ -4,18 +4,47 @@ services:
     restart: unless-stopped
     environment:
       PYTHONPATH: /workspace
-      DATABASE_URL: ${DATABASE_URL:-sqlite:///./app.db}
+      DATABASE_URL_USERS: ${DATABASE_URL_USERS:-mysql+pymysql://user:password@db:3306/users_db}
+      DATABASE_URL_FOOD_CATEGORIES: ${DATABASE_URL_FOOD_CATEGORIES:-mysql+pymysql://user:password@db:3306/food_categories_db}
+      DATABASE_URL_FOODS: ${DATABASE_URL_FOODS:-mysql+pymysql://user:password@db:3306/foods_db}
+      DATABASE_URL_USER_FOODS: ${DATABASE_URL_USER_FOODS:-mysql+pymysql://user:password@db:3306/user_foods_db}
+      DATABASE_URL_RECIPES: ${DATABASE_URL_RECIPES:-mysql+pymysql://user:password@db:3306/recipes_db}
+      DATABASE_URL_RECIPE_FOODS: ${DATABASE_URL_RECIPE_FOODS:-mysql+pymysql://user:password@db:3306/recipe_foods_db}
+      DATABASE_URL_RECEIPTS: ${DATABASE_URL_RECEIPTS:-mysql+pymysql://user:password@db:3306/receipts_db}
+      DATABASE_URL_RAW_FOOD_MAPPINGS: ${DATABASE_URL_RAW_FOOD_MAPPINGS:-mysql+pymysql://user:password@db:3306/raw_food_mappings_db}
+      DATABASE_URL_RECEIPT_DETAILS: ${DATABASE_URL_RECEIPT_DETAILS:-mysql+pymysql://user:password@db:3306/receipt_details_db}
       LOG_LEVEL: ${LOG_LEVEL:-info}
-    command: ["python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
-    volumes: []  # 開発用ボリュームマウントを無効化
+    command: [ "python", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000" ]
+    volumes: [] # 開発用ボリュームマウントを無効化
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     networks:
       - default
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_USER: ${MYSQL_USER:-user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
+
 
 networks:
   default:
