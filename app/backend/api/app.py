@@ -21,4 +21,3 @@ def read_items():
 @app.get("/items/{item_id}")
 def read_item(item_id: int):  # 型ヒント(int)で自動的にバリデーション
     return {"item_id": item_id, "description": f"This is item number {item_id}"}
-
