@@ -3,5 +3,21 @@
         "app"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "www.dmgpt.site",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "dbms_class",
+            "database": "db_class",
+            "username": "student"
+        }
+    ]
 }
