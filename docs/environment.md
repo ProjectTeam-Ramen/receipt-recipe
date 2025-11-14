@@ -172,14 +172,24 @@ requests>=2.31.0          # HTTPライブラリ
 
 ### API・Web
 ```toml
-fastapi>=0.100.0                      # Webフレームワーク
-uvicorn[standard]>=0.23.0             # ASGIサーバー
-pydantic>=2.0.0                       # データバリデーション
-pydantic-settings>=2.0.0              # 設定管理
+fastapi>=0.104.0                      # Webフレームワーク
+uvicorn[standard]>=0.24.0             # ASGIサーバー
+sqlalchemy>=2.0.0                     # SQLツールキット/ORM
+aiosqlite>=0.19.0                     # 非同期SQLiteドライバ
+pydantic>=2.4.0                       # データバリデーション
 python-multipart>=0.0.6               # マルチパート解析
-python-jose[cryptography]>=3.3.0      # JWT処理
+pillow>=10.0.0                        # 画像処理ライブラリ
+opencv-python-headless>=4.8.0         # OpenCV（ヘッドレス版）
+numpy>=1.24.0,<2.0.0                  # 数値計算（v1系）
+python-dotenv>=1.0.0                  # 環境変数管理
+easyocr>=1.7.1                        # OCRライブラリ
+matplotlib>=3.7.0                     # グラフ描画
+scikit-image>=0.21.0                  # 画像処理
+scipy>=1.10.0                         # 科学技術計算
+pyyaml>=6.0                           # YAML処理
+python-jose[cryptography]>=3.3.0      # JWT認証
 passlib[bcrypt]>=1.7.4                # パスワードハッシュ
-httpx>=0.24.0                         # 非同期HTTPクライアント
+httpx>=0.25.0                         # 非同期HTTPクライアント
 ```
 
 ### 非同期処理・タスク管理
