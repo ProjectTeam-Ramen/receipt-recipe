@@ -545,3 +545,126 @@ footer {
 .confirm-btn:hover {
   background-color: #005fa3;
 }
+
+/* ==============================
+   レシート読み取りページ追加 CSS
+============================== */
+
+/* 画像プレビュー */
+#preview {
+  width: 60%;
+  max-width: 400px;
+  display: none;
+  margin: 15px auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* OCRボタン */
+#extractBtn {
+  display: none;
+  padding: 10px 20px;
+  margin: 10px auto;
+  background-color: #0078d7;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+#extractBtn:hover {
+  background-color: #005ea6;
+}
+
+/* 読み取り後のフォームエリア */
+#formSection {
+  display: none;
+  width: 90%;
+  max-width: 420px;
+  margin: 25px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+#formSection input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* 登録ボタン */
+#registerBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 17px;
+}
+#registerBtn:hover {
+  background-color: #1d7f34;
+}
+
+/* メッセージ表示 */
+#message {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 15px;
+  color: #333;
+}
+
+/* ▼ レシート読み取りフォーム */
+.receipt-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* ▼ 複数フォームを横並びで表示する */
+#formsContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 15px;
+}
+
+.food-form {
+  min-width: 260px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.food-form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.food-form input {
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* ▼ 登録ボタンの中央配置 */
+.register-wrapper {
+  text-align: center;
+  margin: 30px 0;
+}
+
+
+.back-btn:hover {
+  background-color: #666;
+}
