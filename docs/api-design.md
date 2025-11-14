@@ -1,766 +1,899 @@
 # API設計書
 
 ## 概要
+Receipt-Recipe APIは、レシート画像からテキストを抽出し、食材情報を解析してレシピを推薦するRESTful APIです。
 
-Receipt-Recipe APIは、レシート画像を解析して食材を抽出し、それらの食材を使ったレシピを推薦するRESTful APIです。
+**バージョン**: 1.0.0  
+**ベースURL**: `http://localhost:8000/api/v1`  
+**最終更新日**: 2025年11月6日
 
-## ベースURL
+---
 
-```
-開発環境: http://localhost:8000
-本番環境: https://api.receipt-recipe.com
-```
+## 目次
+1. [認証](#認証)
+2. [エンドポイント一覧](#エンドポイント一覧)
+3. [データモデル](#データモデル)
+4. [エラーレスポンス](#エラーレスポンス)
+5. [レート制限](#レート制限)
+
+---
 
 ## 認証
 
-JWT (JSON Web Token) ベースの認証を使用します。
+### 認証方式
+- JWT (JSON Web Token) ベースの認証を使用
+- アクセストークンの有効期限: 30分
+- リフレッシュトークンの有効期限: 7日
 
-### 認証フロー
-
-1. ユーザー登録またはログインでトークンを取得
-2. 以降のリクエストで `Authorization: Bearer <token>` ヘッダーを付与
+### 認証ヘッダー
+```
+Authorization: Bearer <access_token>
+```
 
 ---
 
 ## エンドポイント一覧
 
-### 1. 認証系
+### 1. 認証関連
 
 #### 1.1 ユーザー登録
-
-```
-POST /api/v1/auth/register
+```http
+POST /auth/register
 ```
 
 **リクエストボディ**
-
 ```json
 {
-  "email": "user@example.com",
-  "password": "securePassword123",
-  "username": "username"
+  "username": "string",
+  "email": "string",
+  "password": "string"
 }
 ```
 
-**レスポンス (201 Created)**
-
+**レスポンス** (201 Created)
 ```json
 {
-  "user_id": "uuid-string",
-  "email": "user@example.com",
-  "username": "username",
-  "created_at": "2025-11-06T10:00:00Z"
-}
-```
-
-**エラーレスポンス**
-
-```json
-{
-  "error": "EMAIL_ALREADY_EXISTS",
-  "message": "このメールアドレスは既に登録されています"
+  "user_id": "integer",
+  "username": "string",
+  "email": "string",
+  "created_at": "datetime"
 }
 ```
 
 #### 1.2 ログイン
-
-```
-POST /api/v1/auth/login
+```http
+POST /auth/login
 ```
 
 **リクエストボディ**
-
 ```json
 {
-  "email": "user@example.com",
-  "password": "securePassword123"
+  "email": "string",
+  "password": "string"
 }
 ```
 
-**レスポンス (200 OK)**
-
+**レスポンス** (200 OK)
 ```json
 {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "token_type": "bearer",
-  "expires_in": 3600,
-  "user": {
-    "user_id": "uuid-string",
-    "email": "user@example.com",
-    "username": "username"
-  }
+  "access_token": "string",
+  "refresh_token": "string",
+  "token_type": "Bearer",
+  "expires_in": 1800
 }
 ```
 
-#### 1.3 トークン更新
-
-```
-POST /api/v1/auth/refresh
-```
-
-**リクエストヘッダー**
-
-```
-Authorization: Bearer <token>
+#### 1.3 トークンリフレッシュ
+```http
+POST /auth/refresh
 ```
 
-**レスポンス (200 OK)**
-
+**リクエストボディ**
 ```json
 {
-  "access_token": "new-token-string",
-  "token_type": "bearer",
-  "expires_in": 3600
+  "refresh_token": "string"
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "access_token": "string",
+  "token_type": "Bearer",
+  "expires_in": 1800
+}
+```
+
+#### 1.4 ログアウト
+```http
+POST /auth/logout
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**レスポンス** (200 OK)
+```json
+{
+  "message": "Successfully logged out"
 }
 ```
 
 ---
 
-### 2. レシート処理系
+### 2. レシート処理
 
 #### 2.1 レシート画像アップロード
-
-```
-POST /api/v1/receipts
-```
-
-**リクエスト (multipart/form-data)**
-
-```
-receipt_image: <binary-file>
+```http
+POST /receipts/upload
 ```
 
-**リクエストヘッダー**
+**ヘッダー**: `Authorization: Bearer <token>`  
+**Content-Type**: `multipart/form-data`
 
+**リクエストボディ**
 ```
-Authorization: Bearer <token>
-Content-Type: multipart/form-data
+file: <image_file> (PNG, JPG, JPEG)
 ```
 
-**レスポンス (201 Created)**
-
+**レスポンス** (202 Accepted)
 ```json
 {
-  "receipt_id": "uuid-string",
-  "user_id": "uuid-string",
+  "receipt_id": "integer",
   "status": "processing",
-  "uploaded_at": "2025-11-06T10:00:00Z",
-  "image_url": "/receipts/uuid-string/image.jpg"
+  "uploaded_at": "datetime",
+  "message": "Receipt uploaded successfully. Processing started."
 }
 ```
 
-#### 2.2 レシート処理状況取得
-
+#### 2.2 レシート処理状況確認
+```http
+GET /receipts/{receipt_id}/status
 ```
-GET /api/v1/receipts/{receipt_id}
-```
 
-**レスポンス (200 OK) - 処理中**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "receipt_id": "uuid-string",
-  "status": "processing",
-  "progress": {
-    "current_step": "ocr_processing",
-    "percentage": 50
-  },
-  "uploaded_at": "2025-11-06T10:00:00Z"
+  "receipt_id": "integer",
+  "status": "completed|processing|failed",
+  "progress": "integer (0-100)",
+  "current_step": "string",
+  "updated_at": "datetime"
 }
 ```
 
-**レスポンス (200 OK) - 処理完了**
+#### 2.3 レシート解析結果取得
+```http
+GET /receipts/{receipt_id}
+```
 
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**レスポンス** (200 OK)
 ```json
 {
-  "receipt_id": "uuid-string",
-  "user_id": "uuid-string",
-  "status": "completed",
-  "uploaded_at": "2025-11-06T10:00:00Z",
-  "processed_at": "2025-11-06T10:01:30Z",
-  "image_url": "/receipts/uuid-string/image.jpg",
-  "extracted_items": [
+  "receipt_id": "integer",
+  "user_id": "integer",
+  "store_name": "string",
+  "purchase_date": "date",
+  "total_amount": "integer",
+  "tax_amount": "integer",
+  "items": [
     {
-      "item_id": "uuid-string",
-      "name": "玉ねぎ",
-      "quantity": 2,
-      "category": "野菜"
-    },
-    {
-      "item_id": "uuid-string",
-      "name": "豚肉",
-      "quantity": 300,
-      "category": "肉類"
-    }
-  ]
-}
-
-#### 2.4 レシート削除
-
-```
-DELETE /api/v1/receipts/{receipt_id}
-```
-
-**レスポンス (204 No Content)**
-
----
-
-### 3. 食材管理系
-
-#### 3.1 食材一覧取得
-
-```
-GET /api/v1/ingredients?category=野菜&in_stock=true
-```
-
-**クエリパラメータ**
-
-- `category` (optional): カテゴリでフィルタ (`野菜`, `肉類`, `魚介類`, `調味料`, etc.)
-- `in_stock` (optional): 在庫ありのみ表示 (true/false)
-- `search` (optional): 食材名で検索
-
-**レスポンス (200 OK)**
-
-```json
-{
-  "ingredients": [
-    {
-      "ingredient_id": "uuid-string",
-      "name": "玉ねぎ",
-      "category": "野菜",
-      "quantity": 5,
-      "unit": "個",
-      "purchase_date": "2025-11-06",
-      "expiry_date": "2025-11-20",
-      "status": "in_stock",
-      "receipts": [
-        {
-          "receipt_id": "uuid-string",
-          "purchased_at": "2025-11-06T10:00:00Z"
-        }
-      ]
+      "item_id": "integer",
+      "raw_text": "string",
+      "food_id": "integer|null",
+      "food_name": "string",
+      "quantity": "float",
+      "unit": "string",
+      "price": "integer",
+      "category": "string"
     }
   ],
-  "total_count": 15
+  "ocr_confidence": "float",
+  "created_at": "datetime",
+  "updated_at": "datetime"
 }
 ```
 
-#### 3.2 食材詳細取得
-
+#### 2.4 レシート一覧取得
+```http
+GET /receipts?page=1&limit=20&sort=desc
 ```
-GET /api/v1/ingredients/{ingredient_id}
-```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**クエリパラメータ**
+- `page` (integer, default: 1): ページ番号
+- `limit` (integer, default: 20, max: 100): 1ページあたりの件数
+- `sort` (string, default: "desc"): 並び順 (asc/desc)
+- `from_date` (date, optional): 開始日
+- `to_date` (date, optional): 終了日
+
+**レスポンス** (200 OK)
 ```json
 {
-  "ingredient_id": "uuid-string",
-  "name": "玉ねぎ",
-  "category": "野菜",
-  "quantity": 5,
-  "unit": "個",
-  "purchase_date": "2025-11-06",
-  "expiry_date": "2025-11-20",
-  "status": "in_stock",
-  "nutritional_info": {
-    "calories": 37,
-    "protein": 1.0,
-    "carbohydrates": 8.8,
-    "fat": 0.1
-  },
-  "storage_tips": "冷暗所で保存してください",
-  "usage_history": [
+  "total": "integer",
+  "page": "integer",
+  "limit": "integer",
+  "total_pages": "integer",
+  "receipts": [
     {
-      "used_in_recipe": "カレーライス",
-      "used_at": "2025-11-07T18:00:00Z",
-      "quantity_used": 2
+      "receipt_id": "integer",
+      "store_name": "string",
+      "purchase_date": "date",
+      "total_amount": "integer",
+      "items_count": "integer",
+      "created_at": "datetime"
     }
   ]
 }
 ```
 
-#### 3.3 食材の手動追加
-
+#### 2.5 レシート削除
+```http
+DELETE /receipts/{receipt_id}
 ```
-POST /api/v1/ingredients
-```
 
-**リクエストボディ**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "name": "キャベツ",
-  "category": "野菜",
-  "quantity": 1,
-  "unit": "個",
-  "purchase_date": "2025-11-06",
-  "expiry_date": "2025-11-13"
+  "message": "Receipt deleted successfully",
+  "receipt_id": "integer"
 }
 ```
-
-**レスポンス (201 Created)**
-
-```json
-{
-  "ingredient_id": "uuid-string",
-  "name": "キャベツ",
-  "category": "野菜",
-  "quantity": 1,
-  "unit": "個",
-  "purchase_date": "2025-11-06",
-  "expiry_date": "2025-11-13",
-  "status": "in_stock",
-  "created_at": "2025-11-06T10:00:00Z"
-}
-```
-
-#### 3.4 食材の更新
-
-```
-PUT /api/v1/ingredients/{ingredient_id}
-```
-
-**リクエストボディ**
-
-```json
-{
-  "quantity": 3,
-  "status": "in_stock"
-}
-```
-
-**レスポンス (200 OK)**
-
-```json
-{
-  "ingredient_id": "uuid-string",
-  "name": "キャベツ",
-  "quantity": 3,
-  "status": "in_stock",
-  "updated_at": "2025-11-06T12:00:00Z"
-}
-```
-
-#### 3.5 食材の削除
-
-```
-DELETE /api/v1/ingredients/{ingredient_id}
-```
-
-**レスポンス (204 No Content)**
 
 ---
 
-### 4. レシピ推薦系
+### 3. 食材管理
 
-#### 4.1 レシピ推薦取得
-
+#### 3.1 ユーザー所有食材一覧取得
+```http
+GET /ingredients?category=all&sort_by=expiry_date
 ```
-POST /api/v1/recipes/recommend
-```
 
-**リクエストボディ**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**クエリパラメータ**
+- `category` (string, optional): カテゴリフィルター
+- `sort_by` (string, default: "expiry_date"): ソート基準
+- `expiring_soon` (boolean, optional): 賞味期限間近のみ
+
+**レスポンス** (200 OK)
 ```json
 {
-  "ingredient_ids": ["uuid-1", "uuid-2", "uuid-3"],
-  "preferences": {
-    "difficulty": "easy",
-    "cooking_time_max": 30,
-    "cuisine_type": "japanese",
-    "dietary_restrictions": ["vegetarian"]
-  },
-  "limit": 10
+  "total": "integer",
+  "ingredients": [
+    {
+      "user_food_id": "integer",
+      "food_id": "integer",
+      "food_name": "string",
+      "category": "string",
+      "quantity": "float",
+      "unit": "string",
+      "expiry_date": "date|null",
+      "purchase_date": "date",
+      "receipt_id": "integer|null",
+      "days_until_expiry": "integer|null",
+      "created_at": "datetime",
+      "updated_at": "datetime"
+    }
+  ]
 }
 ```
 
-**パラメータ説明**
+#### 3.2 食材手動追加
+```http
+POST /ingredients
+```
 
-- `ingredient_ids`: 使用する食材のID配列 (省略時は全在庫食材を使用)
-- `preferences.difficulty`: 難易度 (`easy`, `medium`, `hard`)
-- `preferences.cooking_time_max`: 最大調理時間(分)
-- `preferences.cuisine_type`: 料理の種類 (`japanese`, `western`, `chinese`, `italian`, etc.)
-- `preferences.dietary_restrictions`: 食事制限 (`vegetarian`, `vegan`, `gluten-free`, etc.)
-- `limit`: 推薦レシピ数 (デフォルト: 10)
+**ヘッダー**: `Authorization: Bearer <token>`
 
-**レスポンス (200 OK)**
-
+**リクエストボディ**
 ```json
 {
-  "recipes": [
+  "food_name": "string",
+  "category": "string",
+  "quantity": "float",
+  "unit": "string",
+  "expiry_date": "date|null",
+  "purchase_date": "date"
+}
+```
+
+**レスポンス** (201 Created)
+```json
+{
+  "user_food_id": "integer",
+  "food_id": "integer",
+  "food_name": "string",
+  "category": "string",
+  "quantity": "float",
+  "unit": "string",
+  "expiry_date": "date|null",
+  "created_at": "datetime"
+}
+```
+
+#### 3.3 食材更新
+```http
+PUT /ingredients/{user_food_id}
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**リクエストボディ**
+```json
+{
+  "quantity": "float",
+  "unit": "string",
+  "expiry_date": "date|null"
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "user_food_id": "integer",
+  "food_name": "string",
+  "quantity": "float",
+  "unit": "string",
+  "expiry_date": "date|null",
+  "updated_at": "datetime"
+}
+```
+
+#### 3.4 食材削除
+```http
+DELETE /ingredients/{user_food_id}
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**レスポンス** (200 OK)
+```json
+{
+  "message": "Ingredient deleted successfully",
+  "user_food_id": "integer"
+}
+```
+
+#### 3.5 食材消費記録
+```http
+POST /ingredients/{user_food_id}/consume
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**リクエストボディ**
+```json
+{
+  "consumed_quantity": "float",
+  "recipe_id": "integer|null"
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "user_food_id": "integer",
+  "remaining_quantity": "float",
+  "consumed_quantity": "float",
+  "message": "Ingredient consumption recorded"
+}
+```
+
+---
+
+### 4. レシピ推薦
+
+#### 4.1 レシピ推薦取得
+```http
+GET /recipes/recommendations?limit=10&mode=all
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**クエリパラメータ**
+- `limit` (integer, default: 10, max: 50): 推薦レシピ数
+- `mode` (string, default: "all"): 推薦モード
+  - `all`: すべての所有食材から
+  - `expiring`: 賞味期限間近の食材優先
+  - `use_all`: 特定食材を使い切るレシピ
+- `include_food_ids` (array[integer], optional): 必須食材ID
+- `exclude_allergens` (array[string], optional): 除外アレルゲン
+
+**レスポンス** (200 OK)
+```json
+{
+  "total": "integer",
+  "recommendations": [
     {
-      "recipe_id": "uuid-string",
-      "name": "野菜カレー",
-      "description": "野菜たっぷりの美味しいカレーです",
-      "difficulty": "easy",
-      "cooking_time": 30,
-      "servings": 4,
-      "cuisine_type": "japanese",
-      "image_url": "/recipes/uuid-string/image.jpg",
-      "match_score": 0.95,
+      "recipe_id": "integer",
+      "recipe_name": "string",
+      "description": "string",
+      "cooking_time": "integer (minutes)",
+      "difficulty": "easy|medium|hard",
+      "servings": "integer",
+      "match_score": "float (0-1)",
       "matched_ingredients": [
         {
-          "ingredient_id": "uuid-1",
-          "name": "玉ねぎ",
-          "required_quantity": 2,
-          "available_quantity": 5,
-          "unit": "個"
+          "food_id": "integer",
+          "food_name": "string",
+          "required_quantity": "float",
+          "owned_quantity": "float",
+          "unit": "string",
+          "is_available": "boolean"
         }
       ],
       "missing_ingredients": [
         {
-          "name": "カレールー",
-          "required_quantity": 1,
-          "unit": "箱"
+          "food_id": "integer",
+          "food_name": "string",
+          "required_quantity": "float",
+          "unit": "string"
         }
       ],
+      "categories": ["string"],
+      "image_url": "string|null",
       "nutrition": {
-        "calories": 450,
-        "protein": 12,
-        "carbohydrates": 65,
-        "fat": 15
+        "calories": "integer",
+        "protein": "float",
+        "fat": "float",
+        "carbohydrates": "float"
       }
     }
-  ],
-  "total_count": 15,
-  "recommendation_metadata": {
-    "algorithm_version": "v1.2",
-    "generated_at": "2025-11-06T10:00:00Z"
-  }
+  ]
 }
 ```
 
 #### 4.2 レシピ詳細取得
-
+```http
+GET /recipes/{recipe_id}
 ```
-GET /api/v1/recipes/{recipe_id}
-```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "recipe_id": "uuid-string",
-  "name": "野菜カレー",
-  "description": "野菜たっぷりの美味しいカレーです",
-  "difficulty": "easy",
-  "cooking_time": 30,
-  "servings": 4,
-  "cuisine_type": "japanese",
-  "image_url": "/recipes/uuid-string/image.jpg",
+  "recipe_id": "integer",
+  "recipe_name": "string",
+  "description": "string",
+  "cooking_time": "integer",
+  "difficulty": "string",
+  "servings": "integer",
   "ingredients": [
     {
-      "name": "玉ねぎ",
-      "quantity": 2,
-      "unit": "個",
-      "notes": "薄切りにする"
-    },
-    {
-      "name": "人参",
-      "quantity": 1,
-      "unit": "本",
-      "notes": "乱切りにする"
+      "food_id": "integer",
+      "food_name": "string",
+      "quantity": "float",
+      "unit": "string",
+      "is_optional": "boolean"
     }
   ],
-  "instructions": [
+  "steps": [
     {
-      "step": 1,
-      "description": "玉ねぎと人参を切る",
-      "time_estimate": 5,
-      "image_url": "/recipes/uuid-string/step1.jpg"
-    },
-    {
-      "step": 2,
-      "description": "鍋で野菜を炒める",
-      "time_estimate": 10,
-      "temperature": "中火"
+      "step_number": "integer",
+      "instruction": "string",
+      "duration": "integer|null",
+      "image_url": "string|null"
     }
   ],
+  "categories": ["string"],
+  "tags": ["string"],
   "nutrition": {
-    "per_serving": {
-      "calories": 450,
-      "protein": 12,
-      "carbohydrates": 65,
-      "fat": 15,
-      "fiber": 5,
-      "sodium": 800
-    }
+    "calories": "integer",
+    "protein": "float",
+    "fat": "float",
+    "carbohydrates": "float",
+    "fiber": "float",
+    "sodium": "float"
   },
-  "tags": ["簡単", "野菜たっぷり", "カレー"],
-  "created_at": "2025-10-01T10:00:00Z",
-  "rating": {
-    "average": 4.5,
-    "count": 120
-  }
+  "allergens": ["string"],
+  "image_url": "string|null",
+  "source": "string|null",
+  "created_at": "datetime",
+  "updated_at": "datetime"
 }
 ```
 
 #### 4.3 レシピ検索
+```http
+GET /recipes/search?query=パスタ&category=洋食
+```
 
-```
-GET /api/v1/recipes/search?q=カレー&cuisine_type=japanese&max_time=30
-```
+**ヘッダー**: `Authorization: Bearer <token>`
 
 **クエリパラメータ**
+- `query` (string): 検索キーワード
+- `category` (string, optional): カテゴリ
+- `cooking_time_max` (integer, optional): 最大調理時間
+- `difficulty` (string, optional): 難易度
+- `page` (integer, default: 1): ページ番号
+- `limit` (integer, default: 20, max: 100): 件数
 
-- `q`: 検索キーワード
-- `cuisine_type`: 料理の種類
-- `difficulty`: 難易度
-- `max_time`: 最大調理時間
-- `page`: ページ番号
-- `limit`: 1ページあたりの件数
-
-**レスポンス (200 OK)**
-
+**レスポンス** (200 OK)
 ```json
 {
+  "total": "integer",
+  "page": "integer",
+  "limit": "integer",
+  "total_pages": "integer",
   "recipes": [
     {
-      "recipe_id": "uuid-string",
-      "name": "野菜カレー",
-      "difficulty": "easy",
-      "cooking_time": 30,
-      "image_url": "/recipes/uuid-string/image.jpg",
-      "rating": 4.5
+      "recipe_id": "integer",
+      "recipe_name": "string",
+      "description": "string",
+      "cooking_time": "integer",
+      "difficulty": "string",
+      "servings": "integer",
+      "image_url": "string|null",
+      "match_score": "float|null"
     }
-  ],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 3,
-    "total_items": 25,
-    "items_per_page": 10
-  }
+  ]
 }
 ```
 
-#### 4.4 お気に入りレシピに追加
-
+#### 4.4 お気に入りレシピ追加
+```http
+POST /recipes/{recipe_id}/favorite
 ```
-POST /api/v1/recipes/{recipe_id}/favorite
-```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "recipe_id": "uuid-string",
-  "favorited": true,
-  "favorited_at": "2025-11-06T10:00:00Z"
+  "message": "Recipe added to favorites",
+  "recipe_id": "integer"
 }
 ```
 
-#### 4.5 お気に入りレシピ一覧取得
-
+#### 4.5 お気に入りレシピ削除
+```http
+DELETE /recipes/{recipe_id}/favorite
 ```
-GET /api/v1/recipes/favorites
-```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "recipes": [
+  "message": "Recipe removed from favorites",
+  "recipe_id": "integer"
+}
+```
+
+#### 4.6 お気に入りレシピ一覧
+```http
+GET /recipes/favorites
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**レスポンス** (200 OK)
+```json
+{
+  "total": "integer",
+  "favorites": [
     {
-      "recipe_id": "uuid-string",
-      "name": "野菜カレー",
-      "image_url": "/recipes/uuid-string/image.jpg",
-      "favorited_at": "2025-11-06T10:00:00Z"
+      "recipe_id": "integer",
+      "recipe_name": "string",
+      "description": "string",
+      "cooking_time": "integer",
+      "difficulty": "string",
+      "image_url": "string|null",
+      "added_at": "datetime"
     }
-  ],
-  "total_count": 5
+  ]
 }
 ```
 
 ---
 
-### 5. OCR処理系 (内部API)
+### 5. ユーザー管理
 
-#### 5.1 画像前処理
-
-```
-POST /api/v1/ocr/preprocess
-```
-
-**リクエスト (multipart/form-data)**
-
-```
-image: <binary-file>
-denoise_method: "bilateral"
-binarize_method: "adaptive"
-correct_skew: true
+#### 5.1 ユーザー情報取得
+```http
+GET /users/me
 ```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**レスポンス** (200 OK)
 ```json
 {
-  "processed_image_url": "/ocr/processed/uuid-string.jpg",
-  "preprocessing_info": {
-    "original_size": [1920, 1080],
-    "processed_size": [1920, 1080],
-    "detected_skew_angle": -2.5,
-    "processing_time_ms": 150
+  "user_id": "integer",
+  "username": "string",
+  "email": "string",
+  "created_at": "datetime",
+  "updated_at": "datetime",
+  "preferences": {
+    "dietary_restrictions": ["string"],
+    "allergens": ["string"],
+    "favorite_categories": ["string"]
+  },
+  "statistics": {
+    "total_receipts": "integer",
+    "total_ingredients": "integer",
+    "favorite_recipes": "integer"
   }
 }
 ```
 
-#### 5.2 テキスト検出
-
-```
-POST /api/v1/ocr/detect-text
-```
-
-**リクエスト (multipart/form-data)**
-
-```
-image: <binary-file>
-languages: ["ja", "en"]
+#### 5.2 ユーザー情報更新
+```http
+PUT /users/me
 ```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**リクエストボディ**
+```json
+{
+  "username": "string",
+  "email": "string",
+  "preferences": {
+    "dietary_restrictions": ["string"],
+    "allergens": ["string"],
+    "favorite_categories": ["string"]
+  }
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "user_id": "integer",
+  "username": "string",
+  "email": "string",
+  "updated_at": "datetime"
+}
+```
+
+#### 5.3 パスワード変更
+```http
+PUT /users/me/password
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**リクエストボディ**
+```json
+{
+  "current_password": "string",
+  "new_password": "string"
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "message": "Password updated successfully"
+}
+```
+
+#### 5.4 ユーザー削除
+```http
+DELETE /users/me
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**リクエストボディ**
+```json
+{
+  "password": "string",
+  "confirmation": "DELETE_MY_ACCOUNT"
+}
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "message": "User account deleted successfully"
+}
+```
+
+---
+
+### 6. 食材マスターデータ
+
+#### 6.1 食材カテゴリ一覧取得
+```http
+GET /master/categories
+```
+
+**レスポンス** (200 OK)
+```json
+{
+  "categories": [
+    {
+      "category_id": "integer",
+      "category_name": "string",
+      "parent_category_id": "integer|null",
+      "description": "string"
+    }
+  ]
+}
+```
+
+#### 6.2 食材マスター検索
+```http
+GET /master/foods?query=トマト
+```
+
+**クエリパラメータ**
+- `query` (string): 検索キーワード
+- `category_id` (integer, optional): カテゴリID
+- `limit` (integer, default: 50): 件数
+
+**レスポンス** (200 OK)
+```json
+{
+  "total": "integer",
+  "foods": [
+    {
+      "food_id": "integer",
+      "food_name": "string",
+      "category_id": "integer",
+      "category_name": "string",
+      "standard_unit": "string",
+      "aliases": ["string"],
+      "nutrition_per_100g": {
+        "calories": "integer",
+        "protein": "float",
+        "fat": "float",
+        "carbohydrates": "float"
+      }
+    }
+  ]
+}
+```
+
+---
+
+### 7. OCR処理
+
+#### 7.1 画像前処理のみ実行
+```http
+POST /ocr/preprocess
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`  
+**Content-Type**: `multipart/form-data`
+
+**リクエストボディ**
+```
+file: <image_file>
+```
+
+**クエリパラメータ**
+- `grayscale` (boolean, default: true): グレースケール変換
+- `binarize` (boolean, default: true): 二値化
+- `denoise` (boolean, default: true): ノイズ除去
+- `correct_skew` (boolean, default: true): 傾き補正
+
+**レスポンス** (200 OK)
+```json
+{
+  "processed_image_url": "string",
+  "preprocessing_steps": ["string"],
+  "image_quality_score": "float",
+  "processing_time": "float"
+}
+```
+
+#### 7.2 テキスト検出のみ実行
+```http
+POST /ocr/detect-text
+```
+
+**ヘッダー**: `Authorization: Bearer <token>`  
+**Content-Type**: `multipart/form-data`
+
+**リクエストボディ**
+```
+file: <image_file>
+```
+
+**レスポンス** (200 OK)
 ```json
 {
   "text_regions": [
     {
-      "region_id": 0,
-      "bbox": [[100, 50], [300, 50], [300, 80], [100, 80]],
-      "text": "スーパーマーケット",
-      "confidence": 0.98,
-      "center": [200, 65]
+      "text": "string",
+      "confidence": "float",
+      "bounding_box": {
+        "x": "integer",
+        "y": "integer",
+        "width": "integer",
+        "height": "integer"
+      },
+      "line_number": "integer"
     }
   ],
-  "total_regions": 25,
-  "processing_time_ms": 500
-}
-```
-
-#### 5.3 文字認識（詳細）
-
-```
-POST /api/v1/ocr/recognize-characters
-```
-
-**リクエスト**
-
-```json
-{
-  "image_url": "/receipts/uuid-string/image.jpg",
-  "padding": 2
-}
-```
-
-**レスポンス (200 OK)**
-
-```json
-{
-  "characters": [
-    {
-      "char_id": 0,
-      "region_id": 0,
-      "char": "ス",
-      "char_index_in_region": 0,
-      "bbox": [100, 50, 115, 80],
-      "center": [107.5, 65],
-      "confidence": 0.98,
-      "image_url": "/ocr/characters/uuid-string/char_0000.png"
-    }
-  ],
-  "total_characters": 150,
-  "metadata_url": "/ocr/characters/uuid-string/metadata.json"
+  "total_regions": "integer",
+  "average_confidence": "float",
+  "processing_time": "float"
 }
 ```
 
 ---
 
-### 6. ユーザー管理系
+### 8. 統計・分析
 
-#### 6.1 ユーザー情報取得
-
+#### 8.1 食材消費統計
+```http
+GET /statistics/consumption?period=month
 ```
-GET /api/v1/users/me
-```
 
-**レスポンス (200 OK)**
+**ヘッダー**: `Authorization: Bearer <token>`
 
+**クエリパラメータ**
+- `period` (string, default: "month"): 集計期間 (week/month/year)
+- `category` (string, optional): カテゴリフィルター
+
+**レスポンス** (200 OK)
 ```json
 {
-  "user_id": "uuid-string",
-  "email": "user@example.com",
-  "username": "username",
-  "profile": {
-    "display_name": "太郎",
-    "avatar_url": "/avatars/uuid-string.jpg",
-    "bio": "料理が好きです"
+  "period": "string",
+  "start_date": "date",
+  "end_date": "date",
+  "total_consumption": {
+    "items_count": "integer",
+    "total_value": "integer"
   },
-  "preferences": {
-    "dietary_restrictions": ["vegetarian"],
-    "favorite_cuisines": ["japanese", "italian"],
-    "skill_level": "intermediate"
-  },
-  "statistics": {
-    "total_receipts": 50,
-    "total_ingredients": 25,
-    "favorite_recipes": 15,
-    "recipes_cooked": 30
-  },
-  "created_at": "2025-01-01T00:00:00Z"
-}
-```
-
-#### 6.2 ユーザー情報更新
-
-```
-PUT /api/v1/users/me
-```
-
-**リクエストボディ**
-
-```json
-{
-  "profile": {
-    "display_name": "太郎",
-    "bio": "料理が大好きです"
-  },
-  "preferences": {
-    "dietary_restrictions": ["vegetarian"],
-    "favorite_cuisines": ["japanese", "italian"]
+  "by_category": [
+    {
+      "category": "string",
+      "items_count": "integer",
+      "total_value": "integer",
+      "percentage": "float"
+    }
+  ],
+  "waste_analysis": {
+    "expired_items_count": "integer",
+    "waste_value": "integer",
+    "waste_percentage": "float"
   }
 }
 ```
 
-**レスポンス (200 OK)**
+#### 8.2 レシート統計
+```http
+GET /statistics/receipts?period=month
+```
 
+**ヘッダー**: `Authorization: Bearer <token>`
+
+**クエリパラメータ**
+- `period` (string, default: "month"): 集計期間
+
+**レスポンス** (200 OK)
 ```json
 {
-  "user_id": "uuid-string",
-  "profile": {
-    "display_name": "太郎",
-    "bio": "料理が大好きです"
-  },
-  "updated_at": "2025-11-06T10:00:00Z"
-}
-```
-
-#### 6.3 プロフィール画像アップロード
-
-```
-POST /api/v1/users/me/avatar
-```
-
-**リクエスト (multipart/form-data)**
-
-```
-avatar: <binary-file>
-```
-
-**レスポンス (200 OK)**
-
-```json
-{
-  "avatar_url": "/avatars/uuid-string.jpg",
-  "uploaded_at": "2025-11-06T10:00:00Z"
+  "period": "string",
+  "total_receipts": "integer",
+  "total_amount": "integer",
+  "average_amount": "float",
+  "most_visited_stores": [
+    {
+      "store_name": "string",
+      "visit_count": "integer",
+      "total_spent": "integer"
+    }
+  ],
+  "spending_trend": [
+    {
+      "date": "date",
+      "amount": "integer"
+    }
+  ]
 }
 ```
 
@@ -768,326 +901,295 @@ avatar: <binary-file>
 
 ## データモデル
 
-### User
-
+### User (ユーザー)
 ```typescript
 {
-  user_id: string (UUID)
-  email: string
+  user_id: integer
   username: string
+  email: string
   password_hash: string
-  profile: {
-    display_name?: string
-    avatar_url?: string
-    bio?: string
-  }
-  preferences: {
-    dietary_restrictions?: string[]
-    favorite_cuisines?: string[]
-    skill_level?: "beginner" | "intermediate" | "advanced"
-  }
   created_at: datetime
   updated_at: datetime
+  is_active: boolean
+  preferences: UserPreferences
 }
 ```
 
-### Receipt
-
+### Receipt (レシート)
 ```typescript
 {
-  receipt_id: string (UUID)
-  user_id: string (UUID)
-  status: "processing" | "completed" | "failed"
+  receipt_id: integer
+  user_id: integer
+  store_name: string
+  purchase_date: date
+  total_amount: integer
+  tax_amount: integer
   image_url: string
-  store_name?: string
-  purchase_date?: date
-  total_amount?: number
-  ocr_result?: {
-    detected_text: string
-    confidence: number
-    processing_time_ms: number
-  }
-  uploaded_at: datetime
-  processed_at?: datetime
-}
-```
-
-### Ingredient
-
-```typescript
-{
-  ingredient_id: string (UUID)
-  user_id: string (UUID)
-  name: string
-  category: string
-  quantity: number
-  unit: string
-  purchase_date?: date
-  expiry_date?: date
-  status: "in_stock" | "low_stock" | "out_of_stock" | "expired"
-  nutritional_info?: {
-    calories: number
-    protein: number
-    carbohydrates: number
-    fat: number
-  }
+  ocr_confidence: float
+  processing_status: enum["pending", "processing", "completed", "failed"]
   created_at: datetime
   updated_at: datetime
 }
 ```
 
-### Recipe
-
+### ReceiptDetail (レシート明細)
 ```typescript
 {
-  recipe_id: string (UUID)
-  name: string
-  description: string
-  difficulty: "easy" | "medium" | "hard"
-  cooking_time: number (minutes)
-  servings: number
-  cuisine_type: string
-  image_url?: string
-  ingredients: Array<{
-    name: string
-    quantity: number
-    unit: string
-    notes?: string
-  }>
-  instructions: Array<{
-    step: number
-    description: string
-    time_estimate?: number
-    image_url?: string
-  }>
-  nutrition: {
-    per_serving: {
-      calories: number
-      protein: number
-      carbohydrates: number
-      fat: number
-    }
-  }
-  tags: string[]
-  rating?: {
-    average: number
-    count: number
-  }
+  detail_id: integer
+  receipt_id: integer
+  raw_text: string
+  food_id: integer | null
+  food_name: string
+  quantity: float
+  unit: string
+  price: integer
+  category: string
+  confidence: float
+}
+```
+
+### Food (食材マスター)
+```typescript
+{
+  food_id: integer
+  food_name: string
+  category_id: integer
+  standard_unit: string
+  aliases: string[]
+  nutrition_per_100g: NutritionInfo
+  allergens: string[]
   created_at: datetime
+  updated_at: datetime
+}
+```
+
+### UserFood (ユーザー所有食材)
+```typescript
+{
+  user_food_id: integer
+  user_id: integer
+  food_id: integer
+  quantity: float
+  unit: string
+  expiry_date: date | null
+  purchase_date: date
+  receipt_id: integer | null
+  created_at: datetime
+  updated_at: datetime
+}
+```
+
+### Recipe (レシピ)
+```typescript
+{
+  recipe_id: integer
+  recipe_name: string
+  description: string
+  cooking_time: integer
+  difficulty: enum["easy", "medium", "hard"]
+  servings: integer
+  steps: RecipeStep[]
+  categories: string[]
+  tags: string[]
+  nutrition: NutritionInfo
+  allergens: string[]
+  image_url: string | null
+  source: string | null
+  created_at: datetime
+  updated_at: datetime
+}
+```
+
+### RecipeIngredient (レシピ材料)
+```typescript
+{
+  recipe_ingredient_id: integer
+  recipe_id: integer
+  food_id: integer
+  quantity: float
+  unit: string
+  is_optional: boolean
 }
 ```
 
 ---
 
-## エラーコード
+## エラーレスポンス
 
-### HTTPステータスコード
-
-- `200 OK`: リクエスト成功
-- `201 Created`: リソース作成成功
-- `204 No Content`: 削除成功（レスポンスボディなし）
-- `400 Bad Request`: リクエストが不正
-- `401 Unauthorized`: 認証が必要
-- `403 Forbidden`: 権限がない
-- `404 Not Found`: リソースが見つからない
-- `409 Conflict`: リソースの競合
-- `422 Unprocessable Entity`: バリデーションエラー
-- `429 Too Many Requests`: レート制限超過
-- `500 Internal Server Error`: サーバーエラー
-- `503 Service Unavailable`: サービス利用不可
-
-### エラーレスポンス形式
-
+### 標準エラーフォーマット
 ```json
 {
-  "error": "ERROR_CODE",
-  "message": "エラーの説明",
-  "details": {
-    "field": "問題のあるフィールド",
-    "reason": "詳細な理由"
-  },
-  "timestamp": "2025-11-06T10:00:00Z",
-  "request_id": "uuid-string"
+  "error": {
+    "code": "string",
+    "message": "string",
+    "details": "object | null",
+    "timestamp": "datetime"
+  }
 }
 ```
 
+### HTTPステータスコード
+
+| コード | 説明 | 例 |
+|--------|------|-----|
+| 200 | OK | 正常処理完了 |
+| 201 | Created | リソース作成成功 |
+| 202 | Accepted | 非同期処理受付 |
+| 204 | No Content | 削除成功（レスポンスボディなし） |
+| 400 | Bad Request | リクエスト形式エラー |
+| 401 | Unauthorized | 認証エラー |
+| 403 | Forbidden | 権限エラー |
+| 404 | Not Found | リソース未検出 |
+| 409 | Conflict | リソース競合 |
+| 422 | Unprocessable Entity | バリデーションエラー |
+| 429 | Too Many Requests | レート制限超過 |
+| 500 | Internal Server Error | サーバーエラー |
+| 503 | Service Unavailable | サービス利用不可 |
+
 ### エラーコード一覧
 
-#### 認証関連
+| コード | 説明 |
+|--------|------|
+| `AUTH_001` | 無効な認証情報 |
+| `AUTH_002` | トークン期限切れ |
+| `AUTH_003` | 無効なトークン |
+| `AUTH_004` | 権限不足 |
+| `VALIDATION_001` | 必須フィールド欠落 |
+| `VALIDATION_002` | 無効な値 |
+| `VALIDATION_003` | フォーマットエラー |
+| `RESOURCE_001` | リソースが見つかりません |
+| `RESOURCE_002` | リソース既に存在 |
+| `RESOURCE_003` | リソース削除済み |
+| `OCR_001` | 画像処理エラー |
+| `OCR_002` | 未サポートの画像形式 |
+| `OCR_003` | 画像サイズ超過 |
+| `OCR_004` | テキスト検出失敗 |
+| `SYSTEM_001` | データベースエラー |
+| `SYSTEM_002` | 外部APIエラー |
+| `SYSTEM_003` | タイムアウト |
 
-- `INVALID_CREDENTIALS`: 認証情報が無効
-- `TOKEN_EXPIRED`: トークンの有効期限切れ
-- `TOKEN_INVALID`: トークンが無効
-- `EMAIL_ALREADY_EXISTS`: メールアドレスが既に登録済み
-- `USERNAME_ALREADY_EXISTS`: ユーザー名が既に使用済み
+### エラーレスポンス例
 
-#### レシート処理関連
+**401 Unauthorized**
+```json
+{
+  "error": {
+    "code": "AUTH_002",
+    "message": "Access token has expired",
+    "details": {
+      "expired_at": "2025-11-06T10:30:00Z"
+    },
+    "timestamp": "2025-11-06T11:00:00Z"
+  }
+}
+```
 
-- `RECEIPT_NOT_FOUND`: レシートが見つからない
-- `INVALID_IMAGE_FORMAT`: 画像形式が不正
-- `IMAGE_TOO_LARGE`: 画像サイズが大きすぎる
-- `OCR_PROCESSING_FAILED`: OCR処理に失敗
-- `RECEIPT_PROCESSING_TIMEOUT`: 処理タイムアウト
-
-#### 食材関連
-
-- `INGREDIENT_NOT_FOUND`: 食材が見つからない
-- `INVALID_CATEGORY`: カテゴリが無効
-- `INVALID_QUANTITY`: 数量が無効
-
-#### レシピ関連
-
-- `RECIPE_NOT_FOUND`: レシピが見つからない
-- `NO_MATCHING_RECIPES`: マッチするレシピがない
-- `INSUFFICIENT_INGREDIENTS`: 食材が不足
+**422 Unprocessable Entity**
+```json
+{
+  "error": {
+    "code": "VALIDATION_002",
+    "message": "Validation failed",
+    "details": {
+      "fields": [
+        {
+          "field": "email",
+          "message": "Invalid email format"
+        },
+        {
+          "field": "password",
+          "message": "Password must be at least 8 characters"
+        }
+      ]
+    },
+    "timestamp": "2025-11-06T11:00:00Z"
+  }
+}
+```
 
 ---
 
 ## レート制限
 
 ### 制限値
-
-- 認証済みユーザー: 1000リクエスト/時間
-- 未認証ユーザー: 100リクエスト/時間
-- レシート画像アップロード: 50リクエスト/日
+- **認証済みユーザー**: 100リクエスト/分
+- **未認証ユーザー**: 20リクエスト/分
+- **画像アップロード**: 10リクエスト/分
 
 ### レスポンスヘッダー
-
 ```
-X-RateLimit-Limit: 1000
-X-RateLimit-Remaining: 999
-X-RateLimit-Reset: 1699275600
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1699267200
 ```
 
----
-
-## ページネーション
-
-リスト取得APIは以下のクエリパラメータをサポートします。
-
-- `page`: ページ番号 (デフォルト: 1)
-- `limit`: 1ページあたりの件数 (デフォルト: 20, 最大: 100)
-
-レスポンスには以下の形式でページネーション情報が含まれます。
-
+### レート制限超過時
 ```json
 {
-  "data": [...],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 5,
-    "total_items": 87,
-    "items_per_page": 20,
-    "has_next": true,
-    "has_prev": false
+  "error": {
+    "code": "RATE_LIMIT_EXCEEDED",
+    "message": "Rate limit exceeded",
+    "details": {
+      "retry_after": 60
+    },
+    "timestamp": "2025-11-06T11:00:00Z"
   }
 }
 ```
 
 ---
 
-## WebSocket API (将来実装予定)
+## ベストプラクティス
 
-### レシート処理進捗通知
+### 1. 認証
+- アクセストークンは安全に保管
+- トークン期限切れ前にリフレッシュ
+- ログアウト時にトークンを破棄
 
-```
-ws://localhost:8000/api/v1/ws/receipts/{receipt_id}/progress
-```
+### 2. 画像アップロード
+- 推奨サイズ: 最大10MB
+- 推奨フォーマット: JPEG, PNG
+- 画像は明るく鮮明なものを使用
 
-**受信メッセージ形式**
+### 3. エラーハンドリング
+- すべてのAPIコールでエラーハンドリングを実装
+- リトライロジックの実装（エクスポネンシャルバックオフ）
+- 適切なタイムアウト設定
 
-```json
-{
-  "type": "progress_update",
-  "receipt_id": "uuid-string",
-  "progress": {
-    "current_step": "ocr_processing",
-    "percentage": 50,
-    "message": "テキストを検出中..."
-  },
-  "timestamp": "2025-11-06T10:00:00Z"
-}
-```
+### 4. パフォーマンス
+- ページネーションの活用
+- 必要なフィールドのみをリクエスト
+- キャッシュの活用
+
+### 5. セキュリティ
+- HTTPSの使用
+- APIキーの適切な管理
+- 入力値の検証
 
 ---
 
 ## バージョニング
 
-APIバージョンはURLパスに含めます（例: `/api/v1/`）。
-
-- 現在のバージョン: `v1`
-- 非推奨の機能は最低6ヶ月間サポート
-- 破壊的変更は新バージョンとしてリリース
-
+### バージョン管理方式
+- URLベースのバージョニング: `/api/v1/`, `/api/v2/`
+- 後方互換性の維持
+- 旧バージョンのサポート期間: 最低6ヶ月
 ---
 
-## セキュリティ
-
-### HTTPS
-
-本番環境では全ての通信をHTTPS経由で行います。
-
-### CORS
-
-許可されたオリジンからのリクエストのみ受け付けます。
-
-```
-Access-Control-Allow-Origin: https://receipt-recipe.com
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE
-Access-Control-Allow-Headers: Content-Type, Authorization
-```
-
-### データ検証
-
-- 全てのリクエストボディをPydanticで検証
-- SQLインジェクション対策（SQLAlchemy ORM使用）
-- XSS対策（適切なエスケープ処理）
-
----
-
-## 付録
-
-### サポートされる画像形式
-
-- JPEG (.jpg, .jpeg)
-- PNG (.png)
-- 最大ファイルサイズ: 10MB
-- 推奨解像度: 300 DPI以上
-
-### サポートされる言語
-
-OCR処理で以下の言語をサポート:
-
-- 日本語 (ja)
-- 英語 (en)
-
-### カテゴリ一覧
-
-食材カテゴリ:
-
-- 野菜
-- 果物
-- 肉類
-- 魚介類
-- 乳製品
-- 卵
-- 穀物
-- 調味料
-- 加工食品
-- その他
-
-料理の種類:
-
-- japanese (和食)
-- western (洋食)
-- chinese (中華)
-- italian (イタリアン)
-- french (フレンチ)
-- korean (韓国料理)
-- thai (タイ料理)
-- other (その他)
+### ドキュメント
+- API Reference: https://api.receipt-recipe.com/docs
+- Swagger UI: https://api.receipt-recipe.com/swagger
 
 ---
 
 **最終更新日**: 2025年11月6日
-**APIバージョン**: v1.0.0
+**Version**: 1.0.0
+**作成者**: fmt
+**変更内容**: 文章の作成
+
+## 更新履歴
+
+**最終更新日**: 2025年11月6日
+**Version**: 1.0.0
+**作成者**: fmt
+**変更内容**: 文章の作成
