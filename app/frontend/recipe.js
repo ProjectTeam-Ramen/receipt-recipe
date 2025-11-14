@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     empty.style.display = "none";
     grid.innerHTML = list.map(r => `
       <article class="card" role="listitem">
-        <a href="${r.url}" class="card-link">
+        <a href="recipes/${r.id}.html" class="card-link">
           <figure class="card-figure"><img src="${r.image}" alt="${r.title}" loading="lazy"></figure>
           <div class="card-body">
             <h3 class="card-title">${r.title}</h3>
