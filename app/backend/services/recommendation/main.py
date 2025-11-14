@@ -22,7 +22,7 @@ def get_proposals_for_demo(custom_inventory: Union[List[Ingredient], None] = Non
     all_recipes_data = recipe_source.load_and_vectorize_recipes()
     user_profile = recipe_source.create_user_profile_vector()
 
-    # ★ 修正: custom_inventory が None でないかを確認して優先する ★
+    # 修正: custom_inventory が None でないかを確認して優先する
     if custom_inventory is not None:
         current_inventory_data = custom_inventory
     else:

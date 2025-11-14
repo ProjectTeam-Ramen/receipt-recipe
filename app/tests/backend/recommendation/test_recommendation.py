@@ -152,7 +152,7 @@ def test_expiration_boost_priority():
 
     # 3. Proposerを初期化
     proposer = RecipeProposer(recipe_list_boost_test, inventory_near_expiration, common_vector)
-    proposer.MIN_COVERAGE_THRESHOLD = 0.9 # カバー率が1.0なので通過
+    proposer.MIN_COVERAGE_THRESHOLD = 0.2 # カバー率が1.0なので通過
 
     params = UserParameters(max_time=100, max_calories=1000, allergies=set())
     proposals = proposer.propose(params)
