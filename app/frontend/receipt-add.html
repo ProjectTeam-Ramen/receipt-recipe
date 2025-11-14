@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レシートから食材追加</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Receipt Add</h1>
+    <button class="logout-btn" id="backBtn">back</button>
+  </header>
+
+  <main class="receipt-add-main">
+    <h2>レシート読み取りで食材を追加</h2>
+
+    <div class="upload-area">
+      <p>レシート画像を選択してください：</p>
+      <input type="file" id="receiptInput" accept="image/*">
+      <button id="analyzeBtn" class="analyze-btn">読み取る</button>
+    </div>
+
+    <div id="resultArea" class="result-area">
+      <p>読み取った食材はここに表示されます。</p>
+    </div>
+  </main>
+
+  <script src="receipt-add.js"></script>
+</body>
+</html>
