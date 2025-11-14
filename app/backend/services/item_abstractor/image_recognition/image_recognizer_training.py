@@ -41,7 +41,7 @@ data_transforms = {
 image_datasets = {x: ImageFolder(os.path.join(data_dir, x), data_transforms[x])
                   for x in ['train', 'val']}
 # DataLoaderを作成
-dataloaders = {x: DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=4)
+dataloaders = {x: DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=0)
                for x in ['train', 'val']}
 
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}

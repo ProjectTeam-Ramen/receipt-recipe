@@ -8,11 +8,11 @@ from PIL import Image
 # ステップ2で学習・保存したモデルのパス
 model_path = 'my_food_model.pth'
 # 予測したい画像
-image_path = 'test_rice.jpg' 
+image_path = 'zakoshi.jpeg' 
 
 # ★重要：学習時と全く同じクラス名を、同じ順番で定義する
 # （ステップ1のフォルダ構成 '00_egg', '01_rice', '02_flour' に対応）
-class_names = ['00_egg', '01_rice', '02_flour'] 
+class_names = ['tomato'] 
 num_classes = len(class_names)
 
 # --- 2. モデルのロード ---
