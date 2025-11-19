@@ -33,17 +33,23 @@ main {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* フッター */
-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-  color: #666;
-  font-size: 0.9em;
+/* ログアウト/戻るボタン共通 */
+.logout-btn {
+  background-color: #ff5757;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.logout-btn:hover {
+  background-color: #e04646;
 }
 
 /* ==============================
-   ログイン画面専用
+   ログイン画面専用 (index.html)
 ============================== */
 .login-container {
   width: 320px;
@@ -92,43 +98,24 @@ footer {
   color: red;
   margin-top: 1em;
   font-size: 0.9em;
+  text-align: center;
 }
 
 /* ==============================
-   ホーム画面
+   ホーム画面 (home.html)
 ============================== */
-.logout-btn {
-  background-color: #ff5757;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.logout-btn:hover {
-  background-color: #e04646;
-}
-
-.app-main {
-  text-align: center;
-}
-.app-main h2 {
-  color: #0078d7;
-}
-.app-main p {
-  font-size: 1.1em;
-  margin-top: 0.5em;
-}
-
-/* ホーム画面：ボタン配置 */
 .center-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 50vh;
+  gap: 20px;
+}
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 .recipe-btn,
@@ -157,7 +144,7 @@ footer {
 }
 
 /* ==============================
-   レシピ検索ページ
+   レシピ検索ページ (recipe.html)
 ============================== */
 .recipe-main {
   text-align: center;
@@ -198,16 +185,22 @@ footer {
   text-align: center;
   font-size: 1.1em;
 }
+/* レシピカード用（JSで生成される要素） */
+.recipe-card {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+  text-align: left;
+  width: 200px;
+}
+.recipe-card img {
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
 
 /* ==============================
-   冷蔵庫ホーム画面
+   冷蔵庫ホーム (fridge-home.html)
 ============================== */
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
 .control-btn,
 .check-btn {
   border: none;
@@ -217,35 +210,34 @@ footer {
   cursor: pointer;
   transition: background-color 0.3s;
   width: 260px;
+  color: white;
+  text-align: center;
 }
+/* fridge-home.htmlでのボタン色 */
 .control-btn {
   background-color: #e017ff;
-  color: #333;
+  color: #333; /* control-btnは文字色黒指定あり */
 }
 .control-btn:hover {
   background-color: #4fe2ff;
 }
 .check-btn {
   background-color: #17a2b8;
-  color: white;
 }
 .check-btn:hover {
   background-color: #138496;
 }
 
 /* ==============================
-   冷蔵庫：管理メニュー画面
+   冷蔵庫：管理メニュー (fridge-control.html)
 ============================== */
 .fridge-control-main {
   text-align: center;
 }
-
 .fridge-control-main h2 {
   color: #0078d7;
   margin-bottom: 30px;
 }
-
-/* メニュー全体のレイアウト */
 .control-menu {
   display: flex;
   flex-direction: column;
@@ -253,37 +245,21 @@ footer {
   gap: 18px;
 }
 
-/* ボタン共通デザイン */
-.control-btn {
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 30px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 260px;
-  text-align: center;
-  font-weight: bold;
-}
-
-/* 食材追加ボタン（緑） */
+/* 管理メニュー専用ID指定ボタン */
 #addFoodBtn {
   background-color: #28a745;
+  color: white;
 }
 #addFoodBtn:hover {
   background-color: #218838;
 }
-
-/* 食材削除ボタン（赤） */
 #deleteFoodBtn {
   background-color: #dc3545;
+  color: white;
 }
 #deleteFoodBtn:hover {
   background-color: #c82333;
 }
-
-/* レシート読み取りボタン（黄） */
 #receiptAddBtn {
   background-color: #ffc107;
   color: #333;
@@ -292,9 +268,9 @@ footer {
   background-color: #e0a800;
 }
 
-
 /* ==============================
-   冷蔵庫：食材追加ページ
+   冷蔵庫：食材追加 (food-add.html)
+   & レシート読み取り結果フォーム
 ============================== */
 .food-add-main {
   text-align: center;
@@ -303,15 +279,19 @@ footer {
   color: #0078d7;
   margin-bottom: 20px;
 }
+
+/* 食材入力フォーム（共通デザイン） */
 .food-form {
   background-color: #fff;
   padding: 25px 30px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* デフォルトは単体ページ用の表示 */
   display: inline-block;
   text-align: left;
   width: 320px;
 }
+
 .food-form label {
   display: block;
   margin-top: 12px;
@@ -327,6 +307,8 @@ footer {
   border-radius: 8px;
   box-sizing: border-box;
 }
+
+/* 追加ボタン */
 .add-confirm-btn {
   background-color: #28a745;
   color: white;
@@ -342,6 +324,8 @@ footer {
 .add-confirm-btn:hover {
   background-color: #218838;
 }
+
+/* メッセージエリア */
 .message-area {
   margin-top: 20px;
   font-size: 1em;
@@ -354,7 +338,7 @@ footer {
 }
 
 /* ==============================
-   冷蔵庫：食材削除ページ
+   冷蔵庫：食材削除 (food-delete.html)
 ============================== */
 .food-delete-main {
   text-align: center;
@@ -403,231 +387,45 @@ footer {
 }
 
 /* ==============================
-   冷蔵庫一覧ページ専用スタイル
-   ============================== */
-
-.fridge-check-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-}
-
-.fridge-check-container h2 {
-  color: #0078d7;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-/* テーブル全体 */
-.fridge-table {
+   冷蔵庫：食材一覧 (fridge-check.html)
+============================== */
+/* HTMLでは <table id="foodTable"> が使われているためIDセレクタに変更 */
+#foodTable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
-
-.fridge-table th,
-.fridge-table td {
+#foodTable th,
+#foodTable td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
-
-.fridge-table th {
+#foodTable th {
   background-color: #0078d7;
   color: white;
   font-weight: bold;
 }
-
-.fridge-table tr:hover {
+#foodTable tr:hover {
   background-color: #f1f7ff;
   transition: 0.2s;
 }
-
-/* データがないとき */
-.fridge-table td[colspan="5"] {
+#foodTable td[colspan="5"] {
   text-align: center;
   color: #888;
   font-style: italic;
   padding: 20px;
 }
 
-/* ボタンエリア */
-.fridge-btn-area {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-/* ボタン */
-.fridge-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.fridge-btn.refresh {
-  background-color: #0078d7;
-  color: white;
-}
-
-.fridge-btn.refresh:hover {
-  background-color: #005fa3;
-}
-
-.fridge-btn.back {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.fridge-btn.back:hover {
-  background-color: #ccc;
-}
-
 /* ==============================
-   冷蔵庫：レシート追加ページ
+   冷蔵庫：レシート追加 (receipt-add.html)
 ============================== */
-.receipt-add-main {
-  text-align: center;
-}
-.receipt-add-main h2 {
-  color: #0078d7;
-  margin-bottom: 20px;
-}
-.upload-area {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  margin-bottom: 30px;
-}
-.upload-area input[type="file"] {
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-.analyze-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.analyze-btn:hover {
-  background-color: #218838;
-}
-.result-area {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.confirm-btn {
-  background-color: #0078d7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  margin-top: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.confirm-btn:hover {
-  background-color: #005fa3;
-}
-
-/* ==============================
-   レシート読み取りページ追加 CSS
-============================== */
-
-/* 画像プレビュー */
-#preview {
-  width: 60%;
-  max-width: 400px;
-  display: none;
-  margin: 15px auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-/* OCRボタン */
-#extractBtn {
-  display: none;
-  padding: 10px 20px;
-  margin: 10px auto;
-  background-color: #0078d7;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-}
-#extractBtn:hover {
-  background-color: #005ea6;
-}
-
-/* 読み取り後のフォームエリア */
-#formSection {
-  display: none;
-  width: 90%;
-  max-width: 420px;
-  margin: 25px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-#formSection input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 15px;
-}
-
-/* 登録ボタン */
-#registerBtn {
-  width: 100%;
-  padding: 12px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 17px;
-}
-#registerBtn:hover {
-  background-color: #1d7f34;
-}
-
-/* メッセージ表示 */
-#message {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 15px;
-  color: #333;
-}
-
-/* ▼ レシート読み取りフォーム */
 .receipt-section {
   text-align: center;
   margin-bottom: 30px;
 }
 
-/* ▼ 複数フォームを横並びで表示する */
+/* 横並びフォーム用コンテナ */
 #formsContainer {
   display: flex;
   flex-wrap: nowrap;
@@ -636,35 +434,32 @@ footer {
   padding: 15px;
 }
 
-.food-form {
+/* レシート追加画面内のフォーム（上書きスタイル） */
+/* food-formは共通ですが、ここでは横並び用に幅などを調整 */
+#formsContainer .food-form {
   min-width: 260px;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  width: auto; /* 固定幅を解除 */
   display: flex;
   flex-direction: column;
 }
 
-.food-form label {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.food-form input {
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-/* ▼ 登録ボタンの中央配置 */
+/* 登録ボタン（初期非表示エリア） */
 .register-wrapper {
   text-align: center;
   margin: 30px 0;
 }
-
-
-.back-btn:hover {
-  background-color: #666;
+#registerBtn {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  display: inline-block;
+}
+#registerBtn:hover {
+  background-color: #1d7f34;
 }
