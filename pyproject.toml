@@ -20,6 +20,8 @@ dependencies = [
     "scikit-image>=0.21.0",
     "scipy>=1.10.0",
     "pyyaml>=6.0"
+    "requests>=2.32.5"
+    "PyJWT>=2.8.0"
 ]
 
 [project.optional-dependencies]
