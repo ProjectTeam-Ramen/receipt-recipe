@@ -1,23 +1,26 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-# 1. FastAPIのインスタンスを作成
-app = FastAPI()
+# routers
+from .routers import auth_routes, receipts
 
-# 2. ルート（/）へのGETリクエストに対する処理
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+# アプリケーションインスタンス
+app = FastAPI(title="Receipt-Recipe API")
 
-# 3. /items/ というエンドポイントへのGETリクエスト
-@app.get("/items/")
-def read_items():
-    # 実際にはここでデータベースからデータを取得する
-    return [{"name": "Item 1"}, {"name": "Item 2"}]
-
-# 4. パスパラメータ（/items/5 など）を受け取る
-# {item_id} の部分が動的に変わる
+# CORS(開発用) - 必要に応じて制限してください
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):  # 型ヒント(int)で自動的にバリデーション
-    return {"item_id": item_id, "description": f"This is item number {item_id}"}
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+app.include_router(auth_routes.router, prefix="/auth", tags=["auth"])
+app.include_router(receipts.router, prefix="/receipts", tags=["receipts"])
