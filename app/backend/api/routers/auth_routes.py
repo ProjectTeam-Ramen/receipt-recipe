@@ -1,12 +1,28 @@
+import hashlib
+import secrets
 from typing import Dict
 
 from fastapi import APIRouter, HTTPException, status
-from passlib.context import CryptContext
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 router = APIRouter()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# simple hash helpers (lightweight demo; replace with passlib/JWT in production)
+def _hash_password(password: str, salt: str = None) -> str:
+    if salt is None:
+        salt = secrets.token_hex(8)
+    h = hashlib.sha256((salt + password).encode("utf-8")).hexdigest()
+    return f"{salt}${h}"
+
+
+def _verify_password(password: str, stored: str) -> bool:
+    try:
+        salt, h = stored.split("$", 1)
+    except Exception:
+        return False
+    return _hash_password(password, salt) == stored
+
 
 # simple in-memory user store for demo purposes
 _USERS: Dict[str, Dict] = {}
@@ -15,12 +31,12 @@ _NEXT_USER_ID = 1
 
 class RegisterRequest(BaseModel):
     username: str
-    email: EmailStr
+    email: str
     password: str
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 
@@ -40,7 +56,7 @@ def register(req: RegisterRequest):
         "user_id": _NEXT_USER_ID,
         "username": req.username,
         "email": req.email,
-        "password_hash": pwd_context.hash(req.password),
+        "password_hash": _hash_password(req.password),
     }
     _USERS[req.email] = user
     _NEXT_USER_ID += 1
@@ -54,7 +70,7 @@ def register(req: RegisterRequest):
 @router.post("/login", response_model=TokenResponse)
 def login(req: LoginRequest):
     user = _USERS.get(req.email)
-    if not user or not pwd_context.verify(req.password, user["password_hash"]):
+    if not user or not _verify_password(req.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     # For demo, tokens are simple strings; replace with real JWT in production
     return {

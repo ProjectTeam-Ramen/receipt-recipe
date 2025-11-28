@@ -22,5 +22,5 @@ def health():
     return {"status": "ok"}
 
 
-app.include_router(auth_routes.router, prefix="/auth", tags=["auth"])
-app.include_router(receipts.router, prefix="/receipts", tags=["receipts"])
+app.include_router(auth_routes, prefix="/auth", tags=["auth"])
+app.include_router(receipts, prefix="/receipts", tags=["receipts"])

@@ -53,8 +53,8 @@ def _process_receipt_async(receipt_id: int, file_path: Path):
 
 @router.post("/upload", status_code=202)
 async def upload_receipt(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
-    background_tasks: Optional[BackgroundTasks] = None,
     callback_url: Optional[str] = None,
 ):
     global _NEXT_RECEIPT_ID
@@ -85,10 +85,7 @@ async def upload_receipt(
     }
 
     # schedule background processing (mock)
-    if background_tasks is not None:
-        background_tasks.add_task(_process_receipt_async, receipt_id, file_path)
-    else:
-        _process_receipt_async(receipt_id, file_path)
+    background_tasks.add_task(_process_receipt_async, receipt_id, file_path)
 
     return {
         "receipt_id": receipt_id,
