@@ -454,6 +454,28 @@ main {
   font-size: 17px;
   display: inline-block;
 }
-#registerBtn:hover {
-  background-color: #1d7f34;
+
+/* -------------------------------
+   食材一覧ボタン（.check-btn）
+   追加変更内容：
+   - ボタンの背景色を #17a2b8 に設定
+   - テキストカラーを白に変更
+   - 角を10px丸めてフラット感を強調
+   - hover 時に濃い色 (#138496) に変化するよう追加
+   - 幅を 260px に固定
+--------------------------------- */
+.check-btn {
+  background-color: #17a2b8; /* 基本色 */
+  color: white;              /* テキスト色 */
+  border: none;              
+  padding: 15px 30px;        /* 内側余白 */
+  border-radius: 10px;       /* 角丸 */
+  font-size: 18px;           /* 文字サイズ */
+  cursor: pointer;           
+  transition: background-color 0.3s; /* アニメーション */
+  width: 260px;              /* 横幅固定 */
+}
+
+.check-btn:hover {
+  background-color: #138496; /* hover 時の色 */
 }
