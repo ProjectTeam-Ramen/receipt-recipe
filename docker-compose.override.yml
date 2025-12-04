@@ -10,6 +10,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/workspace
+      - DATABASE_URL=mysql+pymysql://user:password@db:3306/receipt_recipe_db
       - DATABASE_URL_USERS=mysql+pymysql://user:password@db:3306/users_db
       - DATABASE_URL_FOOD_CATEGORIES=mysql+pymysql://user:password@db:3306/food_categories_db
       - DATABASE_URL_FOODS=mysql+pymysql://user:password@db:3306/foods_db

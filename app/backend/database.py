@@ -1,12 +1,17 @@
 import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
-# For SQLite we need check_same_thread=False
+DEFAULT_MYSQL_URL = "mysql+pymysql://user:password@db:3306/receipt_recipe_db"
+DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_MYSQL_URL)
+
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
+    connect_args=connect_args,
+    pool_pre_ping=True,
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

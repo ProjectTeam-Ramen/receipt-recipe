@@ -1,11 +1,12 @@
 import hashlib
 import secrets
-from datetime import datetime, timedelta
+import re
+from datetime import date, datetime, timedelta
 from typing import Dict, Optional
 
 import jwt
 from fastapi import APIRouter, Depends, Header, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from sqlalchemy.orm import Session
 
 from app.backend.database import get_db
@@ -18,6 +19,7 @@ JWT_SECRET = "change_this_secret_in_production"
 JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_SECONDS = 1800
 REFRESH_TOKEN_EXPIRE_DAYS = 7
+EMAIL_REGEX = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 
 
 def _hash_password(password: str, salt: Optional[str] = None) -> str:
@@ -39,11 +41,22 @@ class RegisterRequest(BaseModel):
     username: str
     email: str
     password: str
+    birthday: Optional[date] = None
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value: str) -> str:
+        return _validate_email_format(value)
 
 
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, value: str) -> str:
+        return _validate_email_format(value)
 
 
 class TokenResponse(BaseModel):
@@ -110,10 +123,21 @@ def _delete_refresh_token(db: Session, token: str) -> None:
         db.commit()
 
 
+def _normalize_email(value: str) -> str:
+    return value.strip().lower()
+
+
+def _validate_email_format(value: str) -> str:
+    stripped = value.strip()
+    if not EMAIL_REGEX.match(stripped):
+        raise ValueError("Invalid email format")
+    return stripped.lower()
+
+
 def get_current_user(
     authorization: Optional[str] = Header(None),
     db: Session = Depends(get_db),
-):
+) -> User:
     if not authorization:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing authorization"
@@ -147,30 +171,48 @@ def get_current_user(
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(req: RegisterRequest, db: Session = Depends(get_db)):
-    existing = db.query(User).filter(User.email == req.email).first()
+    email = _normalize_email(req.email)
+    username = req.username.strip()
+    if not username:
+        raise HTTPException(status_code=400, detail="Username is required")
+    if len(req.password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+    existing = db.query(User).filter(User.email == email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
 
     user = User(
-        username=req.username,
-        email=req.email,
+        username=username,
+        email=email,
         password_hash=_hash_password(req.password),
+        birthday=req.birthday,
     )
     db.add(user)
     db.commit()
     db.refresh(user)
-    return {"user_id": user.id, "username": user.username, "email": user.email}
+    return {
+        "user_id": user.user_id,
+        "username": user.username,
+        "email": user.email,
+        "birthday": user.birthday,
+        "created_at": user.created_at,
+    }
 
 
 @router.post("/login", response_model=TokenResponse)
 def login(req: LoginRequest, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == req.email).first()
-    if not user or not _verify_password(req.password, user.password_hash):
+    email = _normalize_email(req.email)
+    user = db.query(User).filter(User.email == email).first()
+    stored_hash = getattr(user, "password_hash", None) if user else None
+    if not user or not isinstance(stored_hash, str) or not _verify_password(req.password, stored_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    access = _create_access_token(req.email)
-    refresh = _create_refresh_token(req.email)
-    _store_refresh_token(db, refresh, user.id)
+    access = _create_access_token(email)
+    refresh = _create_refresh_token(email)
+    user_id = getattr(user, "user_id", None)
+    if not isinstance(user_id, int):
+        raise HTTPException(status_code=500, detail="User record is invalid")
+    _store_refresh_token(db, refresh, user_id)
     return {"access_token": access, "refresh_token": refresh}
 
 
@@ -185,7 +227,8 @@ def refresh(req: RefreshRequest, db: Session = Depends(get_db)):
     )
     if not db_token:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
-    if db_token.expires_at < datetime.utcnow():
+    expires_at = getattr(db_token, "expires_at", None)
+    if isinstance(expires_at, datetime) and expires_at < datetime.utcnow():
         db.delete(db_token)
         db.commit()
         raise HTTPException(status_code=401, detail="Refresh token expired")
