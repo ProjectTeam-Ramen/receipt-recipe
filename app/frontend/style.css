@@ -306,13 +306,6 @@ main {
 #addFoodBtn:hover {
   background-color: #218838;
 }
-#deleteFoodBtn {
-  background-color: #dc3545;
-  color: white;
-}
-#deleteFoodBtn:hover {
-  background-color: #c82333;
-}
 #receiptAddBtn {
   background-color: #ffc107;
   color: #333;
@@ -387,55 +380,6 @@ main {
 }
 .message-area .error {
   color: #dc3545;
-}
-
-/* ==============================
-   冷蔵庫：食材削除 (food-delete.html)
-============================== */
-.food-delete-main {
-  text-align: center;
-}
-.food-delete-main h2 {
-  color: #d9534f;
-  margin-bottom: 20px;
-}
-.food-delete-form {
-  background-color: #fff;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  text-align: left;
-  width: 320px;
-}
-.food-delete-form label {
-  display: block;
-  margin-top: 12px;
-  font-weight: bold;
-  color: #333;
-}
-.food-delete-form input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-.delete-confirm-btn {
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-}
-.delete-confirm-btn:hover {
-  background-color: #c9302c;
 }
 
 /* ==============================
