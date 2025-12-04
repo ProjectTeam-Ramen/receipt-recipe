@@ -17,11 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "food-add.html";
   });
 
-  // 食材削除ページへ移動
-  deleteFoodBtn.addEventListener("click", () => {
-    window.location.href = "food-delete.html";
-  });
-
   // レシート読み取りページへ移動
   receiptAddBtn.addEventListener("click", () => {
     window.location.href = "receipt-add.html";

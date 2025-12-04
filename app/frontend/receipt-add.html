@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>レシートから食材追加</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>レシート読み取り - 食材追加</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>Receipt Add</h1>
-    <button class="logout-btn" id="backBtn">back</button>
+    <h1>レシートから食材を追加</h1>
+    <button id="backBtn" class="logout-btn">戻る</button>
   </header>
 
-  <main class="receipt-add-main">
-    <h2>レシート読み取りで食材を追加</h2>
+  <main>
+    <!-- OCR読み取りUI（既存部分はそのまま） -->
+    <section class="receipt-section">
+      <h2>レシート読み取り</h2>
+      <input type="file" id="receiptInput" accept="image/*" />
+      <button id="scanBtn">読み取り開始</button>
+      <p id="scanMessage"></p>
+    </section>
 
-    <div class="upload-area">
-      <p>レシート画像を選択してください：</p>
-      <input type="file" id="receiptInput" accept="image/*">
-      <button id="analyzeBtn" class="analyze-btn">読み取る</button>
-    </div>
+    <!-- 🔽 読み取った食材のフォームを横並びで表示 -->
+    <section id="formsContainer"></section>
 
-    <div id="resultArea" class="result-area">
-      <p>読み取った食材はここに表示されます。</p>
+    <!-- 登録ボタン（最初は非表示） -->
+    <div class="register-wrapper">
+      <button id="registerBtn" class="submit-btn" style="display:none;">
+        すべて登録する
+      </button>
     </div>
+    
   </main>
 
   <script src="receipt-add.js"></script>
