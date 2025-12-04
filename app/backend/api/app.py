@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.backend.database import Base, engine
+
 # routers
 from .routers import auth_routes, receipts, users
 
@@ -26,3 +28,8 @@ def health():
 app.include_router(auth_routes, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(receipts, prefix="/api/v1/receipts", tags=["receipts"])
 app.include_router(users, prefix="/api/v1/users", tags=["users"])
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    Base.metadata.create_all(bind=engine)
