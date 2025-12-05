@@ -4,7 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.backend.database import Base, engine
 
 # routers
-from .routers import auth_routes, receipts, users
+from .routers.auth_routes import router as auth_router
+from .routers.receipts import router as receipts_router
+from .routers.users import router as users_router
 
 # アプリケーションインスタンス
 app = FastAPI(title="Receipt-Recipe API v1")
@@ -25,9 +27,9 @@ def health():
 
 
 # mount routers under the API version prefix to match the design doc base URL (/api/v1)
-app.include_router(auth_routes, prefix="/api/v1/auth", tags=["auth"])
-app.include_router(receipts, prefix="/api/v1/receipts", tags=["receipts"])
-app.include_router(users, prefix="/api/v1/users", tags=["users"])
+app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(receipts_router, prefix="/api/v1/receipts", tags=["receipts"])
+app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 
 
 @app.on_event("startup")
