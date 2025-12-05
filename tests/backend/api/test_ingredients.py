@@ -76,6 +76,31 @@ def test_create_and_list_ingredients():
             assert list_data["ingredients"][0]["food_name"] == "トマト"
 
             ingredient_id = create_data["user_food_id"]
+
+            consume_resp = client.post(
+                f"/api/v1/ingredients/{ingredient_id}/consume",
+                json={"quantity_g": 100},
+            )
+            assert consume_resp.status_code == 200
+            consume_data = consume_resp.json()
+            assert consume_data["quantity_g"] == 150
+            assert consume_data["status"] == "unused"
+
+            over_resp = client.post(
+                f"/api/v1/ingredients/{ingredient_id}/consume",
+                json={"quantity_g": 200},
+            )
+            assert over_resp.status_code == 400
+
+            finish_resp = client.post(
+                f"/api/v1/ingredients/{ingredient_id}/consume",
+                json={"quantity_g": 150},
+            )
+            assert finish_resp.status_code == 200
+            finish_data = finish_resp.json()
+            assert finish_data["quantity_g"] == 0
+            assert finish_data["status"] == "used"
+
             update_resp = client.patch(
                 f"/api/v1/ingredients/{ingredient_id}/status",
                 json={"status": "used"},

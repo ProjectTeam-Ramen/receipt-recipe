@@ -64,7 +64,13 @@ class UserFood(Base):
     expiration_date = Column(Date, nullable=True)
     purchase_date = Column(Date, nullable=True)
     status = Column(
-        SqlEnum(IngredientStatus, name="ingredient_status", native_enum=False),
+        SqlEnum(
+            IngredientStatus,
+            name="ingredient_status",
+            native_enum=False,
+            values_callable=lambda enum_cls: [status.value for status in enum_cls],
+            validate_strings=True,
+        ),
         nullable=False,
         default=IngredientStatus.UNUSED,
         server_default=IngredientStatus.UNUSED.value,

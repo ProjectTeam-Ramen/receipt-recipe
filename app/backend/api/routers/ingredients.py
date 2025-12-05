@@ -56,6 +56,10 @@ class IngredientStatusUpdateRequest(BaseModel):
     status: IngredientStatus
 
 
+class IngredientConsumeRequest(BaseModel):
+    quantity_g: float = Field(..., gt=0, le=100000)
+
+
 def _normalize(value: str) -> str:
     return value.strip()
 
@@ -212,6 +216,55 @@ def update_ingredient_status(
         raise HTTPException(status_code=404, detail="食材が見つかりません。")
 
     setattr(user_food, "status", body.status)
+    db.commit()
+    db.refresh(user_food)
+    return _to_response(user_food)
+
+
+@router.post("/{user_food_id}/consume", response_model=IngredientResponse)
+def consume_ingredient(
+    user_food_id: int,
+    body: IngredientConsumeRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    user_food = (
+        db.query(UserFood)
+        .filter(
+            UserFood.user_food_id == user_food_id,
+            UserFood.user_id == current_user.user_id,
+        )
+        .first()
+    )
+    if not user_food:
+        raise HTTPException(status_code=404, detail="食材が見つかりません。")
+    status_value_raw = getattr(user_food, "status")
+    status_value = (
+        IngredientStatus(status_value_raw)
+        if isinstance(status_value_raw, str)
+        else cast(IngredientStatus, status_value_raw)
+    )
+    if status_value == IngredientStatus.DELETED:
+        raise HTTPException(status_code=400, detail="削除済みの食材は更新できません。")
+
+    stored_quantity = getattr(user_food, "quantity_g")
+    current_quantity = (
+        Decimal(str(stored_quantity)) if stored_quantity is not None else Decimal("0")
+    )
+    consume_quantity = Decimal(str(body.quantity_g))
+    if consume_quantity > current_quantity:
+        raise HTTPException(
+            status_code=400, detail="在庫を超える数量は指定できません。"
+        )
+
+    remaining = current_quantity - consume_quantity
+    setattr(user_food, "quantity_g", remaining)
+    if remaining <= Decimal("0"):
+        setattr(user_food, "status", IngredientStatus.USED)
+        setattr(user_food, "quantity_g", Decimal("0"))
+    elif status_value == IngredientStatus.USED:
+        setattr(user_food, "status", IngredientStatus.UNUSED)
+
     db.commit()
     db.refresh(user_food)
     return _to_response(user_food)
