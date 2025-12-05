@@ -13,6 +13,8 @@ mysql -u root -p < init.sql
 
 `.env` もしくは環境変数で `DATABASE_URL`（例: `mysql+pymysql://user:password@127.0.0.1/receipt_recipe_db`）を指定してください。未設定の場合は `mysql+pymysql://user:password@db:3306/receipt_recipe_db` に接続します（`docker-compose.override.yml` の `db` サービス）。
 
+> Docker Compose で開発する場合は `docker compose up -d db` を実行すると `MYSQL_DATABASE=receipt_recipe_db` が自動で作成され、`init.sql` が初期化されます。もし既存のボリュームが残っていて `Access denied for user 'user'@'%' to database 'receipt_recipe_db'` が発生する場合は `docker compose down -v` でボリュームを削除したうえで再度 `docker compose up -d db` を実行してください（ボリュームを消すとデータは初期化されます）。
+
 > 既定では SQLite へのフォールバックは行わず、常に MySQL に書き込みます。SQLite を使いたい場合は明示的に `DATABASE_URL=sqlite:///./app.db` などを設定してください。
 
 ### 2. バックエンドの起動
