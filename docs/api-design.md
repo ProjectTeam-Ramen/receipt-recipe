@@ -333,7 +333,7 @@ GET /users/me/receipts/export?format=csv — データエクスポート
 
 ## 3. データモデル（要点）
 （前節から継承。主要フィールドは snake_case、日時は ISO8601）
-- User, Receipt, ReceiptDetail, Food, UserFood, Recipe, RecipeIngredient など。
+- User, Receipt, Food, UserFood, Recipe, RecipeIngredient など。
 
 （省略: 既存の詳細モデルは同様だが、型の表記を実値例に修正済み）
 

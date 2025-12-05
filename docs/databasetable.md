@@ -92,12 +92,3 @@
 | raw_name | VARCHAR(255) | UNI | NOT NULL | 読み取ったままの文字列 |
 | food_id | INT | FK | NULL | 正式な食材ID (紐付け先) |
 | status | VARCHAR(50) | | '未処理' | 状態 ('未処理', '処理済' 等) |
-
-## 9. receipt_details (レシート明細)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **detail_id** | INT | **PK** | AUTO_INCREMENT | 明細ID |
-| receipt_id | INT | FK | NOT NULL | レシートID |
-| mapping_id | INT | FK | NOT NULL | 辞書ID |
-| price | DECIMAL(10,2) | | 0.00 | 価格 |
-| quantity | DECIMAL(10,2) | | 1.00 | 個数 (レシート上の点数) |

@@ -248,6 +248,12 @@ mysql -h db -u user -ppassword receipt_recipe
 # アプリケーションを起動
 uv run uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
+cd /workspace
+uvicorn app.backend.api.app:app --host 0.0.0.0 --port 8000 --reload
+
+cd /workspace/app/frontend
+python -m http.server 5500
+
 # ブラウザで以下にアクセス:
 # http://localhost:8000
 # http://localhost:8000/docs (Swagger UI)

@@ -4,11 +4,14 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
 
 from app.backend.api.routers.auth_routes import get_current_user
 from app.backend.api.routers.ingredients import router as ingredients_router
 from app.backend.database import Base, get_db
-from app.backend.models import User
+from app.backend.models import Food, FoodCategory, User, UserFood
+
+_ = (Food, FoodCategory, UserFood)
 
 
 def _build_test_app():
@@ -18,7 +21,11 @@ def _build_test_app():
 
 
 def _setup_database():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False})
+    engine = create_engine(
+        "sqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
     Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     with TestingSessionLocal() as session:
@@ -60,12 +67,39 @@ def test_create_and_list_ingredients():
             create_data = create_resp.json()
             assert create_data["food_name"] == "トマト"
             assert create_data["quantity_g"] == 250
+            assert create_data["status"] == "unused"
 
             list_resp = client.get("/api/v1/ingredients/")
             assert list_resp.status_code == 200
             list_data = list_resp.json()
             assert list_data["total"] == 1
             assert list_data["ingredients"][0]["food_name"] == "トマト"
+
+            ingredient_id = create_data["user_food_id"]
+            update_resp = client.patch(
+                f"/api/v1/ingredients/{ingredient_id}/status",
+                json={"status": "used"},
+            )
+            assert update_resp.status_code == 200
+            assert update_resp.json()["status"] == "used"
+
+            used_resp = client.get("/api/v1/ingredients/?status=used")
+            assert used_resp.status_code == 200
+            assert used_resp.json()["total"] == 1
+
+            delete_resp = client.patch(
+                f"/api/v1/ingredients/{ingredient_id}/status",
+                json={"status": "deleted"},
+            )
+            assert delete_resp.status_code == 200
+
+            default_list_resp = client.get("/api/v1/ingredients/")
+            assert default_list_resp.status_code == 200
+            assert default_list_resp.json()["total"] == 0
+
+            deleted_list_resp = client.get("/api/v1/ingredients/?status=deleted")
+            assert deleted_list_resp.status_code == 200
+            assert deleted_list_resp.json()["total"] == 1
     finally:
         Base.metadata.drop_all(bind=engine)
         engine.dispose()

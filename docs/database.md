@@ -123,7 +123,6 @@ class Receipt(Base):
     purchase_datetime = Column(TIMESTAMP, nullable=False, server_default="CURRENT_TIMESTAMP")
     
     user = relationship("User", back_populates="receipts")
-    details = relationship("ReceiptDetail", back_populates="receipt")
 
 class RawFoodMapping(Base):
     __tablename__ = "raw_food_mappings"
@@ -133,17 +132,6 @@ class RawFoodMapping(Base):
     status = Column(String(50), nullable=False, default='未処理')
     
     food = relationship("Food")
-
-class ReceiptDetail(Base):
-    __tablename__ = "receipt_details"
-    detail_id = Column(Integer, primary_key=True, autoincrement=True)
-    receipt_id = Column(Integer, ForeignKey("receipts.receipt_id"), nullable=False)
-    mapping_id = Column(Integer, ForeignKey("raw_food_mappings.mapping_id"), nullable=False)
-    price = Column(DECIMAL(10, 2), nullable=False, default=0.00)
-    quantity = Column(DECIMAL(10, 2), nullable=False, default=1.00)
-    
-    receipt = relationship("Receipt", back_populates="details")
-    mapping = relationship("RawFoodMapping")
 
 
 # --- 3. APIスキーマ (Pydanticモデル) ---
@@ -310,16 +298,7 @@ async def upload_receipt_for_ocr(
                 mapping = new_mapping
                 current_status = "new"
 
-            # 5. レシート明細に追加
-            new_detail = ReceiptDetail(
-                receipt_id=new_receipt.receipt_id,
-                mapping_id=mapping.mapping_id,
-                quantity=1.00, # 個数や価格はOCRからは難しいので仮置き
-                price=0.00
-            )
-            db.add(new_detail)
-
-            # 6. 結果リストに追加
+            # 5. 結果リストに追加
             processed_items.append(ReceiptProcessItemSchema(
                 raw_name=raw_text,
                 confidence=float(prob),
@@ -328,8 +307,8 @@ async def upload_receipt_for_ocr(
                 mapped_food_name=food_name
             ))
 
-        db.commit()
-        return processed_items
+    db.commit()
+    return processed_items
 
     except Exception as e:
         db.rollback()

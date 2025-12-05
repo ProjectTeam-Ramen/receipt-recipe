@@ -1,4 +1,4 @@
-from .food import Food, FoodCategory, UserFood
+from .food import Food, FoodCategory, IngredientStatus, UserFood
 from .refresh_token import RefreshToken
 from .user import User
 
@@ -8,4 +8,5 @@ __all__ = [
     "FoodCategory",
     "Food",
     "UserFood",
+    "IngredientStatus",
 ]

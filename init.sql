@@ -32,6 +32,7 @@ CREATE TABLE user_foods (
     quantity_g DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (quantity_g >= 0),
     expiration_date DATE NULL,
     purchase_date DATE NULL,
+    status ENUM('unused','used','deleted') NOT NULL DEFAULT 'unused',
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -70,15 +71,16 @@ CREATE TABLE raw_food_mappings (
     FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE receipt_details (
-    detail_id INT PRIMARY KEY AUTO_INCREMENT,
-    receipt_id INT NOT NULL,
-    mapping_id INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (price >= 0),
-    quantity DECIMAL(10,2) NOT NULL DEFAULT 1.00 CHECK (quantity >= 0),
-    FOREIGN KEY (receipt_id) REFERENCES receipts(receipt_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (mapping_id) REFERENCES raw_food_mappings(mapping_id) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE refresh_tokens (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(512) NOT NULL UNIQUE,
+    user_id INT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
 
 CREATE INDEX idx_foods_category_id ON foods(category_id);
 CREATE INDEX idx_user_foods_user_id ON user_foods(user_id);
@@ -87,8 +89,6 @@ CREATE INDEX idx_recipe_foods_recipe_id ON recipe_foods(recipe_id);
 CREATE INDEX idx_recipe_foods_food_id ON recipe_foods(food_id);
 CREATE INDEX idx_receipts_user_id ON receipts(user_id);
 CREATE INDEX idx_raw_food_mappings_food_id ON raw_food_mappings(food_id);
-CREATE INDEX idx_receipt_details_receipt_id ON receipt_details(receipt_id);
-CREATE INDEX idx_receipt_details_mapping_id ON receipt_details(mapping_id);
 
 DELIMITER //
 

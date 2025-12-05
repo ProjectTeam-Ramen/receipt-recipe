@@ -12,7 +12,7 @@
 
 ## 概要
 
-このプロジェクトでは MySQL 8.0 を使用し、アプリケーションの要件に合わせて **9つのデータベース** を分離して運用します。重要な機能として、OCRで読み取った不正確な文字列（例: 「こしひか」）を正規化された食材マスター（例: 「お米」）に紐付けるための中間辞書テーブル（raw_food_mappings）を用意しています。`init.sql` によって起動時に9つのデータベースが自動作成されます。
+このプロジェクトでは MySQL 8.0 を使用し、アプリケーションの要件に合わせて **8つのデータベース** を分離して運用します。重要な機能として、OCRで読み取った不正確な文字列（例: 「こしひか」）を正規化された食材マスター（例: 「お米」）に紐付けるための中間辞書テーブル（raw_food_mappings）を用意しています。`init.sql` によって起動時に8つのデータベースが自動作成されます。
 
 **使用技術:**
 - MySQL 8.0
@@ -24,7 +24,7 @@
 
 ## データベース構成
 
-以下の9データベースを用意します（それぞれ `*_db` の名前で作成済み）。
+以下の8データベースを用意します（それぞれ `*_db` の名前で作成済み）。
 
 | No. | データベース名 | テーブル名 | 目的 |
 |-----|---------------|-----------|------|
@@ -36,7 +36,6 @@
 | 6 | `recipe_foods_db` | `recipe_foods` | レシピ材料（recipe_food_id, recipe_id, food_id, quantity, unit） |
 | 7 | `receipts_db` | `receipts` | レシート情報（receipt_id, user_id, store_name, purchase_datetime） |
 | 8 | `raw_food_mappings_db` | `raw_food_mappings` | **読み取り食材辞書**（mapping_id, raw_name, food_id, status）※OCR文字列とfoodsを紐付ける中間テーブル |
-| 9 | `receipt_details_db` | `receipt_details` | レシート明細（detail_id, receipt_id, mapping_id, price, quantity） |
 
 ### 重要: raw_food_mappings_db の役割
 
@@ -51,7 +50,6 @@
 **データフロー:**
 1. レシートOCR → `raw_name` を `raw_food_mappings` に登録
 2. 管理者または自動マッチングロジックで `food_id` を紐付け
-3. `receipt_details` は `mapping_id` を参照し、間接的に `foods` にアクセス
 
 ---
 
@@ -78,7 +76,7 @@ mysql+pymysql://user:password@db:3306/<database_name>
 mysql+aiomysql://user:password@db:3306/<database_name>
 ```
 
-**環境変数（9つのデータベース）:**
+**環境変数（8つのデータベース）:**
 
 ```bash
 DATABASE_URL_USERS=mysql+pymysql://user:password@db:3306/users_db
@@ -89,7 +87,6 @@ DATABASE_URL_RECIPES=mysql+pymysql://user:password@db:3306/recipes_db
 DATABASE_URL_RECIPE_FOODS=mysql+pymysql://user:password@db:3306/recipe_foods_db
 DATABASE_URL_RECEIPTS=mysql+pymysql://user:password@db:3306/receipts_db
 DATABASE_URL_RAW_FOOD_MAPPINGS=mysql+pymysql://user:password@db:3306/raw_food_mappings_db
-DATABASE_URL_RECEIPT_DETAILS=mysql+pymysql://user:password@db:3306/receipt_details_db
 ```
 
 これらの環境変数は `docker-compose.override.yml`、`docker-compose.prod.yml`、`.env.example` で設定されています。
@@ -107,7 +104,7 @@ mysql -h db -u user -ppassword users_db
 # raw_food_mappings_db に接続
 mysql -h db -u user -ppassword raw_food_mappings_db
 
-# 9つのデータベース一覧を確認
+# 8つのデータベース一覧を確認
 mysql -h db -u user -ppassword -e "SHOW DATABASES;"
 ```
 
@@ -149,7 +146,7 @@ async def test_connection():
 asyncio.run(test_connection())
 ```
 
-### 4. 全9データベースへの接続確認スクリプト
+### 4. 全8データベースへの接続確認スクリプト
 
 ```python
 from sqlalchemy import create_engine
@@ -163,7 +160,6 @@ databases = [
     "recipe_foods_db",
     "receipts_db",
     "raw_food_mappings_db",
-    "receipt_details_db"
 ]
 
 for db_name in databases:
@@ -187,21 +183,20 @@ for db_name in databases:
    docker-compose logs db
    ```
 
-2. **データベース一覧の確認（9つあるか確認）:**
+2. **データベース一覧の確認（8つあるか確認）:**
    ```bash
    mysql -h db -u user -ppassword -e "SHOW DATABASES;"
    ```
    
-   以下の9つが表示されるはずです:
-   - users_db
-   - food_categories_db
-   - foods_db
-   - user_foods_db
-   - recipes_db
-   - recipe_foods_db
-   - receipts_db
-   - raw_food_mappings_db
-   - receipt_details_db
+    以下の8つが表示されるはずです:
+    - users_db
+    - food_categories_db
+    - foods_db
+    - user_foods_db
+    - recipes_db
+    - recipe_foods_db
+    - receipts_db
+    - raw_food_mappings_db
 
 3. **ボリュームのリセット（初期化）:**
    ```bash
@@ -242,9 +237,6 @@ docker-compose exec db mysql -u user -ppassword -e "SHOW GRANTS FOR 'user'@'%';"
    - または自動マッチングロジック（類似度検索など）で紐付け
    - 紐付け完了後、`status` を '処理済' に更新
 
-3. **レシート明細での参照:**
-   - `receipt_details` は `mapping_id` を参照
-   - `mapping_id` → `raw_food_mappings` → `food_id` → `foods` の順で食材情報を取得
 
 **例: 未マッピング食材の検索**
 ```sql
@@ -259,7 +251,7 @@ AND status = '未処理';
 
 - `docker-compose.override.yml` - 開発環境の設定（データベースの環境変数）
 - `docker-compose.prod.yml` - 本番環境の設定（データベースの環境変数）
-- `init.sql` - **9データベースの作成と権限付与**
+- `init.sql` - **8データベースの作成と権限付与**
 - `.env.example` - 環境変数のサンプル（データベース分）
 
 ---

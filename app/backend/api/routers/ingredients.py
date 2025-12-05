@@ -1,15 +1,21 @@
 from datetime import date
 from decimal import Decimal
-from typing import List, Optional
+from typing import List, Optional, cast
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.backend.database import get_db
-from app.backend.models import Food, FoodCategory, User, UserFood
+from app.backend.models import (
+    Food,
+    FoodCategory,
+    IngredientStatus,
+    User,
+    UserFood,
+)
 
 from .auth_routes import get_current_user
 
@@ -24,10 +30,11 @@ class IngredientCreateRequest(BaseModel):
     purchase_date: Optional[date] = None
     expiration_date: Optional[date] = None
     category: Optional[str] = Field(None, max_length=100)
+    status: IngredientStatus = IngredientStatus.UNUSED
 
 
 class IngredientResponse(BaseModel):
-    model_config = ConfigDict(str_strip_whitespace=True)
+    model_config = ConfigDict(str_strip_whitespace=True, use_enum_values=True)
 
     user_food_id: int
     food_id: int
@@ -35,11 +42,18 @@ class IngredientResponse(BaseModel):
     quantity_g: float
     purchase_date: Optional[date] = None
     expiration_date: Optional[date] = None
+    status: IngredientStatus
 
 
 class IngredientListResponse(BaseModel):
     total: int
     ingredients: List[IngredientResponse]
+
+
+class IngredientStatusUpdateRequest(BaseModel):
+    model_config = ConfigDict(use_enum_values=True)
+
+    status: IngredientStatus
 
 
 def _normalize(value: str) -> str:
@@ -101,16 +115,26 @@ def _get_or_create_food(db: Session, name: str, category_id: int) -> Food:
 
 
 def _to_response(user_food: UserFood) -> IngredientResponse:
-    quantity = user_food.quantity_g
+    quantity = cast(Decimal, user_food.quantity_g)
     if isinstance(quantity, Decimal):
         quantity = float(quantity)
+    purchase_date = cast(Optional[date], user_food.purchase_date)
+    expiration_date = cast(Optional[date], user_food.expiration_date)
+    user_food_id = cast(int, user_food.user_food_id)
+    food_id = cast(int, user_food.food_id)
+    status_raw = user_food.status
+    if isinstance(status_raw, str):
+        status_value: IngredientStatus = IngredientStatus(status_raw)
+    else:
+        status_value = cast(IngredientStatus, status_raw)
     return IngredientResponse(
-        user_food_id=user_food.user_food_id,
-        food_id=user_food.food_id,
+        user_food_id=user_food_id,
+        food_id=food_id,
         food_name=user_food.food.food_name if user_food.food else "",
         quantity_g=quantity,
-        purchase_date=user_food.purchase_date,
-        expiration_date=user_food.expiration_date,
+        purchase_date=purchase_date,
+        expiration_date=expiration_date,
+        status=status_value,
     )
 
 
@@ -127,7 +151,7 @@ def create_ingredient(
         raise HTTPException(status_code=400, detail="食材名を入力してください。")
 
     category = _get_or_create_category(db, body.category)
-    food = _get_or_create_food(db, name, category.category_id)
+    food = _get_or_create_food(db, name, cast(int, category.category_id))
 
     user_food = UserFood(
         user_id=current_user.user_id,
@@ -135,6 +159,7 @@ def create_ingredient(
         quantity_g=body.quantity_g,
         purchase_date=body.purchase_date,
         expiration_date=body.expiration_date,
+        status=body.status,
     )
     db.add(user_food)
     db.commit()
@@ -144,6 +169,10 @@ def create_ingredient(
 
 @router.get("/", response_model=IngredientListResponse)
 def list_ingredients(
+    status: Optional[IngredientStatus] = Query(
+        None,
+        description="絞り込み対象のステータス。指定しない場合は削除済み以外を返します。",
+    ),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
@@ -153,8 +182,36 @@ def list_ingredients(
         .join(Food)
         .order_by(UserFood.expiration_date.is_(None), UserFood.expiration_date)
     )
+    if status:
+        query = query.filter(UserFood.status == status)
+    else:
+        query = query.filter(UserFood.status != IngredientStatus.DELETED)
     items = query.all()
     return IngredientListResponse(
         total=len(items),
         ingredients=[_to_response(item) for item in items],
     )
+
+
+@router.patch("/{user_food_id}/status", response_model=IngredientResponse)
+def update_ingredient_status(
+    user_food_id: int,
+    body: IngredientStatusUpdateRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    user_food = (
+        db.query(UserFood)
+        .filter(
+            UserFood.user_food_id == user_food_id,
+            UserFood.user_id == current_user.user_id,
+        )
+        .first()
+    )
+    if not user_food:
+        raise HTTPException(status_code=404, detail="食材が見つかりません。")
+
+    setattr(user_food, "status", body.status)
+    db.commit()
+    db.refresh(user_food)
+    return _to_response(user_food)

@@ -1,7 +1,16 @@
+from enum import Enum
+
 from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, Numeric, String
+from sqlalchemy import Enum as SqlEnum
 from sqlalchemy.orm import relationship
 
 from app.backend.database import Base
+
+
+class IngredientStatus(str, Enum):
+    UNUSED = "unused"
+    USED = "used"
+    DELETED = "deleted"
 
 
 class FoodCategory(Base):
@@ -54,6 +63,12 @@ class UserFood(Base):
     quantity_g = Column(Numeric(10, 2), nullable=False, default=0)
     expiration_date = Column(Date, nullable=True)
     purchase_date = Column(Date, nullable=True)
+    status = Column(
+        SqlEnum(IngredientStatus, name="ingredient_status", native_enum=False),
+        nullable=False,
+        default=IngredientStatus.UNUSED,
+        server_default=IngredientStatus.UNUSED.value,
+    )
 
     food = relationship("Food", back_populates="user_foods")
     user = relationship("User", back_populates="user_foods")

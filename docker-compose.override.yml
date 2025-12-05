@@ -19,7 +19,6 @@ services:
       - DATABASE_URL_RECIPE_FOODS=mysql+pymysql://user:password@db:3306/recipe_foods_db
       - DATABASE_URL_RECEIPTS=mysql+pymysql://user:password@db:3306/receipts_db
       - DATABASE_URL_RAW_FOOD_MAPPINGS=mysql+pymysql://user:password@db:3306/raw_food_mappings_db
-      - DATABASE_URL_RECEIPT_DETAILS=mysql+pymysql://user:password@db:3306/receipt_details_db
     command: tail -f /dev/null
     depends_on:
       - db

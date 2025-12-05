@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Optional
 
 from fastapi import Depends, FastAPI
@@ -116,7 +117,6 @@ class Receipt(Base):
     )
 
     user = relationship("User", back_populates="receipts")
-    details = relationship("ReceiptDetail", back_populates="receipt")
 
 
 class RawFoodMapping(Base):
@@ -127,20 +127,6 @@ class RawFoodMapping(Base):
     status = Column(String(50), nullable=False, default="未処理")
 
     food = relationship("Food")
-
-
-class ReceiptDetail(Base):
-    __tablename__ = "receipt_details"
-    detail_id = Column(Integer, primary_key=True, autoincrement=True)
-    receipt_id = Column(Integer, ForeignKey("receipts.receipt_id"), nullable=False)
-    mapping_id = Column(
-        Integer, ForeignKey("raw_food_mappings.mapping_id"), nullable=False
-    )
-    price = Column(DECIMAL(10, 2), nullable=False, default=0.00)
-    quantity = Column(DECIMAL(10, 2), nullable=False, default=1.00)
-
-    receipt = relationship("Receipt", back_populates="details")
-    mapping = relationship("RawFoodMapping")
 
 
 # --- 3. APIスキーマ (Pydanticモデル) ---
