@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>冷蔵庫内の食材一覧</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>冷蔵庫内の食材一覧</h1>
@@ -23,11 +25,15 @@
         </tr>
       </thead>
       <tbody id="foodList">
-        <tr><td colspan="5">データを読み込み中...</td></tr>
+        <tr>
+          <td colspan="5">データを読み込み中...</td>
+        </tr>
       </tbody>
     </table>
   </main>
 
-  <script src="fridge-check.js"></script>
+  <script src="config.js" defer></script>
+  <script src="fridge-check.js" defer></script>
 </body>
+
 </html>

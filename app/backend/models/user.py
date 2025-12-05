@@ -21,3 +21,9 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+
+    user_foods = relationship(
+        "UserFood",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )

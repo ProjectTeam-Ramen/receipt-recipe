@@ -5,6 +5,7 @@ from app.backend.database import Base, engine
 
 # routers
 from .routers.auth_routes import router as auth_router
+from .routers.ingredients import router as ingredients_router
 from .routers.receipts import router as receipts_router
 from .routers.users import router as users_router
 
@@ -28,6 +29,9 @@ def health():
 
 # mount routers under the API version prefix to match the design doc base URL (/api/v1)
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(
+    ingredients_router, prefix="/api/v1/ingredients", tags=["ingredients"]
+)
 app.include_router(receipts_router, prefix="/api/v1/receipts", tags=["receipts"])
 app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 

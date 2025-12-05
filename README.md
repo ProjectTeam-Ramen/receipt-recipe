@@ -20,10 +20,10 @@ mysql -u root -p < init.sql
 ### 2. バックエンドの起動
 
 ```bash
-uvicorn app.backend.api.app:app --host 127.0.0.1 --port 8000 --reload
+uvicorn app.backend.api.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-FastAPI は `http://127.0.0.1:8000/api/v1` で待ち受け、JWT 認証 / ユーザー登録 / 受信箱 API を提供します。
+FastAPI はホスト OS からは `http://127.0.0.1:8000/api/v1`（またはポートフォワードに応じたアドレス）で到達できます。開発用コンテナ内で `--host 127.0.0.1` のまま起動するとホスト OS から接続できず、フロントエンドが `Failed to fetch` になるので注意してください。
 
 ### 3. フロントエンドの配信
 
