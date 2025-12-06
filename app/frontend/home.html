@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホーム画面</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>HOME</h1>
+    <button class="logout-btn" id="logoutBtn">Log out</button>
+  </header>
+
+  <main>
+    <h2>Menu</h2>
+    <p id="welcomeMsg" class="welcome-text">読み込み中...</p>
+    <p id="statusMessage" class="status-message" role="status"></p>
+
+    <div class="center-container">
+      <div class="menu-buttons">
+        <button class="recipe-btn" id="recipeBtn">レシピ検索</button>
+        <button class="fridge-btn" id="fridgeBtn">冷蔵庫管理メニュー</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="config.js" defer></script>
+  <script src="home.js" defer></script>
+</body>
+</html>

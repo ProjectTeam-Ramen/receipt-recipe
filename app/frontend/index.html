@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン画面</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="login-container">
+    <h1>ログイン</h1>
+    <form id="loginForm" novalidate>
+      <label for="email">メールアドレス</label>
+      <input type="email" id="email" name="email" autocomplete="email" required>
+      <br>
+      <label for="password">パスワード</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+      <br>
+      <button type="submit">ログイン</button>
+    </form>
+    <p id="message" class="status-message" role="status"></p>
+    <div class="form-footer">
+      <span>アカウントをお持ちでない方はこちら</span>
+      <a class="text-link" href="register.html">新規登録</a>
+    </div>
+  </div>
+
+  <script src="config.js" defer></script>
+  <script src="index.js" defer></script>
+</body>
+
+</html>

@@ -23,6 +23,9 @@ FROM nvcr.io/nvidia/pytorch:22.07-py3
 # uvをインストール
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
+# MySQLクライアントをインストール
+RUN apt-get update && apt-get install -y mysql-client && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /workspace
 
 # プロジェクトファイルをコピー
