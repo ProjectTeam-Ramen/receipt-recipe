@@ -30,6 +30,7 @@ class Recipe:
         prep_time: int,
         calories: int,
         feature_vector: np.ndarray,
+        image_url: Optional[str] = None,
     ):
         self.id = id
         self.name = name
@@ -37,6 +38,7 @@ class Recipe:
         self.prep_time = prep_time  # 調理時間（分）
         self.calories = calories  # カロリー（kcal）
         self.feature_vector = feature_vector  # コサイン類似度計算用の特徴ベクトル
+        self.image_url = image_url
 
 
 class RecommendationRequest(BaseModel):

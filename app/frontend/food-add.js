@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("backBtn");
   const foodForm = document.getElementById("foodForm");
   const messageArea = document.getElementById("messageArea");
+  const foodSelect = document.getElementById("foodSelect");
+  const foodFilter = document.getElementById("foodFilter");
   const submitBtn = foodForm.querySelector("button[type='submit']");
+  let allFoods = [];
 
   if (!localStorage.getItem(STORAGE_KEYS.refreshToken)) {
     redirectToLogin();
@@ -20,17 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "fridge-control.html";
   });
 
+  loadFoodMaster().catch((error) => {
+    console.error("食材一覧の取得に失敗", error);
+    setMessage(messageArea, "食材一覧の取得に失敗しました。再読み込みしてください。", "error");
+  });
+
+  foodFilter?.addEventListener("input", () => {
+    const keyword = foodFilter.value.trim().toLowerCase();
+    const filtered = keyword
+      ? allFoods.filter((food) => food.food_name.toLowerCase().includes(keyword))
+      : allFoods;
+    renderFoodOptions(filtered);
+  });
+
   foodForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     setMessage(messageArea, "", "info");
 
-    const name = document.getElementById("foodName").value.trim();
+    const foodId = Number(foodSelect?.value);
     const amountRaw = document.getElementById("foodAmount").value.trim();
     const purchaseDate = document.getElementById("purchaseDate").value;
     const expirationDate = document.getElementById("expirationDate").value;
 
-    if (!name || !amountRaw) {
-      setMessage(messageArea, "すべての項目を入力してください。", "error");
+    if (!foodId || !amountRaw) {
+      setMessage(messageArea, "食材と数量を入力してください。", "error");
       return;
     }
 
@@ -52,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name,
+          food_id: foodId,
           quantity_g: quantity,
           purchase_date: purchaseDate || null,
           expiration_date: expirationDate || null,
@@ -69,12 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(data?.detail || "食材の追加に失敗しました。");
       }
 
+      const addedFood = allFoods.find((f) => f.food_id === foodId);
+      const label = addedFood ? addedFood.food_name : data.food_name;
       setMessage(
         messageArea,
-        `「${data.food_name}（${data.quantity_g}g）」を追加しました。`,
+        `「${label}（${data.quantity_g}g）」を追加しました。`,
         "success",
       );
       foodForm.reset();
+      renderFoodOptions(allFoods);
     } catch (error) {
       console.error(error);
       setMessage(messageArea, error.message || "食材の追加に失敗しました。", "error");
@@ -83,6 +102,30 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.textContent = "追加";
     }
   });
+
+  async function loadFoodMaster() {
+    const token = await ensureValidAccessToken();
+    const response = await fetch(`${API_BASE_URL}/foods?limit=500`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data?.detail || "食材一覧の取得に失敗しました。");
+    }
+    allFoods = data?.foods ?? [];
+    renderFoodOptions(allFoods);
+  }
+
+  function renderFoodOptions(list) {
+    if (!foodSelect) return;
+    foodSelect.innerHTML = '<option value="" disabled selected>食材を選択してください</option>';
+    list.forEach((food) => {
+      const option = document.createElement("option");
+      option.value = String(food.food_id);
+      option.textContent = food.food_name;
+      foodSelect.appendChild(option);
+    });
+  }
 });
 
 function setMessage(container, text, type) {

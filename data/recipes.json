@@ -1,0 +1,1632 @@
+[
+  {
+    "name": "肉じゃが",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "じゃがいも",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "豚肉",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "豚の生姜焼き",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "豚肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "ハンバーグ",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "ひき肉",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "牛乳",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ケチャップ・ソース",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "鶏の唐揚げ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "鶏肉",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "片栗粉",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "揚げ油",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "ロールキャベツ",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "キャベツ",
+        "quantity_g": 800.0
+      },
+      {
+        "name": "ひき肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 400.0
+      }
+    ]
+  },
+  {
+    "name": "筑前煮",
+    "cooking_time": 37,
+    "calories": 555,
+    "ingredients": [
+      {
+        "name": "鶏肉",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "レンコン",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ごぼう",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "こんにゃく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "椎茸",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "ピーマンの肉詰め",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "ピーマン",
+        "quantity_g": 600.0
+      },
+      {
+        "name": "ひき肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "小麦粉",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "豚肉と野菜のスタミナ炒め",
+    "cooking_time": 34,
+    "calories": 510,
+    "ingredients": [
+      {
+        "name": "豚肉",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "キャベツ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ピーマン",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "もやし",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "ごま油",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "鶏肉のクリーム煮",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "鶏肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "しめじ",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "牛乳",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "生クリーム",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "小麦粉",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      }
+    ]
+  },
+  {
+    "name": "すき焼き風煮",
+    "cooking_time": 37,
+    "calories": 555,
+    "ingredients": [
+      {
+        "name": "牛肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "白菜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "春雨",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "豆腐",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 60.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 30.0
+      }
+    ]
+  },
+  {
+    "name": "鮭のムニエル",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "鮭",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "小麦粉",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      },
+      {
+        "name": "レモン",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "サバの味噌煮",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "鯖",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "味噌",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 200.0
+      }
+    ]
+  },
+  {
+    "name": "ブリ大根",
+    "cooking_time": 34,
+    "calories": 510,
+    "ingredients": [
+      {
+        "name": "ブリ",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "大根",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 300.0
+      }
+    ]
+  },
+  {
+    "name": "アジの南蛮漬け",
+    "cooking_time": 34,
+    "calories": 510,
+    "ingredients": [
+      {
+        "name": "アジ",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ピーマン",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "酢",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "片栗粉",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "エビチリ",
+    "cooking_time": 37,
+    "calories": 555,
+    "ingredients": [
+      {
+        "name": "えび",
+        "quantity_g": 1500.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ケチャップ",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 10.0
+      },
+      {
+        "name": "片栗粉",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "唐辛子",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "イカと大根の煮物",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "いか",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "大根",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "タコときゅうりの酢の物",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "タコ",
+        "quantity_g": 150.0
+      },
+      {
+        "name": "きゅうり",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "わかめ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "酢",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 5.0
+      }
+    ]
+  },
+  {
+    "name": "アサリの酒蒸し",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "あさり",
+        "quantity_g": 500.0
+      },
+      {
+        "name": "酒",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 10.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "マグロアボカドユッケ",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "マグロ",
+        "quantity_g": 150.0
+      },
+      {
+        "name": "アボカド",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "卵黄",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "ごま油",
+        "quantity_g": 5.0
+      },
+      {
+        "name": "白ごま",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "鮭のホイル焼き",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "鮭",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "えのき",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 10.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "親子丼",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "鶏肉",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "米",
+        "quantity_g": 200.0
+      }
+    ]
+  },
+  {
+    "name": "カレーライス",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "豚肉",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "じゃがいも",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "カレールウ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 800.0
+      },
+      {
+        "name": "米",
+        "quantity_g": 200.0
+      }
+    ]
+  },
+  {
+    "name": "チャーハン",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "米",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ハム",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ごま油",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "ナポリタン",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "パスタ",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "ウインナー",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "ピーマン",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ケチャップ",
+        "quantity_g": 75.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "カルボナーラ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "パスタ",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "ベーコン",
+        "quantity_g": 80.0
+      },
+      {
+        "name": "卵黄",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "生クリーム",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "チーズ",
+        "quantity_g": 40.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "タラコスパゲッティ",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "パスタ",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "たらこ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 5.0
+      },
+      {
+        "name": "わかめ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "焼きそば",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "中華麺",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "豚肉",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "キャベツ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "もやし",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ソース",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "鍋焼きうどん",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "うどん",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "鶏肉",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "椎茸",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "牛丼",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "牛肉",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "米",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "きのこリゾット",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "米",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "しめじ",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "舞茸",
+        "quantity_g": 50.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "チーズ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 600.0
+      }
+    ]
+  },
+  {
+    "name": "ポテトサラダ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "じゃがいも",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "きゅうり",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ハム",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "マヨネーズ",
+        "quantity_g": 75.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "酢",
+        "quantity_g": 5.0
+      }
+    ]
+  },
+  {
+    "name": "きんぴらごぼう",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "ごぼう",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "ごま油",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "白ごま",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "ほうれん草の胡麻和え",
+    "cooking_time": 22,
+    "calories": 330,
+    "ingredients": [
+      {
+        "name": "ほうれん草",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "すりごま",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 10.0
+      }
+    ]
+  },
+  {
+    "name": "揚げ出し豆腐",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "豆腐",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "片栗粉",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "大根",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "揚げ油",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "カボチャの煮付け",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "カボチャ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 300.0
+      }
+    ]
+  },
+  {
+    "name": "コールスローサラダ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "キャベツ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "コーン",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "マヨネーズ",
+        "quantity_g": 60.0
+      },
+      {
+        "name": "酢",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 5.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "ナスの揚げ浸し",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "ナス",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "揚げ油",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "ツナサラダ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "レタス",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "トマト",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "きゅうり",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ツナ缶",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "マヨネーズ",
+        "quantity_g": 45.0
+      },
+      {
+        "name": "レモン",
+        "quantity_g": 5.0
+      },
+      {
+        "name": "塩コショウ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "厚揚げとほうれん草の煮浸し",
+    "cooking_time": 22,
+    "calories": 330,
+    "ingredients": [
+      {
+        "name": "厚揚げ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ほうれん草",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "みりん",
+        "quantity_g": 15.0
+      }
+    ]
+  },
+  {
+    "name": "冷奴",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "豆腐",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "生姜",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "わかめ",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "豚汁",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "豚肉",
+        "quantity_g": 150.0
+      },
+      {
+        "name": "大根",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ごぼう",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "こんにゃく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "味噌",
+        "quantity_g": 45.0
+      }
+    ]
+  },
+  {
+    "name": "クラムチャウダー",
+    "cooking_time": 34,
+    "calories": 510,
+    "ingredients": [
+      {
+        "name": "あさり",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "ベーコン",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "じゃがいも",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "牛乳",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "小麦粉",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      }
+    ]
+  },
+  {
+    "name": "ミネストローネ",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "人参",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "キャベツ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ベーコン",
+        "quantity_g": 300.0
+      },
+      {
+        "name": "にんにく",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 600.0
+      }
+    ]
+  },
+  {
+    "name": "わかめと卵のスープ",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "わかめ",
+        "quantity_g": 15.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "水",
+        "quantity_g": 600.0
+      },
+      {
+        "name": "醤油",
+        "quantity_g": 5.0
+      },
+      {
+        "name": "ごま油",
+        "quantity_g": 5.0
+      }
+    ]
+  },
+  {
+    "name": "お味噌汁",
+    "cooking_time": 22,
+    "calories": 330,
+    "ingredients": [
+      {
+        "name": "豆腐",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "わかめ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ネギ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "味噌",
+        "quantity_g": 45.0
+      }
+    ]
+  },
+  {
+    "name": "サンドイッチ",
+    "cooking_time": 31,
+    "calories": 465,
+    "ingredients": [
+      {
+        "name": "食パン",
+        "quantity_g": 600.0
+      },
+      {
+        "name": "レタス",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "トマト",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "ハム",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "チーズ",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "マヨネーズ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "フレンチトースト",
+    "cooking_time": 25,
+    "calories": 375,
+    "ingredients": [
+      {
+        "name": "食パン",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "卵",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "牛乳",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "砂糖",
+        "quantity_g": 30.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 20.0
+      }
+    ]
+  },
+  {
+    "name": "ピザトースト",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "食パン",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "ケチャップ",
+        "quantity_g": 60.0
+      },
+      {
+        "name": "ハム",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "ピーマン",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "玉ねぎ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "チーズ",
+        "quantity_g": 80.0
+      }
+    ]
+  },
+  {
+    "name": "フルーツヨーグルト",
+    "cooking_time": 22,
+    "calories": 330,
+    "ingredients": [
+      {
+        "name": "ヨーグルト",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "バナナ",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "いちご",
+        "quantity_g": 500.0
+      },
+      {
+        "name": "りんご",
+        "quantity_g": 100.0
+      }
+    ]
+  },
+  {
+    "name": "ホットサンド",
+    "cooking_time": 28,
+    "calories": 420,
+    "ingredients": [
+      {
+        "name": "食パン",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "ハム",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "チーズ",
+        "quantity_g": 400.0
+      },
+      {
+        "name": "トマト",
+        "quantity_g": 100.0
+      },
+      {
+        "name": "レタス",
+        "quantity_g": 200.0
+      },
+      {
+        "name": "バター",
+        "quantity_g": 100.0
+      }
+    ]
+  }
+]

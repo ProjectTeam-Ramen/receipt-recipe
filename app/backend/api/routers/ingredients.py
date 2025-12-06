@@ -4,33 +4,28 @@ from typing import List, Optional, cast
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import func
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.backend.database import get_db
 from app.backend.models import (
     Food,
-    FoodCategory,
     IngredientStatus,
+    InventoryChangeSource,
     User,
     UserFood,
+    UserFoodTransaction,
 )
 
 from .auth_routes import get_current_user
 
 router = APIRouter()
 
-DEFAULT_CATEGORY_NAME = "その他"
-
 
 class IngredientCreateRequest(BaseModel):
-    name: str = Field(..., min_length=1, max_length=200)
+    food_id: int = Field(..., gt=0)
     quantity_g: float = Field(..., gt=0, le=100000)
     purchase_date: Optional[date] = None
     expiration_date: Optional[date] = None
-    category: Optional[str] = Field(None, max_length=100)
-    status: IngredientStatus = IngredientStatus.UNUSED
 
 
 class IngredientResponse(BaseModel):
@@ -60,62 +55,32 @@ class IngredientConsumeRequest(BaseModel):
     quantity_g: float = Field(..., gt=0, le=100000)
 
 
-def _normalize(value: str) -> str:
-    return value.strip()
-
-
-def _get_or_create_category(db: Session, name: Optional[str]) -> FoodCategory:
-    normalized = _normalize(name) if name else DEFAULT_CATEGORY_NAME
-    category = (
-        db.query(FoodCategory)
-        .filter(func.lower(FoodCategory.category_name) == normalized.lower())
-        .first()
+def _record_inventory_transaction(
+    db: Session,
+    *,
+    user: User,
+    user_food: UserFood,
+    delta_g: Decimal,
+    source_type: InventoryChangeSource,
+    note: Optional[str] = None,
+    source_reference: Optional[str] = None,
+):
+    quantity_after = getattr(user_food, "quantity_g", None)
+    quantity_after_decimal = (
+        Decimal(str(quantity_after)) if quantity_after is not None else Decimal("0")
     )
-    if category:
-        return category
-
-    category = FoodCategory(category_name=normalized)
-    db.add(category)
-    try:
-        db.commit()
-    except IntegrityError:
-        db.rollback()
-        category = (
-            db.query(FoodCategory)
-            .filter(func.lower(FoodCategory.category_name) == normalized.lower())
-            .first()
-        )
-        if category:
-            return category
-        raise
-    db.refresh(category)
-    return category
-
-
-def _get_or_create_food(db: Session, name: str, category_id: int) -> Food:
-    normalized = _normalize(name)
-    food = (
-        db.query(Food).filter(func.lower(Food.food_name) == normalized.lower()).first()
+    delta_decimal = delta_g if isinstance(delta_g, Decimal) else Decimal(str(delta_g))
+    transaction = UserFoodTransaction(
+        user_id=user.user_id,
+        food_id=user_food.food_id,
+        user_food_id=user_food.user_food_id,
+        delta_g=delta_decimal,
+        quantity_after_g=quantity_after_decimal,
+        source_type=source_type,
+        note=note,
+        source_reference=source_reference,
     )
-    if food:
-        return food
-
-    food = Food(food_name=normalized, category_id=category_id, is_trackable=True)
-    db.add(food)
-    try:
-        db.commit()
-    except IntegrityError:
-        db.rollback()
-        food = (
-            db.query(Food)
-            .filter(func.lower(Food.food_name) == normalized.lower())
-            .first()
-        )
-        if food:
-            return food
-        raise
-    db.refresh(food)
-    return food
+    db.add(transaction)
 
 
 def _to_response(user_food: UserFood) -> IngredientResponse:
@@ -150,22 +115,60 @@ def create_ingredient(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    name = _normalize(body.name)
-    if not name:
-        raise HTTPException(status_code=400, detail="食材名を入力してください。")
-
-    category = _get_or_create_category(db, body.category)
-    food = _get_or_create_food(db, name, cast(int, category.category_id))
-
-    user_food = UserFood(
-        user_id=current_user.user_id,
-        food_id=food.food_id,
-        quantity_g=body.quantity_g,
-        purchase_date=body.purchase_date,
-        expiration_date=body.expiration_date,
-        status=body.status,
+    food = (
+        db.query(Food)
+        .filter(Food.food_id == body.food_id, Food.is_trackable.is_(True))
+        .first()
     )
-    db.add(user_food)
+    if not food:
+        raise HTTPException(status_code=404, detail="指定された食材が存在しません。")
+
+    user_food = (
+        db.query(UserFood)
+        .filter(
+            UserFood.user_id == current_user.user_id,
+            UserFood.food_id == food.food_id,
+            UserFood.status != IngredientStatus.DELETED,
+        )
+        .first()
+    )
+
+    delta = Decimal(str(body.quantity_g))
+
+    if user_food:
+        current_quantity = Decimal(str(user_food.quantity_g or 0))
+        updated_quantity = current_quantity + delta
+        setattr(user_food, "quantity_g", updated_quantity)
+        if body.purchase_date:
+            setattr(user_food, "purchase_date", body.purchase_date)
+        if body.expiration_date:
+            setattr(user_food, "expiration_date", body.expiration_date)
+        status_value_raw = getattr(user_food, "status")
+        if isinstance(status_value_raw, str):
+            status_value = IngredientStatus(status_value_raw)
+        else:
+            status_value = cast(IngredientStatus, status_value_raw)
+        if updated_quantity > Decimal("0") and status_value == IngredientStatus.USED:
+            setattr(user_food, "status", IngredientStatus.UNUSED)
+    else:
+        user_food = UserFood(
+            user_id=current_user.user_id,
+            food_id=food.food_id,
+            quantity_g=delta,
+            purchase_date=body.purchase_date,
+            expiration_date=body.expiration_date,
+            status=IngredientStatus.UNUSED,
+        )
+        db.add(user_food)
+        db.flush()
+
+    _record_inventory_transaction(
+        db,
+        user=current_user,
+        user_food=user_food,
+        delta_g=delta,
+        source_type=InventoryChangeSource.MANUAL_ADD,
+    )
     db.commit()
     db.refresh(user_food)
     return _to_response(user_food)
@@ -266,6 +269,14 @@ def consume_ingredient(
     elif status_value == IngredientStatus.USED:
         setattr(user_food, "status", IngredientStatus.UNUSED)
 
+    _record_inventory_transaction(
+        db,
+        user=current_user,
+        user_food=user_food,
+        delta_g=consume_quantity * Decimal("-1"),
+        source_type=InventoryChangeSource.MANUAL_CONSUME,
+    )
+
     db.commit()
     db.refresh(user_food)
     return _to_response(user_food)
@@ -297,8 +308,21 @@ def delete_ingredient(
     if status_value == IngredientStatus.DELETED:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+    stored_quantity = getattr(user_food, "quantity_g", Decimal("0"))
+    current_quantity = Decimal(str(stored_quantity or "0"))
     setattr(user_food, "status", IngredientStatus.DELETED)
     setattr(user_food, "quantity_g", Decimal("0"))
+
+    if current_quantity != Decimal("0"):
+        _record_inventory_transaction(
+            db,
+            user=current_user,
+            user_food=user_food,
+            delta_g=current_quantity * Decimal("-1"),
+            source_type=InventoryChangeSource.ADJUSTMENT,
+            note="manual delete",
+        )
+
     db.commit()
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -36,8 +36,27 @@ def _setup_database():
             password_hash="hash",
         )
         session.add(user)
+        session.flush()
+
+        category = FoodCategory(category_id=1, category_name="テストカテゴリ")
+        session.add(category)
+        session.flush()
+
+        session.add_all(
+            [
+                Food(food_id=1, food_name="トマト", category_id=category.category_id),
+                Food(food_id=2, food_name="きゅうり", category_id=category.category_id),
+            ]
+        )
         session.commit()
     return engine, TestingSessionLocal
+
+
+def _get_food_id(session_factory, name: str) -> int:
+    with session_factory() as session:
+        food = session.query(Food).filter(Food.food_name == name).first()
+        assert food, f"food '{name}' must exist"
+        return food.food_id
 
 
 def test_create_and_list_ingredients():
@@ -59,9 +78,10 @@ def test_create_and_list_ingredients():
 
     try:
         with TestClient(app) as client:
+            tomato_id = _get_food_id(SessionLocal, "トマト")
             create_resp = client.post(
                 "/api/v1/ingredients/",
-                json={"name": "トマト", "quantity_g": 250},
+                json={"food_id": tomato_id, "quantity_g": 250},
             )
             assert create_resp.status_code == 201
             create_data = create_resp.json()
@@ -149,9 +169,10 @@ def test_delete_ingredient():
 
     try:
         with TestClient(app) as client:
+            cucumber_id = _get_food_id(SessionLocal, "きゅうり")
             create_resp = client.post(
                 "/api/v1/ingredients/",
-                json={"name": "きゅうり", "quantity_g": 100},
+                json={"food_id": cucumber_id, "quantity_g": 100},
             )
             assert create_resp.status_code == 201
             ingredient_id = create_resp.json()["user_food_id"]

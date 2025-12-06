@@ -37,12 +37,29 @@ CREATE TABLE user_foods (
     FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE user_food_transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    food_id INT NOT NULL,
+    user_food_id INT NULL,
+    delta_g DECIMAL(10,2) NOT NULL,
+    quantity_after_g DECIMAL(10,2) NOT NULL,
+    source_type ENUM('manual_add','manual_consume','ocr_import','sync','adjustment') NOT NULL,
+    source_reference VARCHAR(255) NULL,
+    note VARCHAR(255) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_food_id) REFERENCES user_foods(user_food_id) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE recipes (
     recipe_id INT PRIMARY KEY AUTO_INCREMENT,
     recipe_name VARCHAR(255) NOT NULL,
     description TEXT NULL,
     instructions TEXT NULL,
     cooking_time INT UNSIGNED NULL,
+    calories INT NULL,
     image_url VARCHAR(1000) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -85,6 +102,8 @@ CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
 CREATE INDEX idx_foods_category_id ON foods(category_id);
 CREATE INDEX idx_user_foods_user_id ON user_foods(user_id);
 CREATE INDEX idx_user_foods_food_id ON user_foods(food_id);
+CREATE INDEX idx_user_food_transactions_user_food ON user_food_transactions(user_id, food_id, created_at);
+CREATE INDEX idx_user_food_transactions_user_food_id ON user_food_transactions(user_food_id);
 CREATE INDEX idx_recipe_foods_recipe_id ON recipe_foods(recipe_id);
 CREATE INDEX idx_recipe_foods_food_id ON recipe_foods(food_id);
 CREATE INDEX idx_receipts_user_id ON receipts(user_id);

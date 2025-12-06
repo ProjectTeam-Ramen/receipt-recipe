@@ -18,8 +18,13 @@
     <h2>新しい食材を追加</h2>
 
     <form id="foodForm" class="food-form">
-      <label for="foodName">食材名：</label>
-      <input type="text" id="foodName" placeholder="例：卵" required>
+      <label for="foodFilter">食材を検索：</label>
+      <input type="search" id="foodFilter" placeholder="キーワードで絞り込み">
+
+      <label for="foodSelect">食材名：</label>
+      <select id="foodSelect" required>
+        <option value="" disabled selected>食材を選択してください</option>
+      </select>
 
       <label for="foodAmount">数量(g)：</label>
       <input type="number" id="foodAmount" min="1" placeholder="例：200" required>

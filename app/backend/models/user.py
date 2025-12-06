@@ -27,3 +27,9 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+
+    transactions = relationship(
+        "UserFoodTransaction",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
