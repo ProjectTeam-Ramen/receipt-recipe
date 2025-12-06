@@ -229,6 +229,12 @@ DELETE /ingredients/{user_food_id}
 
 POST /ingredients/{user_food_id}/consume — 消費記録（履歴を保存）
 
+#### DELETE /ingredients/{user_food_id}
+  - `status` を `deleted` に更新し、 `quantity_g` を 0 にリセットする。
+  - すでに `deleted` の場合は 204 を返し、副作用なく終了（冪等性確保）。
+
+備考: 削除済みの食材はデフォルトの一覧では返らないため、`GET /ingredients?status=deleted` でのみ確認できる。
+注意: デフォルトの一覧では「未使用 (status=unused) のみ」を返します。残量が0gになった `used` や `deleted` はデフォルト表示から除外されます。`GET /ingredients?status=used` または `?status=deleted` で確認してください。
 レスポンス例（GET /ingredients）:
 ```json
 {

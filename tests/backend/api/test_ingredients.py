@@ -128,3 +128,50 @@ def test_create_and_list_ingredients():
     finally:
         Base.metadata.drop_all(bind=engine)
         engine.dispose()
+
+
+def test_delete_ingredient():
+    engine, SessionLocal = _setup_database()
+    app = _build_test_app()
+
+    def override_get_db():
+        db = SessionLocal()
+        try:
+            yield db
+        finally:
+            db.close()
+
+    def override_get_current_user():
+        return SimpleNamespace(user_id=1)
+
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_current_user] = override_get_current_user
+
+    try:
+        with TestClient(app) as client:
+            create_resp = client.post(
+                "/api/v1/ingredients/",
+                json={"name": "きゅうり", "quantity_g": 100},
+            )
+            assert create_resp.status_code == 201
+            ingredient_id = create_resp.json()["user_food_id"]
+
+            delete_resp = client.delete(f"/api/v1/ingredients/{ingredient_id}")
+            assert delete_resp.status_code == 204
+
+            list_resp = client.get("/api/v1/ingredients/")
+            assert list_resp.status_code == 200
+            assert list_resp.json()["total"] == 0
+
+            deleted_list = client.get("/api/v1/ingredients/?status=deleted")
+            assert deleted_list.status_code == 200
+            assert deleted_list.json()["total"] == 1
+
+            second_delete = client.delete(f"/api/v1/ingredients/{ingredient_id}")
+            assert second_delete.status_code == 204
+
+            not_found = client.delete("/api/v1/ingredients/9999")
+            assert not_found.status_code == 404
+    finally:
+        Base.metadata.drop_all(bind=engine)
+        engine.dispose()

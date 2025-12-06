@@ -38,36 +38,39 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      foodList.innerHTML = items
-        .map((item) => {
-          const statusLabel = formatStatus(item.status);
-          const disabled = item.status === "deleted";
-          return `
-            <tr>
-              <td>${item.food_name}</td>
-              <td>${item.quantity_g} g</td>
-              <td>${item.purchase_date || "-"}</td>
-              <td>${item.expiration_date || "-"}</td>
-              <td>${statusLabel}</td>
-              <td>
-                <button 
-                  class="use-btn"
-                  data-id="${item.user_food_id}"
-                  data-name="${item.food_name}"
-                  data-quantity="${item.quantity_g}"
-                  ${disabled ? "disabled" : ""}
-                >使用</button>
-              </td>
-            </tr>
-          `;
-        })
-        .join("");
-
+      renderIngredientRows(items);
       attachUseHandlers();
+      attachDeleteHandlers();
     } catch (error) {
       console.error("データ取得エラー", error);
       foodList.innerHTML = `<tr><td colspan="6">データの取得に失敗しました。</td></tr>`;
     }
+  }
+
+  function renderIngredientRows(items) {
+    foodList.innerHTML = "";
+    items.forEach((item) => {
+      const disabled = item.status === "deleted";
+      const tr = document.createElement("tr");
+
+      tr.appendChild(createCell(item.food_name));
+      tr.appendChild(createCell(`${item.quantity_g} g`));
+      tr.appendChild(createCell(item.purchase_date || "-"));
+      tr.appendChild(createCell(item.expiration_date || "-"));
+      tr.appendChild(createCell(formatStatus(item.status)));
+
+      const actionsCell = document.createElement("td");
+      actionsCell.classList.add("actions-cell");
+
+      const useButton = createActionButton("use-btn", "使用", item, disabled);
+      const deleteButton = createActionButton("delete-btn", "削除", item, disabled);
+
+      actionsCell.appendChild(useButton);
+      actionsCell.appendChild(deleteButton);
+      tr.appendChild(actionsCell);
+
+      foodList.appendChild(tr);
+    });
   }
 
   function attachUseHandlers() {
@@ -112,6 +115,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function attachDeleteHandlers() {
+    foodList.querySelectorAll(".delete-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const userFoodId = button.dataset.id;
+        const foodName = button.dataset.name;
+        if (!userFoodId || !foodName) return;
+        const confirmed = window.confirm(
+          `${foodName} を削除します。よろしいですか？（在庫使用とは別処理です）`,
+        );
+        if (!confirmed) return;
+
+        try {
+          const token = await ensureValidAccessToken();
+          const response = await fetch(
+            `${API_BASE_URL}/ingredients/${userFoodId}`,
+            {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          );
+          if (!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw new Error(data?.detail || "削除に失敗しました。");
+          }
+          loadFoods();
+        } catch (error) {
+          console.error("削除処理エラー", error);
+          alert(error.message || "削除処理に失敗しました。");
+        }
+      });
+    });
+  }
+
   function formatStatus(status) {
     switch (status) {
       case "used":
@@ -121,6 +157,30 @@ document.addEventListener("DOMContentLoaded", () => {
       default:
         return "未使用";
     }
+  }
+
+  function createCell(text) {
+    const td = document.createElement("td");
+    if (text === null || text === undefined || text === "") {
+      td.textContent = "-";
+    } else {
+      td.textContent = String(text);
+    }
+    return td;
+  }
+
+  function createActionButton(className, label, item, disabled) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.textContent = label;
+    button.dataset.id = String(item.user_food_id);
+    button.dataset.name = item.food_name ?? "";
+    button.dataset.quantity = String(item.quantity_g ?? "0");
+    if (disabled) {
+      button.disabled = true;
+    }
+    return button;
   }
 });
 

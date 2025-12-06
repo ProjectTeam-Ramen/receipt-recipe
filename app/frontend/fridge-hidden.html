@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非表示の食材一覧</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tabs button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            cursor: pointer
+        }
+
+        .tabs button.active {
+            background: #f1f5f9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>非表示の食材</h1>
+        <div>
+            <button class="logout-btn" onclick="window.location.href='fridge-check.html'">戻る</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="tabs">
+            <button id="tab-used" class="active">使用済 (used)</button>
+            <button id="tab-deleted">削除済 (deleted)</button>
+        </div>
+
+        <table id="foodTable">
+            <thead>
+                <tr>
+                    <th>食材名</th>
+                    <th>数量(g)</th>
+                    <th>購入日</th>
+                    <th>消費期限</th>
+                    <th>状態</th>
+                </tr>
+            </thead>
+            <tbody id="foodList">
+                <tr>
+                    <td colspan="5">読み込み中...</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="config.js" defer></script>
+    <script src="fridge-hidden.js" defer></script>
+</body>
+
+</html>

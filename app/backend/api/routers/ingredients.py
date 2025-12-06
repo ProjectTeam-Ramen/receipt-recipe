@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal
 from typing import List, Optional, cast
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
@@ -175,7 +175,7 @@ def create_ingredient(
 def list_ingredients(
     status: Optional[IngredientStatus] = Query(
         None,
-        description="絞り込み対象のステータス。指定しない場合は削除済み以外を返します。",
+        description="絞り込み対象のステータス。指定しない場合は未使用(available) のみを返します。",
     ),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -189,7 +189,8 @@ def list_ingredients(
     if status:
         query = query.filter(UserFood.status == status)
     else:
-        query = query.filter(UserFood.status != IngredientStatus.DELETED)
+        # デフォルトでは未使用の食材のみを返す（残量0gになった used は非表示）
+        query = query.filter(UserFood.status == IngredientStatus.UNUSED)
     items = query.all()
     return IngredientListResponse(
         total=len(items),
@@ -268,3 +269,36 @@ def consume_ingredient(
     db.commit()
     db.refresh(user_food)
     return _to_response(user_food)
+
+
+@router.delete("/{user_food_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_ingredient(
+    user_food_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    user_food = (
+        db.query(UserFood)
+        .filter(
+            UserFood.user_food_id == user_food_id,
+            UserFood.user_id == current_user.user_id,
+        )
+        .first()
+    )
+    if not user_food:
+        raise HTTPException(status_code=404, detail="食材が見つかりません。")
+
+    status_value_raw = getattr(user_food, "status")
+    status_value = (
+        IngredientStatus(status_value_raw)
+        if isinstance(status_value_raw, str)
+        else cast(IngredientStatus, status_value_raw)
+    )
+    if status_value == IngredientStatus.DELETED:
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+    setattr(user_food, "status", IngredientStatus.DELETED)
+    setattr(user_food, "quantity_g", Decimal("0"))
+    db.commit()
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

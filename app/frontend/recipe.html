@@ -1,31 +1,117 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>レシピ検索</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    header { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid #eee; }
-    main { max-width:960px; margin:0 auto; padding:16px; }
-    .controls { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin: 12px 0 16px; }
-    .controls .item { display:flex; gap:8px; align-items:center; }
-    .card-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:16px; }
-    .card { border:1px solid #e5e7eb; border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.06); }
-    .card-link { display:block; color:inherit; text-decoration:none; }
-    .card-figure { aspect-ratio: 3 / 2; overflow:hidden; }
-    
-    .card-figure img { width:100%; height:100%; object-fit:cover; display:block; }
-    .card-body { padding:12px; }
-    .card-title { margin:0 0 6px; font-size:16px; }
-    .badge { display:inline-block; font-size:12px; padding:3px 8px; border-radius:999px; background:#eef2ff; color:#374151; }
-    .badge.ok { background:#def7ec; }
-    .badge.warn { background:#fde68a; }
-    .badgeGroup { display:flex; gap:8px; flex-wrap:wrap; }
-    .muted { color:#6b7280; }
-    .pill { padding:2px 8px; border-radius:999px; background:#eef2ff; font-size:12px; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 12px 0 16px;
+    }
+
+    .controls .item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+    }
+
+    .card-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card-figure {
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+    }
+
+    .card-figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 12px;
+    }
+
+    .card-title {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #374151;
+    }
+
+    .badge.ok {
+      background: #def7ec;
+    }
+
+    .badge.warn {
+      background: #fde68a;
+    }
+
+    .badgeGroup {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: #6b7280;
+    }
+
+    .pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      font-size: 12px;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <h1>レシピ検索</h1>
@@ -39,10 +125,28 @@
         <label><input type="checkbox" id="canMakeOnly"> 作れるだけ</label>
       </div>
       <div class="item">
+        <label>最大調理時間（分）
+          <input id="maxTime" type="number" min="1" value="60">
+        </label>
+      </div>
+      <div class="item">
+        <label>最大カロリー（kcal）
+          <input id="maxCalories" type="number" min="1" value="2000">
+        </label>
+      </div>
+      <div class="item">
+        <label>アレルギー（カンマ区切り）
+          <input id="allergies" type="text" placeholder="例: エビ,小麦">
+        </label>
+      </div>
+      <div class="item">
         <label>不足最大数
           <input id="maxMissing" type="range" min="0" max="5" value="2">
           <span id="maxMissingVal" class="pill">2</span>
         </label>
+      </div>
+      <div class="item">
+        <button id="applyRecommendBtn" class="recipe-btn">提案を取得</button>
       </div>
       <div class="item">
         <label>並べ替え
@@ -67,5 +171,5 @@
 
   <script src="recipe.js"></script>
 </body>
-</html>
 
+</html>
