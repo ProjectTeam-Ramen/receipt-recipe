@@ -1,0 +1,8401 @@
+{
+  "source_image": "/workspace/app/data/processed_receipt_image/receipt.jpg",
+  "total_characters": 365,
+  "characters": [
+    {
+      "char_id": 0,
+      "region_id": 0,
+      "char": ":",
+      "char_index_in_region": 0,
+      "bbox": [
+        525,
+        213,
+        604,
+        301
+      ],
+      "center": [
+        564.5,
+        257.0
+      ],
+      "confidence": 0.0004593555617809325,
+      "image_shape": [
+        88,
+        79,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0000.png"
+    },
+    {
+      "char_id": 1,
+      "region_id": 0,
+      "char": "町",
+      "char_index_in_region": 1,
+      "bbox": [
+        600,
+        213,
+        679,
+        301
+      ],
+      "center": [
+        639.5,
+        257.0
+      ],
+      "confidence": 0.0004593555617809325,
+      "image_shape": [
+        88,
+        79,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0001.png"
+    },
+    {
+      "char_id": 2,
+      "region_id": 0,
+      "char": "n",
+      "char_index_in_region": 2,
+      "bbox": [
+        675,
+        213,
+        755,
+        301
+      ],
+      "center": [
+        715.0,
+        257.0
+      ],
+      "confidence": 0.0004593555617809325,
+      "image_shape": [
+        88,
+        80,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0002.png"
+    },
+    {
+      "char_id": 3,
+      "region_id": 1,
+      "char": "n",
+      "char_index_in_region": 0,
+      "bbox": [
+        559,
+        291,
+        600,
+        320
+      ],
+      "center": [
+        579.5,
+        305.5
+      ],
+      "confidence": 0.008633843501046162,
+      "image_shape": [
+        29,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0003.png"
+    },
+    {
+      "char_id": 4,
+      "region_id": 1,
+      "char": "の",
+      "char_index_in_region": 1,
+      "bbox": [
+        596,
+        291,
+        638,
+        320
+      ],
+      "center": [
+        617.0,
+        305.5
+      ],
+      "confidence": 0.008633843501046162,
+      "image_shape": [
+        29,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0004.png"
+    },
+    {
+      "char_id": 5,
+      "region_id": 2,
+      "char": "~",
+      "char_index_in_region": 0,
+      "bbox": [
+        662,
+        306,
+        700,
+        334
+      ],
+      "center": [
+        681.0,
+        320.0
+      ],
+      "confidence": 0.027271535560054794,
+      "image_shape": [
+        28,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0005.png"
+    },
+    {
+      "char_id": 6,
+      "region_id": 3,
+      "char": "(",
+      "char_index_in_region": 0,
+      "bbox": [
+        451,
+        324,
+        477,
+        380
+      ],
+      "center": [
+        464.0,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0006.png"
+    },
+    {
+      "char_id": 7,
+      "region_id": 3,
+      "char": "本",
+      "char_index_in_region": 1,
+      "bbox": [
+        473,
+        324,
+        500,
+        380
+      ],
+      "center": [
+        486.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0007.png"
+    },
+    {
+      "char_id": 8,
+      "region_id": 3,
+      "char": "8",
+      "char_index_in_region": 2,
+      "bbox": [
+        496,
+        324,
+        523,
+        380
+      ],
+      "center": [
+        509.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0008.png"
+    },
+    {
+      "char_id": 9,
+      "region_id": 3,
+      "char": "ぶ",
+      "char_index_in_region": 3,
+      "bbox": [
+        519,
+        324,
+        546,
+        380
+      ],
+      "center": [
+        532.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0009.png"
+    },
+    {
+      "char_id": 10,
+      "region_id": 3,
+      "char": "零",
+      "char_index_in_region": 4,
+      "bbox": [
+        542,
+        324,
+        568,
+        380
+      ],
+      "center": [
+        555.0,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0010.png"
+    },
+    {
+      "char_id": 11,
+      "region_id": 3,
+      "char": "-",
+      "char_index_in_region": 5,
+      "bbox": [
+        564,
+        324,
+        591,
+        380
+      ],
+      "center": [
+        577.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0011.png"
+    },
+    {
+      "char_id": 12,
+      "region_id": 3,
+      "char": "#",
+      "char_index_in_region": 6,
+      "bbox": [
+        587,
+        324,
+        614,
+        380
+      ],
+      "center": [
+        600.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0012.png"
+    },
+    {
+      "char_id": 13,
+      "region_id": 3,
+      "char": "T",
+      "char_index_in_region": 7,
+      "bbox": [
+        610,
+        324,
+        637,
+        380
+      ],
+      "center": [
+        623.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0013.png"
+    },
+    {
+      "char_id": 14,
+      "region_id": 3,
+      "char": "E",
+      "char_index_in_region": 8,
+      "bbox": [
+        633,
+        324,
+        660,
+        380
+      ],
+      "center": [
+        646.5,
+        352.0
+      ],
+      "confidence": 1.583614397973052e-05,
+      "image_shape": [
+        56,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0014.png"
+    },
+    {
+      "char_id": 15,
+      "region_id": 4,
+      "char": "【",
+      "char_index_in_region": 0,
+      "bbox": [
+        481,
+        365,
+        510,
+        405
+      ],
+      "center": [
+        495.5,
+        385.0
+      ],
+      "confidence": 0.03850799798965454,
+      "image_shape": [
+        40,
+        29,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0015.png"
+    },
+    {
+      "char_id": 16,
+      "region_id": 4,
+      "char": "け",
+      "char_index_in_region": 1,
+      "bbox": [
+        506,
+        365,
+        535,
+        405
+      ],
+      "center": [
+        520.5,
+        385.0
+      ],
+      "confidence": 0.03850799798965454,
+      "image_shape": [
+        40,
+        29,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0016.png"
+    },
+    {
+      "char_id": 17,
+      "region_id": 4,
+      "char": "い",
+      "char_index_in_region": 2,
+      "bbox": [
+        531,
+        365,
+        560,
+        405
+      ],
+      "center": [
+        545.5,
+        385.0
+      ],
+      "confidence": 0.03850799798965454,
+      "image_shape": [
+        40,
+        29,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0017.png"
+    },
+    {
+      "char_id": 18,
+      "region_id": 4,
+      "char": "間",
+      "char_index_in_region": 3,
+      "bbox": [
+        556,
+        365,
+        586,
+        405
+      ],
+      "center": [
+        571.0,
+        385.0
+      ],
+      "confidence": 0.03850799798965454,
+      "image_shape": [
+        40,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0018.png"
+    },
+    {
+      "char_id": 19,
+      "region_id": 5,
+      "char": "三",
+      "char_index_in_region": 0,
+      "bbox": [
+        390,
+        397,
+        433,
+        438
+      ],
+      "center": [
+        411.5,
+        417.5
+      ],
+      "confidence": 0.006864405237138271,
+      "image_shape": [
+        41,
+        43,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0019.png"
+    },
+    {
+      "char_id": 20,
+      "region_id": 5,
+      "char": "フ",
+      "char_index_in_region": 1,
+      "bbox": [
+        429,
+        397,
+        473,
+        438
+      ],
+      "center": [
+        451.0,
+        417.5
+      ],
+      "confidence": 0.006864405237138271,
+      "image_shape": [
+        41,
+        44,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0020.png"
+    },
+    {
+      "char_id": 21,
+      "region_id": 5,
+      "char": "莉",
+      "char_index_in_region": 2,
+      "bbox": [
+        469,
+        397,
+        513,
+        438
+      ],
+      "center": [
+        491.0,
+        417.5
+      ],
+      "confidence": 0.006864405237138271,
+      "image_shape": [
+        41,
+        44,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0021.png"
+    },
+    {
+      "char_id": 22,
+      "region_id": 5,
+      "char": "川",
+      "char_index_in_region": 3,
+      "bbox": [
+        509,
+        397,
+        553,
+        438
+      ],
+      "center": [
+        531.0,
+        417.5
+      ],
+      "confidence": 0.006864405237138271,
+      "image_shape": [
+        41,
+        44,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0022.png"
+    },
+    {
+      "char_id": 23,
+      "region_id": 6,
+      "char": "登",
+      "char_index_in_region": 0,
+      "bbox": [
+        384,
+        453,
+        420,
+        501
+      ],
+      "center": [
+        402.0,
+        477.0
+      ],
+      "confidence": 0.05647452548146248,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0023.png"
+    },
+    {
+      "char_id": 24,
+      "region_id": 6,
+      "char": "録",
+      "char_index_in_region": 1,
+      "bbox": [
+        416,
+        453,
+        453,
+        501
+      ],
+      "center": [
+        434.5,
+        477.0
+      ],
+      "confidence": 0.05647452548146248,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0024.png"
+    },
+    {
+      "char_id": 25,
+      "region_id": 6,
+      "char": "番",
+      "char_index_in_region": 2,
+      "bbox": [
+        449,
+        453,
+        486,
+        501
+      ],
+      "center": [
+        467.5,
+        477.0
+      ],
+      "confidence": 0.05647452548146248,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0025.png"
+    },
+    {
+      "char_id": 26,
+      "region_id": 6,
+      "char": "号",
+      "char_index_in_region": 3,
+      "bbox": [
+        482,
+        453,
+        519,
+        501
+      ],
+      "center": [
+        500.5,
+        477.0
+      ],
+      "confidence": 0.05647452548146248,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0026.png"
+    },
+    {
+      "char_id": 27,
+      "region_id": 7,
+      "char": "7",
+      "char_index_in_region": 0,
+      "bbox": [
+        563,
+        434,
+        583,
+        502
+      ],
+      "center": [
+        573.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0027.png"
+    },
+    {
+      "char_id": 28,
+      "region_id": 7,
+      "char": "2",
+      "char_index_in_region": 1,
+      "bbox": [
+        579,
+        434,
+        600,
+        502
+      ],
+      "center": [
+        589.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0028.png"
+    },
+    {
+      "char_id": 29,
+      "region_id": 7,
+      "char": "9",
+      "char_index_in_region": 2,
+      "bbox": [
+        596,
+        434,
+        616,
+        502
+      ],
+      "center": [
+        606.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0029.png"
+    },
+    {
+      "char_id": 30,
+      "region_id": 7,
+      "char": "1",
+      "char_index_in_region": 3,
+      "bbox": [
+        612,
+        434,
+        633,
+        502
+      ],
+      "center": [
+        622.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0030.png"
+    },
+    {
+      "char_id": 31,
+      "region_id": 7,
+      "char": "1",
+      "char_index_in_region": 4,
+      "bbox": [
+        629,
+        434,
+        649,
+        502
+      ],
+      "center": [
+        639.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0031.png"
+    },
+    {
+      "char_id": 32,
+      "region_id": 7,
+      "char": "4",
+      "char_index_in_region": 5,
+      "bbox": [
+        645,
+        434,
+        666,
+        502
+      ],
+      "center": [
+        655.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0032.png"
+    },
+    {
+      "char_id": 33,
+      "region_id": 7,
+      "char": "9",
+      "char_index_in_region": 6,
+      "bbox": [
+        662,
+        434,
+        683,
+        502
+      ],
+      "center": [
+        672.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0033.png"
+    },
+    {
+      "char_id": 34,
+      "region_id": 7,
+      "char": "1",
+      "char_index_in_region": 7,
+      "bbox": [
+        679,
+        434,
+        699,
+        502
+      ],
+      "center": [
+        689.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0034.png"
+    },
+    {
+      "char_id": 35,
+      "region_id": 7,
+      "char": "0",
+      "char_index_in_region": 8,
+      "bbox": [
+        695,
+        434,
+        716,
+        502
+      ],
+      "center": [
+        705.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0035.png"
+    },
+    {
+      "char_id": 36,
+      "region_id": 7,
+      "char": "1",
+      "char_index_in_region": 9,
+      "bbox": [
+        712,
+        434,
+        732,
+        502
+      ],
+      "center": [
+        722.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0036.png"
+    },
+    {
+      "char_id": 37,
+      "region_id": 7,
+      "char": "9",
+      "char_index_in_region": 10,
+      "bbox": [
+        728,
+        434,
+        749,
+        502
+      ],
+      "center": [
+        738.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0037.png"
+    },
+    {
+      "char_id": 38,
+      "region_id": 7,
+      "char": "8",
+      "char_index_in_region": 11,
+      "bbox": [
+        745,
+        434,
+        765,
+        502
+      ],
+      "center": [
+        755.0,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0038.png"
+    },
+    {
+      "char_id": 39,
+      "region_id": 7,
+      "char": "8",
+      "char_index_in_region": 12,
+      "bbox": [
+        761,
+        434,
+        782,
+        502
+      ],
+      "center": [
+        771.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0039.png"
+    },
+    {
+      "char_id": 40,
+      "region_id": 7,
+      "char": "1",
+      "char_index_in_region": 13,
+      "bbox": [
+        778,
+        434,
+        799,
+        502
+      ],
+      "center": [
+        788.5,
+        468.0
+      ],
+      "confidence": 0.5032961828095605,
+      "image_shape": [
+        68,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0040.png"
+    },
+    {
+      "char_id": 41,
+      "region_id": 8,
+      "char": "ず",
+      "char_index_in_region": 0,
+      "bbox": [
+        376,
+        465,
+        426,
+        542
+      ],
+      "center": [
+        401.0,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        50,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0041.png"
+    },
+    {
+      "char_id": 42,
+      "region_id": 8,
+      "char": ":",
+      "char_index_in_region": 1,
+      "bbox": [
+        422,
+        465,
+        473,
+        542
+      ],
+      "center": [
+        447.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0042.png"
+    },
+    {
+      "char_id": 43,
+      "region_id": 8,
+      "char": "即",
+      "char_index_in_region": 2,
+      "bbox": [
+        469,
+        465,
+        520,
+        542
+      ],
+      "center": [
+        494.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0043.png"
+    },
+    {
+      "char_id": 44,
+      "region_id": 8,
+      "char": "の",
+      "char_index_in_region": 3,
+      "bbox": [
+        516,
+        465,
+        567,
+        542
+      ],
+      "center": [
+        541.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0044.png"
+    },
+    {
+      "char_id": 45,
+      "region_id": 8,
+      "char": "~",
+      "char_index_in_region": 4,
+      "bbox": [
+        563,
+        465,
+        613,
+        542
+      ],
+      "center": [
+        588.0,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        50,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0045.png"
+    },
+    {
+      "char_id": 46,
+      "region_id": 8,
+      "char": ")",
+      "char_index_in_region": 5,
+      "bbox": [
+        609,
+        465,
+        660,
+        542
+      ],
+      "center": [
+        634.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0046.png"
+    },
+    {
+      "char_id": 47,
+      "region_id": 8,
+      "char": " ",
+      "char_index_in_region": 6,
+      "bbox": [
+        656,
+        465,
+        707,
+        542
+      ],
+      "center": [
+        681.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0047.png"
+    },
+    {
+      "char_id": 48,
+      "region_id": 8,
+      "char": "的",
+      "char_index_in_region": 7,
+      "bbox": [
+        703,
+        465,
+        754,
+        542
+      ],
+      "center": [
+        728.5,
+        503.5
+      ],
+      "confidence": 1.8323281010489693e-05,
+      "image_shape": [
+        77,
+        51,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0048.png"
+    },
+    {
+      "char_id": 49,
+      "region_id": 9,
+      "char": "レ",
+      "char_index_in_region": 0,
+      "bbox": [
+        765,
+        493,
+        786,
+        533
+      ],
+      "center": [
+        775.5,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0049.png"
+    },
+    {
+      "char_id": 50,
+      "region_id": 9,
+      "char": "ッ",
+      "char_index_in_region": 1,
+      "bbox": [
+        782,
+        493,
+        803,
+        533
+      ],
+      "center": [
+        792.5,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0050.png"
+    },
+    {
+      "char_id": 51,
+      "region_id": 9,
+      "char": " ",
+      "char_index_in_region": 2,
+      "bbox": [
+        799,
+        493,
+        821,
+        533
+      ],
+      "center": [
+        810.0,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0051.png"
+    },
+    {
+      "char_id": 52,
+      "region_id": 9,
+      "char": "2",
+      "char_index_in_region": 3,
+      "bbox": [
+        817,
+        493,
+        838,
+        533
+      ],
+      "center": [
+        827.5,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0052.png"
+    },
+    {
+      "char_id": 53,
+      "region_id": 9,
+      "char": "0",
+      "char_index_in_region": 4,
+      "bbox": [
+        834,
+        493,
+        856,
+        533
+      ],
+      "center": [
+        845.0,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0053.png"
+    },
+    {
+      "char_id": 54,
+      "region_id": 9,
+      "char": "0",
+      "char_index_in_region": 5,
+      "bbox": [
+        852,
+        493,
+        873,
+        533
+      ],
+      "center": [
+        862.5,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0054.png"
+    },
+    {
+      "char_id": 55,
+      "region_id": 9,
+      "char": "2",
+      "char_index_in_region": 6,
+      "bbox": [
+        869,
+        493,
+        891,
+        533
+      ],
+      "center": [
+        880.0,
+        513.0
+      ],
+      "confidence": 0.3099097071414015,
+      "image_shape": [
+        40,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0055.png"
+    },
+    {
+      "char_id": 56,
+      "region_id": 10,
+      "char": "賀",
+      "char_index_in_region": 0,
+      "bbox": [
+        379,
+        498,
+        414,
+        576
+      ],
+      "center": [
+        396.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0056.png"
+    },
+    {
+      "char_id": 57,
+      "region_id": 10,
+      "char": "o",
+      "char_index_in_region": 1,
+      "bbox": [
+        410,
+        498,
+        445,
+        576
+      ],
+      "center": [
+        427.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0057.png"
+    },
+    {
+      "char_id": 58,
+      "region_id": 10,
+      "char": "d",
+      "char_index_in_region": 2,
+      "bbox": [
+        441,
+        498,
+        477,
+        576
+      ],
+      "center": [
+        459.0,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0058.png"
+    },
+    {
+      "char_id": 59,
+      "region_id": 10,
+      "char": "o",
+      "char_index_in_region": 3,
+      "bbox": [
+        473,
+        498,
+        508,
+        576
+      ],
+      "center": [
+        490.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0059.png"
+    },
+    {
+      "char_id": 60,
+      "region_id": 10,
+      "char": "e",
+      "char_index_in_region": 4,
+      "bbox": [
+        504,
+        498,
+        540,
+        576
+      ],
+      "center": [
+        522.0,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0060.png"
+    },
+    {
+      "char_id": 61,
+      "region_id": 10,
+      "char": "会",
+      "char_index_in_region": 5,
+      "bbox": [
+        536,
+        498,
+        571,
+        576
+      ],
+      "center": [
+        553.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0061.png"
+    },
+    {
+      "char_id": 62,
+      "region_id": 10,
+      "char": "計",
+      "char_index_in_region": 6,
+      "bbox": [
+        567,
+        498,
+        602,
+        576
+      ],
+      "center": [
+        584.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0062.png"
+    },
+    {
+      "char_id": 63,
+      "region_id": 10,
+      "char": "機",
+      "char_index_in_region": 7,
+      "bbox": [
+        598,
+        498,
+        634,
+        576
+      ],
+      "center": [
+        616.0,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0063.png"
+    },
+    {
+      "char_id": 64,
+      "region_id": 10,
+      "char": "i",
+      "char_index_in_region": 8,
+      "bbox": [
+        630,
+        498,
+        665,
+        576
+      ],
+      "center": [
+        647.5,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0064.png"
+    },
+    {
+      "char_id": 65,
+      "region_id": 10,
+      "char": "'",
+      "char_index_in_region": 9,
+      "bbox": [
+        661,
+        498,
+        697,
+        576
+      ],
+      "center": [
+        679.0,
+        537.0
+      ],
+      "confidence": 0.030092767291644354,
+      "image_shape": [
+        78,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0065.png"
+    },
+    {
+      "char_id": 66,
+      "region_id": 11,
+      "char": "ス",
+      "char_index_in_region": 0,
+      "bbox": [
+        380,
+        549,
+        401,
+        601
+      ],
+      "center": [
+        390.5,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0066.png"
+    },
+    {
+      "char_id": 67,
+      "region_id": 11,
+      "char": "N",
+      "char_index_in_region": 1,
+      "bbox": [
+        397,
+        549,
+        419,
+        601
+      ],
+      "center": [
+        408.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0067.png"
+    },
+    {
+      "char_id": 68,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 2,
+      "bbox": [
+        415,
+        549,
+        436,
+        601
+      ],
+      "center": [
+        425.5,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0068.png"
+    },
+    {
+      "char_id": 69,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 3,
+      "bbox": [
+        432,
+        549,
+        454,
+        601
+      ],
+      "center": [
+        443.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0069.png"
+    },
+    {
+      "char_id": 70,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 4,
+      "bbox": [
+        450,
+        549,
+        471,
+        601
+      ],
+      "center": [
+        460.5,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0070.png"
+    },
+    {
+      "char_id": 71,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 5,
+      "bbox": [
+        467,
+        549,
+        489,
+        601
+      ],
+      "center": [
+        478.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0071.png"
+    },
+    {
+      "char_id": 72,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 6,
+      "bbox": [
+        485,
+        549,
+        506,
+        601
+      ],
+      "center": [
+        495.5,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0072.png"
+    },
+    {
+      "char_id": 73,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 7,
+      "bbox": [
+        502,
+        549,
+        524,
+        601
+      ],
+      "center": [
+        513.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0073.png"
+    },
+    {
+      "char_id": 74,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 8,
+      "bbox": [
+        520,
+        549,
+        541,
+        601
+      ],
+      "center": [
+        530.5,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0074.png"
+    },
+    {
+      "char_id": 75,
+      "region_id": 11,
+      "char": "o",
+      "char_index_in_region": 9,
+      "bbox": [
+        537,
+        549,
+        559,
+        601
+      ],
+      "center": [
+        548.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0075.png"
+    },
+    {
+      "char_id": 76,
+      "region_id": 11,
+      "char": "1",
+      "char_index_in_region": 10,
+      "bbox": [
+        555,
+        549,
+        577,
+        601
+      ],
+      "center": [
+        566.0,
+        575.0
+      ],
+      "confidence": 0.3728936862466705,
+      "image_shape": [
+        52,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0076.png"
+    },
+    {
+      "char_id": 77,
+      "region_id": 12,
+      "char": "ス",
+      "char_index_in_region": 0,
+      "bbox": [
+        420,
+        576,
+        440,
+        631
+      ],
+      "center": [
+        430.0,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0077.png"
+    },
+    {
+      "char_id": 78,
+      "region_id": 12,
+      "char": "キ",
+      "char_index_in_region": 1,
+      "bbox": [
+        436,
+        576,
+        457,
+        631
+      ],
+      "center": [
+        446.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0078.png"
+    },
+    {
+      "char_id": 79,
+      "region_id": 12,
+      "char": "ャ",
+      "char_index_in_region": 2,
+      "bbox": [
+        453,
+        576,
+        473,
+        631
+      ],
+      "center": [
+        463.0,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0079.png"
+    },
+    {
+      "char_id": 80,
+      "region_id": 12,
+      "char": "ン",
+      "char_index_in_region": 3,
+      "bbox": [
+        469,
+        576,
+        490,
+        631
+      ],
+      "center": [
+        479.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0080.png"
+    },
+    {
+      "char_id": 81,
+      "region_id": 12,
+      "char": "レ",
+      "char_index_in_region": 4,
+      "bbox": [
+        486,
+        576,
+        506,
+        631
+      ],
+      "center": [
+        496.0,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0081.png"
+    },
+    {
+      "char_id": 82,
+      "region_id": 12,
+      "char": "シ",
+      "char_index_in_region": 5,
+      "bbox": [
+        502,
+        576,
+        523,
+        631
+      ],
+      "center": [
+        512.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0082.png"
+    },
+    {
+      "char_id": 83,
+      "region_id": 12,
+      "char": " ",
+      "char_index_in_region": 6,
+      "bbox": [
+        519,
+        576,
+        539,
+        631
+      ],
+      "center": [
+        529.0,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0083.png"
+    },
+    {
+      "char_id": 84,
+      "region_id": 12,
+      "char": "1",
+      "char_index_in_region": 7,
+      "bbox": [
+        535,
+        576,
+        556,
+        631
+      ],
+      "center": [
+        545.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0084.png"
+    },
+    {
+      "char_id": 85,
+      "region_id": 12,
+      "char": "0",
+      "char_index_in_region": 8,
+      "bbox": [
+        552,
+        576,
+        572,
+        631
+      ],
+      "center": [
+        562.0,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0085.png"
+    },
+    {
+      "char_id": 86,
+      "region_id": 12,
+      "char": "0",
+      "char_index_in_region": 9,
+      "bbox": [
+        568,
+        576,
+        589,
+        631
+      ],
+      "center": [
+        578.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0086.png"
+    },
+    {
+      "char_id": 87,
+      "region_id": 12,
+      "char": "1",
+      "char_index_in_region": 10,
+      "bbox": [
+        585,
+        576,
+        606,
+        631
+      ],
+      "center": [
+        595.5,
+        603.5
+      ],
+      "confidence": 0.6199273420502196,
+      "image_shape": [
+        55,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0087.png"
+    },
+    {
+      "char_id": 88,
+      "region_id": 13,
+      "char": "レ",
+      "char_index_in_region": 0,
+      "bbox": [
+        427,
+        617,
+        463,
+        661
+      ],
+      "center": [
+        445.0,
+        639.0
+      ],
+      "confidence": 0.9800353629289239,
+      "image_shape": [
+        44,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0088.png"
+    },
+    {
+      "char_id": 89,
+      "region_id": 13,
+      "char": "ジ",
+      "char_index_in_region": 1,
+      "bbox": [
+        459,
+        617,
+        495,
+        661
+      ],
+      "center": [
+        477.0,
+        639.0
+      ],
+      "confidence": 0.9800353629289239,
+      "image_shape": [
+        44,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0089.png"
+    },
+    {
+      "char_id": 90,
+      "region_id": 13,
+      "char": "袋",
+      "char_index_in_region": 2,
+      "bbox": [
+        491,
+        617,
+        527,
+        661
+      ],
+      "center": [
+        509.0,
+        639.0
+      ],
+      "confidence": 0.9800353629289239,
+      "image_shape": [
+        44,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0090.png"
+    },
+    {
+      "char_id": 91,
+      "region_id": 14,
+      "char": "粉",
+      "char_index_in_region": 0,
+      "bbox": [
+        844,
+        626,
+        886,
+        662
+      ],
+      "center": [
+        865.0,
+        644.0
+      ],
+      "confidence": 0.031190952772797154,
+      "image_shape": [
+        36,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0091.png"
+    },
+    {
+      "char_id": 92,
+      "region_id": 15,
+      "char": "富",
+      "char_index_in_region": 0,
+      "bbox": [
+        420,
+        652,
+        457,
+        696
+      ],
+      "center": [
+        438.5,
+        674.0
+      ],
+      "confidence": 0.9294411080683446,
+      "image_shape": [
+        44,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0092.png"
+    },
+    {
+      "char_id": 93,
+      "region_id": 15,
+      "char": "士",
+      "char_index_in_region": 1,
+      "bbox": [
+        453,
+        652,
+        491,
+        696
+      ],
+      "center": [
+        472.0,
+        674.0
+      ],
+      "confidence": 0.9294411080683446,
+      "image_shape": [
+        44,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0093.png"
+    },
+    {
+      "char_id": 94,
+      "region_id": 15,
+      "char": "山",
+      "char_index_in_region": 2,
+      "bbox": [
+        487,
+        652,
+        525,
+        696
+      ],
+      "center": [
+        506.0,
+        674.0
+      ],
+      "confidence": 0.9294411080683446,
+      "image_shape": [
+        44,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0094.png"
+    },
+    {
+      "char_id": 95,
+      "region_id": 16,
+      "char": "蒼",
+      "char_index_in_region": 0,
+      "bbox": [
+        536,
+        638,
+        575,
+        691
+      ],
+      "center": [
+        555.5,
+        664.5
+      ],
+      "confidence": 0.5517569780349731,
+      "image_shape": [
+        53,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0095.png"
+    },
+    {
+      "char_id": 96,
+      "region_id": 16,
+      "char": "天",
+      "char_index_in_region": 1,
+      "bbox": [
+        571,
+        638,
+        611,
+        691
+      ],
+      "center": [
+        591.0,
+        664.5
+      ],
+      "confidence": 0.5517569780349731,
+      "image_shape": [
+        53,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0096.png"
+    },
+    {
+      "char_id": 97,
+      "region_id": 16,
+      "char": "の",
+      "char_index_in_region": 2,
+      "bbox": [
+        607,
+        638,
+        647,
+        691
+      ],
+      "center": [
+        627.0,
+        664.5
+      ],
+      "confidence": 0.5517569780349731,
+      "image_shape": [
+        53,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0097.png"
+    },
+    {
+      "char_id": 98,
+      "region_id": 16,
+      "char": "水",
+      "char_index_in_region": 3,
+      "bbox": [
+        643,
+        638,
+        683,
+        691
+      ],
+      "center": [
+        663.0,
+        664.5
+      ],
+      "confidence": 0.5517569780349731,
+      "image_shape": [
+        53,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0098.png"
+    },
+    {
+      "char_id": 99,
+      "region_id": 17,
+      "char": "2",
+      "char_index_in_region": 0,
+      "bbox": [
+        701,
+        649,
+        738,
+        692
+      ],
+      "center": [
+        719.5,
+        670.5
+      ],
+      "confidence": 0.9872827387883,
+      "image_shape": [
+        43,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0099.png"
+    },
+    {
+      "char_id": 100,
+      "region_id": 17,
+      "char": "L",
+      "char_index_in_region": 1,
+      "bbox": [
+        734,
+        649,
+        772,
+        692
+      ],
+      "center": [
+        753.0,
+        670.5
+      ],
+      "confidence": 0.9872827387883,
+      "image_shape": [
+        43,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0100.png"
+    },
+    {
+      "char_id": 101,
+      "region_id": 18,
+      "char": "#",
+      "char_index_in_region": 0,
+      "bbox": [
+        825,
+        657,
+        849,
+        697
+      ],
+      "center": [
+        837.0,
+        677.0
+      ],
+      "confidence": 0.4017495124412005,
+      "image_shape": [
+        40,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0101.png"
+    },
+    {
+      "char_id": 102,
+      "region_id": 18,
+      "char": "8",
+      "char_index_in_region": 1,
+      "bbox": [
+        845,
+        657,
+        869,
+        697
+      ],
+      "center": [
+        857.0,
+        677.0
+      ],
+      "confidence": 0.4017495124412005,
+      "image_shape": [
+        40,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0102.png"
+    },
+    {
+      "char_id": 103,
+      "region_id": 18,
+      "char": "8",
+      "char_index_in_region": 2,
+      "bbox": [
+        865,
+        657,
+        889,
+        697
+      ],
+      "center": [
+        877.0,
+        677.0
+      ],
+      "confidence": 0.4017495124412005,
+      "image_shape": [
+        40,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0103.png"
+    },
+    {
+      "char_id": 104,
+      "region_id": 19,
+      "char": "サ",
+      "char_index_in_region": 0,
+      "bbox": [
+        416,
+        669,
+        452,
+        729
+      ],
+      "center": [
+        434.0,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0104.png"
+    },
+    {
+      "char_id": 105,
+      "region_id": 19,
+      "char": "ン",
+      "char_index_in_region": 1,
+      "bbox": [
+        448,
+        669,
+        485,
+        729
+      ],
+      "center": [
+        466.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0105.png"
+    },
+    {
+      "char_id": 106,
+      "region_id": 19,
+      "char": "ト",
+      "char_index_in_region": 2,
+      "bbox": [
+        481,
+        669,
+        518,
+        729
+      ],
+      "center": [
+        499.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0106.png"
+    },
+    {
+      "char_id": 107,
+      "region_id": 19,
+      "char": "リ",
+      "char_index_in_region": 3,
+      "bbox": [
+        514,
+        669,
+        551,
+        729
+      ],
+      "center": [
+        532.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0107.png"
+    },
+    {
+      "char_id": 108,
+      "region_id": 19,
+      "char": "ー",
+      "char_index_in_region": 4,
+      "bbox": [
+        547,
+        669,
+        584,
+        729
+      ],
+      "center": [
+        565.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0108.png"
+    },
+    {
+      "char_id": 109,
+      "region_id": 19,
+      "char": "天",
+      "char_index_in_region": 5,
+      "bbox": [
+        580,
+        669,
+        617,
+        729
+      ],
+      "center": [
+        598.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0109.png"
+    },
+    {
+      "char_id": 110,
+      "region_id": 19,
+      "char": "然",
+      "char_index_in_region": 6,
+      "bbox": [
+        613,
+        669,
+        650,
+        729
+      ],
+      "center": [
+        631.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0110.png"
+    },
+    {
+      "char_id": 111,
+      "region_id": 19,
+      "char": "水",
+      "char_index_in_region": 7,
+      "bbox": [
+        646,
+        669,
+        683,
+        729
+      ],
+      "center": [
+        664.5,
+        699.0
+      ],
+      "confidence": 0.8713713011757808,
+      "image_shape": [
+        60,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0111.png"
+    },
+    {
+      "char_id": 112,
+      "region_id": 20,
+      "char": "5",
+      "char_index_in_region": 0,
+      "bbox": [
+        703,
+        683,
+        730,
+        727
+      ],
+      "center": [
+        716.5,
+        705.0
+      ],
+      "confidence": 0.741362988948822,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0112.png"
+    },
+    {
+      "char_id": 113,
+      "region_id": 20,
+      "char": " ",
+      "char_index_in_region": 1,
+      "bbox": [
+        726,
+        683,
+        754,
+        727
+      ],
+      "center": [
+        740.0,
+        705.0
+      ],
+      "confidence": 0.741362988948822,
+      "image_shape": [
+        44,
+        28,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0113.png"
+    },
+    {
+      "char_id": 114,
+      "region_id": 20,
+      "char": "5",
+      "char_index_in_region": 2,
+      "bbox": [
+        750,
+        683,
+        777,
+        727
+      ],
+      "center": [
+        763.5,
+        705.0
+      ],
+      "confidence": 0.741362988948822,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0114.png"
+    },
+    {
+      "char_id": 115,
+      "region_id": 20,
+      "char": "0",
+      "char_index_in_region": 3,
+      "bbox": [
+        773,
+        683,
+        801,
+        727
+      ],
+      "center": [
+        787.0,
+        705.0
+      ],
+      "confidence": 0.741362988948822,
+      "image_shape": [
+        44,
+        28,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0115.png"
+    },
+    {
+      "char_id": 116,
+      "region_id": 21,
+      "char": "t",
+      "char_index_in_region": 0,
+      "bbox": [
+        823,
+        691,
+        857,
+        731
+      ],
+      "center": [
+        840.0,
+        711.0
+      ],
+      "confidence": 0.15235200829423895,
+      "image_shape": [
+        40,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0116.png"
+    },
+    {
+      "char_id": 117,
+      "region_id": 21,
+      "char": "8",
+      "char_index_in_region": 1,
+      "bbox": [
+        853,
+        691,
+        887,
+        731
+      ],
+      "center": [
+        870.0,
+        711.0
+      ],
+      "confidence": 0.15235200829423895,
+      "image_shape": [
+        40,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0117.png"
+    },
+    {
+      "char_id": 118,
+      "region_id": 22,
+      "char": "ボ",
+      "char_index_in_region": 0,
+      "bbox": [
+        414,
+        709,
+        450,
+        762
+      ],
+      "center": [
+        432.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0118.png"
+    },
+    {
+      "char_id": 119,
+      "region_id": 22,
+      "char": "カ",
+      "char_index_in_region": 1,
+      "bbox": [
+        446,
+        709,
+        482,
+        762
+      ],
+      "center": [
+        464.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0119.png"
+    },
+    {
+      "char_id": 120,
+      "region_id": 22,
+      "char": "リ",
+      "char_index_in_region": 2,
+      "bbox": [
+        478,
+        709,
+        514,
+        762
+      ],
+      "center": [
+        496.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0120.png"
+    },
+    {
+      "char_id": 121,
+      "region_id": 22,
+      "char": "ス",
+      "char_index_in_region": 3,
+      "bbox": [
+        510,
+        709,
+        546,
+        762
+      ],
+      "center": [
+        528.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0121.png"
+    },
+    {
+      "char_id": 122,
+      "region_id": 22,
+      "char": "エ",
+      "char_index_in_region": 4,
+      "bbox": [
+        542,
+        709,
+        578,
+        762
+      ],
+      "center": [
+        560.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0122.png"
+    },
+    {
+      "char_id": 123,
+      "region_id": 22,
+      "char": "ッ",
+      "char_index_in_region": 5,
+      "bbox": [
+        574,
+        709,
+        611,
+        762
+      ],
+      "center": [
+        592.5,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0123.png"
+    },
+    {
+      "char_id": 124,
+      "region_id": 22,
+      "char": "ト",
+      "char_index_in_region": 6,
+      "bbox": [
+        607,
+        709,
+        643,
+        762
+      ],
+      "center": [
+        625.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0124.png"
+    },
+    {
+      "char_id": 125,
+      "region_id": 22,
+      "char": "5",
+      "char_index_in_region": 7,
+      "bbox": [
+        639,
+        709,
+        675,
+        762
+      ],
+      "center": [
+        657.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0125.png"
+    },
+    {
+      "char_id": 126,
+      "region_id": 22,
+      "char": "o",
+      "char_index_in_region": 8,
+      "bbox": [
+        671,
+        709,
+        707,
+        762
+      ],
+      "center": [
+        689.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0126.png"
+    },
+    {
+      "char_id": 127,
+      "region_id": 22,
+      "char": "O",
+      "char_index_in_region": 9,
+      "bbox": [
+        703,
+        709,
+        739,
+        762
+      ],
+      "center": [
+        721.0,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0127.png"
+    },
+    {
+      "char_id": 128,
+      "region_id": 22,
+      "char": "m",
+      "char_index_in_region": 10,
+      "bbox": [
+        735,
+        709,
+        772,
+        762
+      ],
+      "center": [
+        753.5,
+        735.5
+      ],
+      "confidence": 0.592426330390586,
+      "image_shape": [
+        53,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0128.png"
+    },
+    {
+      "char_id": 129,
+      "region_id": 23,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        805,
+        725,
+        828,
+        765
+      ],
+      "center": [
+        816.5,
+        745.0
+      ],
+      "confidence": 0.3567148447036743,
+      "image_shape": [
+        40,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0129.png"
+    },
+    {
+      "char_id": 130,
+      "region_id": 23,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        824,
+        725,
+        848,
+        765
+      ],
+      "center": [
+        836.0,
+        745.0
+      ],
+      "confidence": 0.3567148447036743,
+      "image_shape": [
+        40,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0130.png"
+    },
+    {
+      "char_id": 131,
+      "region_id": 23,
+      "char": "0",
+      "char_index_in_region": 2,
+      "bbox": [
+        844,
+        725,
+        867,
+        765
+      ],
+      "center": [
+        855.5,
+        745.0
+      ],
+      "confidence": 0.3567148447036743,
+      "image_shape": [
+        40,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0131.png"
+    },
+    {
+      "char_id": 132,
+      "region_id": 23,
+      "char": "8",
+      "char_index_in_region": 3,
+      "bbox": [
+        863,
+        725,
+        887,
+        765
+      ],
+      "center": [
+        875.0,
+        745.0
+      ],
+      "confidence": 0.3567148447036743,
+      "image_shape": [
+        40,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0132.png"
+    },
+    {
+      "char_id": 133,
+      "region_id": 24,
+      "char": "※",
+      "char_index_in_region": 0,
+      "bbox": [
+        382,
+        758,
+        410,
+        786
+      ],
+      "center": [
+        396.0,
+        772.0
+      ],
+      "confidence": 0.02704275524266131,
+      "image_shape": [
+        28,
+        28,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0133.png"
+    },
+    {
+      "char_id": 134,
+      "region_id": 25,
+      "char": "シ",
+      "char_index_in_region": 0,
+      "bbox": [
+        415,
+        753,
+        451,
+        793
+      ],
+      "center": [
+        433.0,
+        773.0
+      ],
+      "confidence": 0.5602557063102722,
+      "image_shape": [
+        40,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0134.png"
+    },
+    {
+      "char_id": 135,
+      "region_id": 25,
+      "char": "ー",
+      "char_index_in_region": 1,
+      "bbox": [
+        447,
+        753,
+        483,
+        793
+      ],
+      "center": [
+        465.0,
+        773.0
+      ],
+      "confidence": 0.5602557063102722,
+      "image_shape": [
+        40,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0135.png"
+    },
+    {
+      "char_id": 136,
+      "region_id": 25,
+      "char": "フ",
+      "char_index_in_region": 2,
+      "bbox": [
+        479,
+        753,
+        515,
+        793
+      ],
+      "center": [
+        497.0,
+        773.0
+      ],
+      "confidence": 0.5602557063102722,
+      "image_shape": [
+        40,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0136.png"
+    },
+    {
+      "char_id": 137,
+      "region_id": 25,
+      "char": "ー",
+      "char_index_in_region": 3,
+      "bbox": [
+        511,
+        753,
+        547,
+        793
+      ],
+      "center": [
+        529.0,
+        773.0
+      ],
+      "confidence": 0.5602557063102722,
+      "image_shape": [
+        40,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0137.png"
+    },
+    {
+      "char_id": 138,
+      "region_id": 26,
+      "char": "ド",
+      "char_index_in_region": 0,
+      "bbox": [
+        540,
+        737,
+        570,
+        803
+      ],
+      "center": [
+        555.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0138.png"
+    },
+    {
+      "char_id": 139,
+      "region_id": 26,
+      "char": "ヌ",
+      "char_index_in_region": 1,
+      "bbox": [
+        566,
+        737,
+        597,
+        803
+      ],
+      "center": [
+        581.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0139.png"
+    },
+    {
+      "char_id": 140,
+      "region_id": 26,
+      "char": "ニ",
+      "char_index_in_region": 2,
+      "bbox": [
+        593,
+        737,
+        623,
+        803
+      ],
+      "center": [
+        608.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0140.png"
+    },
+    {
+      "char_id": 141,
+      "region_id": 26,
+      "char": "ド",
+      "char_index_in_region": 3,
+      "bbox": [
+        619,
+        737,
+        650,
+        803
+      ],
+      "center": [
+        634.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0141.png"
+    },
+    {
+      "char_id": 142,
+      "region_id": 26,
+      "char": "ル",
+      "char_index_in_region": 4,
+      "bbox": [
+        646,
+        737,
+        676,
+        803
+      ],
+      "center": [
+        661.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0142.png"
+    },
+    {
+      "char_id": 143,
+      "region_id": 26,
+      "char": "ピ",
+      "char_index_in_region": 5,
+      "bbox": [
+        672,
+        737,
+        703,
+        803
+      ],
+      "center": [
+        687.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0143.png"
+    },
+    {
+      "char_id": 144,
+      "region_id": 26,
+      "char": "ッ",
+      "char_index_in_region": 6,
+      "bbox": [
+        699,
+        737,
+        729,
+        803
+      ],
+      "center": [
+        714.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0144.png"
+    },
+    {
+      "char_id": 145,
+      "region_id": 26,
+      "char": "グ",
+      "char_index_in_region": 7,
+      "bbox": [
+        725,
+        737,
+        756,
+        803
+      ],
+      "center": [
+        740.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0145.png"
+    },
+    {
+      "char_id": 146,
+      "region_id": 26,
+      "char": " ",
+      "char_index_in_region": 8,
+      "bbox": [
+        752,
+        737,
+        782,
+        803
+      ],
+      "center": [
+        767.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0146.png"
+    },
+    {
+      "char_id": 147,
+      "region_id": 26,
+      "char": "#",
+      "char_index_in_region": 9,
+      "bbox": [
+        778,
+        737,
+        809,
+        803
+      ],
+      "center": [
+        793.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0147.png"
+    },
+    {
+      "char_id": 148,
+      "region_id": 26,
+      "char": "2",
+      "char_index_in_region": 10,
+      "bbox": [
+        805,
+        737,
+        835,
+        803
+      ],
+      "center": [
+        820.0,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0148.png"
+    },
+    {
+      "char_id": 149,
+      "region_id": 26,
+      "char": "4",
+      "char_index_in_region": 11,
+      "bbox": [
+        831,
+        737,
+        862,
+        803
+      ],
+      "center": [
+        846.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0149.png"
+    },
+    {
+      "char_id": 150,
+      "region_id": 26,
+      "char": "8",
+      "char_index_in_region": 12,
+      "bbox": [
+        858,
+        737,
+        889,
+        803
+      ],
+      "center": [
+        873.5,
+        770.0
+      ],
+      "confidence": 0.6641952801292732,
+      "image_shape": [
+        66,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0150.png"
+    },
+    {
+      "char_id": 151,
+      "region_id": 27,
+      "char": "※",
+      "char_index_in_region": 0,
+      "bbox": [
+        378,
+        790,
+        408,
+        820
+      ],
+      "center": [
+        393.0,
+        805.0
+      ],
+      "confidence": 0.4752918613437629,
+      "image_shape": [
+        30,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0151.png"
+    },
+    {
+      "char_id": 152,
+      "region_id": 28,
+      "char": "ス",
+      "char_index_in_region": 0,
+      "bbox": [
+        410,
+        774,
+        446,
+        831
+      ],
+      "center": [
+        428.0,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0152.png"
+    },
+    {
+      "char_id": 153,
+      "region_id": 28,
+      "char": "ナ",
+      "char_index_in_region": 1,
+      "bbox": [
+        442,
+        774,
+        478,
+        831
+      ],
+      "center": [
+        460.0,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0153.png"
+    },
+    {
+      "char_id": 154,
+      "region_id": 28,
+      "char": "ッ",
+      "char_index_in_region": 2,
+      "bbox": [
+        474,
+        774,
+        511,
+        831
+      ],
+      "center": [
+        492.5,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0154.png"
+    },
+    {
+      "char_id": 155,
+      "region_id": 28,
+      "char": "ク",
+      "char_index_in_region": 3,
+      "bbox": [
+        507,
+        774,
+        543,
+        831
+      ],
+      "center": [
+        525.0,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0155.png"
+    },
+    {
+      "char_id": 156,
+      "region_id": 28,
+      "char": "バ",
+      "char_index_in_region": 4,
+      "bbox": [
+        539,
+        774,
+        576,
+        831
+      ],
+      "center": [
+        557.5,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0156.png"
+    },
+    {
+      "char_id": 157,
+      "region_id": 28,
+      "char": "ン",
+      "char_index_in_region": 5,
+      "bbox": [
+        572,
+        774,
+        608,
+        831
+      ],
+      "center": [
+        590.0,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0157.png"
+    },
+    {
+      "char_id": 158,
+      "region_id": 28,
+      "char": "チ",
+      "char_index_in_region": 6,
+      "bbox": [
+        604,
+        774,
+        641,
+        831
+      ],
+      "center": [
+        622.5,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0158.png"
+    },
+    {
+      "char_id": 159,
+      "region_id": 28,
+      "char": "ョ",
+      "char_index_in_region": 7,
+      "bbox": [
+        637,
+        774,
+        673,
+        831
+      ],
+      "center": [
+        655.0,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0159.png"
+    },
+    {
+      "char_id": 160,
+      "region_id": 28,
+      "char": "コ",
+      "char_index_in_region": 8,
+      "bbox": [
+        669,
+        774,
+        706,
+        831
+      ],
+      "center": [
+        687.5,
+        802.5
+      ],
+      "confidence": 0.9928309624433183,
+      "image_shape": [
+        57,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0160.png"
+    },
+    {
+      "char_id": 161,
+      "region_id": 29,
+      "char": "パ",
+      "char_index_in_region": 0,
+      "bbox": [
+        727,
+        788,
+        753,
+        835
+      ],
+      "center": [
+        740.0,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0161.png"
+    },
+    {
+      "char_id": 162,
+      "region_id": 29,
+      "char": "ス",
+      "char_index_in_region": 1,
+      "bbox": [
+        749,
+        788,
+        775,
+        835
+      ],
+      "center": [
+        762.0,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0162.png"
+    },
+    {
+      "char_id": 163,
+      "region_id": 29,
+      "char": " ",
+      "char_index_in_region": 2,
+      "bbox": [
+        771,
+        788,
+        797,
+        835
+      ],
+      "center": [
+        784.0,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0163.png"
+    },
+    {
+      "char_id": 164,
+      "region_id": 29,
+      "char": "1",
+      "char_index_in_region": 3,
+      "bbox": [
+        793,
+        788,
+        820,
+        835
+      ],
+      "center": [
+        806.5,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0164.png"
+    },
+    {
+      "char_id": 165,
+      "region_id": 29,
+      "char": "1",
+      "char_index_in_region": 4,
+      "bbox": [
+        816,
+        788,
+        842,
+        835
+      ],
+      "center": [
+        829.0,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0165.png"
+    },
+    {
+      "char_id": 166,
+      "region_id": 29,
+      "char": "1",
+      "char_index_in_region": 5,
+      "bbox": [
+        838,
+        788,
+        864,
+        835
+      ],
+      "center": [
+        851.0,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0166.png"
+    },
+    {
+      "char_id": 167,
+      "region_id": 29,
+      "char": "8",
+      "char_index_in_region": 6,
+      "bbox": [
+        860,
+        788,
+        887,
+        835
+      ],
+      "center": [
+        873.5,
+        811.5
+      ],
+      "confidence": 0.40744822158328503,
+      "image_shape": [
+        47,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0167.png"
+    },
+    {
+      "char_id": 168,
+      "region_id": 30,
+      "char": "*",
+      "char_index_in_region": 0,
+      "bbox": [
+        374,
+        824,
+        404,
+        856
+      ],
+      "center": [
+        389.0,
+        840.0
+      ],
+      "confidence": 0.02527738281934777,
+      "image_shape": [
+        32,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0168.png"
+    },
+    {
+      "char_id": 169,
+      "region_id": 31,
+      "char": "ビ",
+      "char_index_in_region": 0,
+      "bbox": [
+        413,
+        819,
+        447,
+        861
+      ],
+      "center": [
+        430.0,
+        840.0
+      ],
+      "confidence": 0.9893166344061275,
+      "image_shape": [
+        42,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0169.png"
+    },
+    {
+      "char_id": 170,
+      "region_id": 31,
+      "char": "ュ",
+      "char_index_in_region": 1,
+      "bbox": [
+        443,
+        819,
+        477,
+        861
+      ],
+      "center": [
+        460.0,
+        840.0
+      ],
+      "confidence": 0.9893166344061275,
+      "image_shape": [
+        42,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0170.png"
+    },
+    {
+      "char_id": 171,
+      "region_id": 32,
+      "char": "ア",
+      "char_index_in_region": 0,
+      "bbox": [
+        470,
+        806,
+        505,
+        871
+      ],
+      "center": [
+        487.5,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0171.png"
+    },
+    {
+      "char_id": 172,
+      "region_id": 32,
+      "char": "ラ",
+      "char_index_in_region": 1,
+      "bbox": [
+        501,
+        806,
+        537,
+        871
+      ],
+      "center": [
+        519.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0172.png"
+    },
+    {
+      "char_id": 173,
+      "region_id": 32,
+      "char": "ル",
+      "char_index_in_region": 2,
+      "bbox": [
+        533,
+        806,
+        569,
+        871
+      ],
+      "center": [
+        551.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0173.png"
+    },
+    {
+      "char_id": 174,
+      "region_id": 32,
+      "char": "グ",
+      "char_index_in_region": 3,
+      "bbox": [
+        565,
+        806,
+        601,
+        871
+      ],
+      "center": [
+        583.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0174.png"
+    },
+    {
+      "char_id": 175,
+      "region_id": 32,
+      "char": "ミ",
+      "char_index_in_region": 4,
+      "bbox": [
+        597,
+        806,
+        632,
+        871
+      ],
+      "center": [
+        614.5,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0175.png"
+    },
+    {
+      "char_id": 176,
+      "region_id": 32,
+      "char": "ぶ",
+      "char_index_in_region": 5,
+      "bbox": [
+        628,
+        806,
+        664,
+        871
+      ],
+      "center": [
+        646.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0176.png"
+    },
+    {
+      "char_id": 177,
+      "region_id": 32,
+      "char": "ど",
+      "char_index_in_region": 6,
+      "bbox": [
+        660,
+        806,
+        696,
+        871
+      ],
+      "center": [
+        678.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0177.png"
+    },
+    {
+      "char_id": 178,
+      "region_id": 32,
+      "char": "う",
+      "char_index_in_region": 7,
+      "bbox": [
+        692,
+        806,
+        728,
+        871
+      ],
+      "center": [
+        710.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0178.png"
+    },
+    {
+      "char_id": 179,
+      "region_id": 32,
+      "char": "5",
+      "char_index_in_region": 8,
+      "bbox": [
+        724,
+        806,
+        759,
+        871
+      ],
+      "center": [
+        741.5,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0179.png"
+    },
+    {
+      "char_id": 180,
+      "region_id": 32,
+      "char": "呂",
+      "char_index_in_region": 9,
+      "bbox": [
+        755,
+        806,
+        791,
+        871
+      ],
+      "center": [
+        773.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0180.png"
+    },
+    {
+      "char_id": 181,
+      "region_id": 32,
+      "char": " ",
+      "char_index_in_region": 10,
+      "bbox": [
+        787,
+        806,
+        823,
+        871
+      ],
+      "center": [
+        805.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0181.png"
+    },
+    {
+      "char_id": 182,
+      "region_id": 32,
+      "char": "#",
+      "char_index_in_region": 11,
+      "bbox": [
+        819,
+        806,
+        855,
+        871
+      ],
+      "center": [
+        837.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0182.png"
+    },
+    {
+      "char_id": 183,
+      "region_id": 32,
+      "char": ";",
+      "char_index_in_region": 12,
+      "bbox": [
+        851,
+        806,
+        887,
+        871
+      ],
+      "center": [
+        869.0,
+        838.5
+      ],
+      "confidence": 0.12106279586185165,
+      "image_shape": [
+        65,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0183.png"
+    },
+    {
+      "char_id": 184,
+      "region_id": 33,
+      "char": "*",
+      "char_index_in_region": 0,
+      "bbox": [
+        370,
+        846,
+        404,
+        899
+      ],
+      "center": [
+        387.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0184.png"
+    },
+    {
+      "char_id": 185,
+      "region_id": 33,
+      "char": " ",
+      "char_index_in_region": 1,
+      "bbox": [
+        400,
+        846,
+        434,
+        899
+      ],
+      "center": [
+        417.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0185.png"
+    },
+    {
+      "char_id": 186,
+      "region_id": 33,
+      "char": "ス",
+      "char_index_in_region": 2,
+      "bbox": [
+        430,
+        846,
+        464,
+        899
+      ],
+      "center": [
+        447.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0186.png"
+    },
+    {
+      "char_id": 187,
+      "region_id": 33,
+      "char": "ウ",
+      "char_index_in_region": 3,
+      "bbox": [
+        460,
+        846,
+        494,
+        899
+      ],
+      "center": [
+        477.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0187.png"
+    },
+    {
+      "char_id": 188,
+      "region_id": 33,
+      "char": "ィ",
+      "char_index_in_region": 4,
+      "bbox": [
+        490,
+        846,
+        524,
+        899
+      ],
+      "center": [
+        507.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0188.png"
+    },
+    {
+      "char_id": 189,
+      "region_id": 33,
+      "char": "ー",
+      "char_index_in_region": 5,
+      "bbox": [
+        520,
+        846,
+        554,
+        899
+      ],
+      "center": [
+        537.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0189.png"
+    },
+    {
+      "char_id": 190,
+      "region_id": 33,
+      "char": "フ",
+      "char_index_in_region": 6,
+      "bbox": [
+        550,
+        846,
+        584,
+        899
+      ],
+      "center": [
+        567.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0190.png"
+    },
+    {
+      "char_id": 191,
+      "region_id": 33,
+      "char": "ィ",
+      "char_index_in_region": 7,
+      "bbox": [
+        580,
+        846,
+        614,
+        899
+      ],
+      "center": [
+        597.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0191.png"
+    },
+    {
+      "char_id": 192,
+      "region_id": 33,
+      "char": "ー",
+      "char_index_in_region": 8,
+      "bbox": [
+        610,
+        846,
+        644,
+        899
+      ],
+      "center": [
+        627.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0192.png"
+    },
+    {
+      "char_id": 193,
+      "region_id": 33,
+      "char": "ラ",
+      "char_index_in_region": 9,
+      "bbox": [
+        640,
+        846,
+        674,
+        899
+      ],
+      "center": [
+        657.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0193.png"
+    },
+    {
+      "char_id": 194,
+      "region_id": 33,
+      "char": "イ",
+      "char_index_in_region": 10,
+      "bbox": [
+        670,
+        846,
+        704,
+        899
+      ],
+      "center": [
+        687.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0194.png"
+    },
+    {
+      "char_id": 195,
+      "region_id": 33,
+      "char": "ト",
+      "char_index_in_region": 11,
+      "bbox": [
+        700,
+        846,
+        734,
+        899
+      ],
+      "center": [
+        717.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0195.png"
+    },
+    {
+      "char_id": 196,
+      "region_id": 33,
+      "char": "ミ",
+      "char_index_in_region": 12,
+      "bbox": [
+        730,
+        846,
+        764,
+        899
+      ],
+      "center": [
+        747.0,
+        872.5
+      ],
+      "confidence": 0.7398079350647211,
+      "image_shape": [
+        53,
+        34,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0196.png"
+    },
+    {
+      "char_id": 197,
+      "region_id": 34,
+      "char": "+",
+      "char_index_in_region": 0,
+      "bbox": [
+        819,
+        861,
+        843,
+        905
+      ],
+      "center": [
+        831.0,
+        883.0
+      ],
+      "confidence": 0.0471250690181212,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0197.png"
+    },
+    {
+      "char_id": 198,
+      "region_id": 34,
+      "char": "9",
+      "char_index_in_region": 1,
+      "bbox": [
+        839,
+        861,
+        864,
+        905
+      ],
+      "center": [
+        851.5,
+        883.0
+      ],
+      "confidence": 0.0471250690181212,
+      "image_shape": [
+        44,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0198.png"
+    },
+    {
+      "char_id": 199,
+      "region_id": 34,
+      "char": "8",
+      "char_index_in_region": 2,
+      "bbox": [
+        860,
+        861,
+        885,
+        905
+      ],
+      "center": [
+        872.5,
+        883.0
+      ],
+      "confidence": 0.0471250690181212,
+      "image_shape": [
+        44,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0199.png"
+    },
+    {
+      "char_id": 200,
+      "region_id": 35,
+      "char": "*",
+      "char_index_in_region": 0,
+      "bbox": [
+        370,
+        894,
+        400,
+        922
+      ],
+      "center": [
+        385.0,
+        908.0
+      ],
+      "confidence": 0.06972782031203906,
+      "image_shape": [
+        28,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0200.png"
+    },
+    {
+      "char_id": 201,
+      "region_id": 36,
+      "char": "ア",
+      "char_index_in_region": 0,
+      "bbox": [
+        406,
+        881,
+        442,
+        929
+      ],
+      "center": [
+        424.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0201.png"
+    },
+    {
+      "char_id": 202,
+      "region_id": 36,
+      "char": "ー",
+      "char_index_in_region": 1,
+      "bbox": [
+        438,
+        881,
+        474,
+        929
+      ],
+      "center": [
+        456.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0202.png"
+    },
+    {
+      "char_id": 203,
+      "region_id": 36,
+      "char": "モ",
+      "char_index_in_region": 2,
+      "bbox": [
+        470,
+        881,
+        507,
+        929
+      ],
+      "center": [
+        488.5,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0203.png"
+    },
+    {
+      "char_id": 204,
+      "region_id": 36,
+      "char": "ン",
+      "char_index_in_region": 3,
+      "bbox": [
+        503,
+        881,
+        539,
+        929
+      ],
+      "center": [
+        521.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0204.png"
+    },
+    {
+      "char_id": 205,
+      "region_id": 36,
+      "char": "ド",
+      "char_index_in_region": 4,
+      "bbox": [
+        535,
+        881,
+        571,
+        929
+      ],
+      "center": [
+        553.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0205.png"
+    },
+    {
+      "char_id": 206,
+      "region_id": 36,
+      "char": "チ",
+      "char_index_in_region": 5,
+      "bbox": [
+        567,
+        881,
+        604,
+        929
+      ],
+      "center": [
+        585.5,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0206.png"
+    },
+    {
+      "char_id": 207,
+      "region_id": 36,
+      "char": "ョ",
+      "char_index_in_region": 6,
+      "bbox": [
+        600,
+        881,
+        636,
+        929
+      ],
+      "center": [
+        618.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0207.png"
+    },
+    {
+      "char_id": 208,
+      "region_id": 36,
+      "char": "コ",
+      "char_index_in_region": 7,
+      "bbox": [
+        632,
+        881,
+        668,
+        929
+      ],
+      "center": [
+        650.0,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0208.png"
+    },
+    {
+      "char_id": 209,
+      "region_id": 36,
+      "char": "レ",
+      "char_index_in_region": 8,
+      "bbox": [
+        664,
+        881,
+        701,
+        929
+      ],
+      "center": [
+        682.5,
+        905.0
+      ],
+      "confidence": 0.984604430940131,
+      "image_shape": [
+        48,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0209.png"
+    },
+    {
+      "char_id": 210,
+      "region_id": 37,
+      "char": "ト",
+      "char_index_in_region": 0,
+      "bbox": [
+        732,
+        898,
+        762,
+        928
+      ],
+      "center": [
+        747.0,
+        913.0
+      ],
+      "confidence": 0.9945116453691902,
+      "image_shape": [
+        30,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0210.png"
+    },
+    {
+      "char_id": 211,
+      "region_id": 38,
+      "char": "6",
+      "char_index_in_region": 0,
+      "bbox": [
+        801,
+        895,
+        825,
+        939
+      ],
+      "center": [
+        813.0,
+        917.0
+      ],
+      "confidence": 0.32873526215553284,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0211.png"
+    },
+    {
+      "char_id": 212,
+      "region_id": 38,
+      "char": "2",
+      "char_index_in_region": 1,
+      "bbox": [
+        821,
+        895,
+        845,
+        939
+      ],
+      "center": [
+        833.0,
+        917.0
+      ],
+      "confidence": 0.32873526215553284,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0212.png"
+    },
+    {
+      "char_id": 213,
+      "region_id": 38,
+      "char": "4",
+      "char_index_in_region": 2,
+      "bbox": [
+        841,
+        895,
+        865,
+        939
+      ],
+      "center": [
+        853.0,
+        917.0
+      ],
+      "confidence": 0.32873526215553284,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0213.png"
+    },
+    {
+      "char_id": 214,
+      "region_id": 38,
+      "char": "8",
+      "char_index_in_region": 3,
+      "bbox": [
+        861,
+        895,
+        885,
+        939
+      ],
+      "center": [
+        873.0,
+        917.0
+      ],
+      "confidence": 0.32873526215553284,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0214.png"
+    },
+    {
+      "char_id": 215,
+      "region_id": 39,
+      "char": "*",
+      "char_index_in_region": 0,
+      "bbox": [
+        366,
+        928,
+        396,
+        956
+      ],
+      "center": [
+        381.0,
+        942.0
+      ],
+      "confidence": 0.09490209612437184,
+      "image_shape": [
+        28,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0215.png"
+    },
+    {
+      "char_id": 216,
+      "region_id": 40,
+      "char": "ミ",
+      "char_index_in_region": 0,
+      "bbox": [
+        404,
+        918,
+        440,
+        965
+      ],
+      "center": [
+        422.0,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0216.png"
+    },
+    {
+      "char_id": 217,
+      "region_id": 40,
+      "char": "ン",
+      "char_index_in_region": 1,
+      "bbox": [
+        436,
+        918,
+        473,
+        965
+      ],
+      "center": [
+        454.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0217.png"
+    },
+    {
+      "char_id": 218,
+      "region_id": 40,
+      "char": "テ",
+      "char_index_in_region": 2,
+      "bbox": [
+        469,
+        918,
+        506,
+        965
+      ],
+      "center": [
+        487.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0218.png"
+    },
+    {
+      "char_id": 219,
+      "region_id": 40,
+      "char": "ィ",
+      "char_index_in_region": 3,
+      "bbox": [
+        502,
+        918,
+        539,
+        965
+      ],
+      "center": [
+        520.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0219.png"
+    },
+    {
+      "char_id": 220,
+      "region_id": 40,
+      "char": "ア",
+      "char_index_in_region": 4,
+      "bbox": [
+        535,
+        918,
+        571,
+        965
+      ],
+      "center": [
+        553.0,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0220.png"
+    },
+    {
+      "char_id": 221,
+      "region_id": 40,
+      "char": "ブ",
+      "char_index_in_region": 5,
+      "bbox": [
+        567,
+        918,
+        604,
+        965
+      ],
+      "center": [
+        585.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0221.png"
+    },
+    {
+      "char_id": 222,
+      "region_id": 40,
+      "char": "リ",
+      "char_index_in_region": 6,
+      "bbox": [
+        600,
+        918,
+        637,
+        965
+      ],
+      "center": [
+        618.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0222.png"
+    },
+    {
+      "char_id": 223,
+      "region_id": 40,
+      "char": "ー",
+      "char_index_in_region": 7,
+      "bbox": [
+        633,
+        918,
+        670,
+        965
+      ],
+      "center": [
+        651.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0223.png"
+    },
+    {
+      "char_id": 224,
+      "region_id": 40,
+      "char": "ズ",
+      "char_index_in_region": 8,
+      "bbox": [
+        666,
+        918,
+        703,
+        965
+      ],
+      "center": [
+        684.5,
+        941.5
+      ],
+      "confidence": 0.9976758560582895,
+      "image_shape": [
+        47,
+        37,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0224.png"
+    },
+    {
+      "char_id": 225,
+      "region_id": 41,
+      "char": "フ",
+      "char_index_in_region": 0,
+      "bbox": [
+        725,
+        929,
+        751,
+        975
+      ],
+      "center": [
+        738.0,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0225.png"
+    },
+    {
+      "char_id": 226,
+      "region_id": 41,
+      "char": "レ",
+      "char_index_in_region": 1,
+      "bbox": [
+        747,
+        929,
+        773,
+        975
+      ],
+      "center": [
+        760.0,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0226.png"
+    },
+    {
+      "char_id": 227,
+      "region_id": 41,
+      "char": " ",
+      "char_index_in_region": 2,
+      "bbox": [
+        769,
+        929,
+        795,
+        975
+      ],
+      "center": [
+        782.0,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0227.png"
+    },
+    {
+      "char_id": 228,
+      "region_id": 41,
+      "char": "1",
+      "char_index_in_region": 3,
+      "bbox": [
+        791,
+        929,
+        818,
+        975
+      ],
+      "center": [
+        804.5,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0228.png"
+    },
+    {
+      "char_id": 229,
+      "region_id": 41,
+      "char": "1",
+      "char_index_in_region": 4,
+      "bbox": [
+        814,
+        929,
+        840,
+        975
+      ],
+      "center": [
+        827.0,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0229.png"
+    },
+    {
+      "char_id": 230,
+      "region_id": 41,
+      "char": "9",
+      "char_index_in_region": 5,
+      "bbox": [
+        836,
+        929,
+        862,
+        975
+      ],
+      "center": [
+        849.0,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0230.png"
+    },
+    {
+      "char_id": 231,
+      "region_id": 41,
+      "char": "8",
+      "char_index_in_region": 6,
+      "bbox": [
+        858,
+        929,
+        885,
+        975
+      ],
+      "center": [
+        871.5,
+        952.0
+      ],
+      "confidence": 0.6646911937751374,
+      "image_shape": [
+        46,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0231.png"
+    },
+    {
+      "char_id": 232,
+      "region_id": 42,
+      "char": "小",
+      "char_index_in_region": 0,
+      "bbox": [
+        349,
+        959,
+        390,
+        1001
+      ],
+      "center": [
+        369.5,
+        980.0
+      ],
+      "confidence": 0.9996885489969857,
+      "image_shape": [
+        42,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0232.png"
+    },
+    {
+      "char_id": 233,
+      "region_id": 42,
+      "char": "計",
+      "char_index_in_region": 1,
+      "bbox": [
+        386,
+        959,
+        427,
+        1001
+      ],
+      "center": [
+        406.5,
+        980.0
+      ],
+      "confidence": 0.9996885489969857,
+      "image_shape": [
+        42,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0233.png"
+    },
+    {
+      "char_id": 234,
+      "region_id": 43,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        769,
+        965,
+        800,
+        1011
+      ],
+      "center": [
+        784.5,
+        988.0
+      ],
+      "confidence": 0.8084558844566345,
+      "image_shape": [
+        46,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0234.png"
+    },
+    {
+      "char_id": 235,
+      "region_id": 43,
+      "char": "3",
+      "char_index_in_region": 1,
+      "bbox": [
+        796,
+        965,
+        828,
+        1011
+      ],
+      "center": [
+        812.0,
+        988.0
+      ],
+      "confidence": 0.8084558844566345,
+      "image_shape": [
+        46,
+        32,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0235.png"
+    },
+    {
+      "char_id": 236,
+      "region_id": 43,
+      "char": "6",
+      "char_index_in_region": 2,
+      "bbox": [
+        824,
+        965,
+        855,
+        1011
+      ],
+      "center": [
+        839.5,
+        988.0
+      ],
+      "confidence": 0.8084558844566345,
+      "image_shape": [
+        46,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0236.png"
+    },
+    {
+      "char_id": 237,
+      "region_id": 43,
+      "char": "7",
+      "char_index_in_region": 3,
+      "bbox": [
+        851,
+        965,
+        883,
+        1011
+      ],
+      "center": [
+        867.0,
+        988.0
+      ],
+      "confidence": 0.8084558844566345,
+      "image_shape": [
+        46,
+        32,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0237.png"
+    },
+    {
+      "char_id": 238,
+      "region_id": 44,
+      "char": "(",
+      "char_index_in_region": 0,
+      "bbox": [
+        347,
+        989,
+        374,
+        1037
+      ],
+      "center": [
+        360.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0238.png"
+    },
+    {
+      "char_id": 239,
+      "region_id": 44,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        370,
+        989,
+        397,
+        1037
+      ],
+      "center": [
+        383.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0239.png"
+    },
+    {
+      "char_id": 240,
+      "region_id": 44,
+      "char": "0",
+      "char_index_in_region": 2,
+      "bbox": [
+        393,
+        989,
+        420,
+        1037
+      ],
+      "center": [
+        406.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0240.png"
+    },
+    {
+      "char_id": 241,
+      "region_id": 44,
+      "char": "%",
+      "char_index_in_region": 3,
+      "bbox": [
+        416,
+        989,
+        443,
+        1037
+      ],
+      "center": [
+        429.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0241.png"
+    },
+    {
+      "char_id": 242,
+      "region_id": 44,
+      "char": "外",
+      "char_index_in_region": 4,
+      "bbox": [
+        439,
+        989,
+        466,
+        1037
+      ],
+      "center": [
+        452.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0242.png"
+    },
+    {
+      "char_id": 243,
+      "region_id": 44,
+      "char": "税",
+      "char_index_in_region": 5,
+      "bbox": [
+        462,
+        989,
+        489,
+        1037
+      ],
+      "center": [
+        475.5,
+        1013.0
+      ],
+      "confidence": 0.3640689592638105,
+      "image_shape": [
+        48,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0243.png"
+    },
+    {
+      "char_id": 244,
+      "region_id": 45,
+      "char": "対",
+      "char_index_in_region": 0,
+      "bbox": [
+        521,
+        989,
+        563,
+        1033
+      ],
+      "center": [
+        542.0,
+        1011.0
+      ],
+      "confidence": 0.9881658862381347,
+      "image_shape": [
+        44,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0244.png"
+    },
+    {
+      "char_id": 245,
+      "region_id": 45,
+      "char": "象",
+      "char_index_in_region": 1,
+      "bbox": [
+        559,
+        989,
+        601,
+        1033
+      ],
+      "center": [
+        580.0,
+        1011.0
+      ],
+      "confidence": 0.9881658862381347,
+      "image_shape": [
+        44,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0245.png"
+    },
+    {
+      "char_id": 246,
+      "region_id": 46,
+      "char": "c",
+      "char_index_in_region": 0,
+      "bbox": [
+        785,
+        1003,
+        818,
+        1045
+      ],
+      "center": [
+        801.5,
+        1024.0
+      ],
+      "confidence": 0.04182731238381706,
+      "image_shape": [
+        42,
+        33,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0246.png"
+    },
+    {
+      "char_id": 247,
+      "region_id": 46,
+      "char": ")",
+      "char_index_in_region": 1,
+      "bbox": [
+        814,
+        1003,
+        847,
+        1045
+      ],
+      "center": [
+        830.5,
+        1024.0
+      ],
+      "confidence": 0.04182731238381706,
+      "image_shape": [
+        42,
+        33,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0247.png"
+    },
+    {
+      "char_id": 248,
+      "region_id": 47,
+      "char": "(",
+      "char_index_in_region": 0,
+      "bbox": [
+        342,
+        1024,
+        377,
+        1072
+      ],
+      "center": [
+        359.5,
+        1048.0
+      ],
+      "confidence": 0.9647349715232849,
+      "image_shape": [
+        48,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0248.png"
+    },
+    {
+      "char_id": 249,
+      "region_id": 47,
+      "char": "8",
+      "char_index_in_region": 1,
+      "bbox": [
+        373,
+        1024,
+        408,
+        1072
+      ],
+      "center": [
+        390.5,
+        1048.0
+      ],
+      "confidence": 0.9647349715232849,
+      "image_shape": [
+        48,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0249.png"
+    },
+    {
+      "char_id": 250,
+      "region_id": 47,
+      "char": "外",
+      "char_index_in_region": 2,
+      "bbox": [
+        404,
+        1024,
+        439,
+        1072
+      ],
+      "center": [
+        421.5,
+        1048.0
+      ],
+      "confidence": 0.9647349715232849,
+      "image_shape": [
+        48,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0250.png"
+    },
+    {
+      "char_id": 251,
+      "region_id": 47,
+      "char": "税",
+      "char_index_in_region": 3,
+      "bbox": [
+        435,
+        1024,
+        471,
+        1072
+      ],
+      "center": [
+        453.0,
+        1048.0
+      ],
+      "confidence": 0.9647349715232849,
+      "image_shape": [
+        48,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0251.png"
+    },
+    {
+      "char_id": 252,
+      "region_id": 48,
+      "char": "対",
+      "char_index_in_region": 0,
+      "bbox": [
+        519,
+        1025,
+        561,
+        1069
+      ],
+      "center": [
+        540.0,
+        1047.0
+      ],
+      "confidence": 0.4252795017256132,
+      "image_shape": [
+        44,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0252.png"
+    },
+    {
+      "char_id": 253,
+      "region_id": 48,
+      "char": "象",
+      "char_index_in_region": 1,
+      "bbox": [
+        557,
+        1025,
+        599,
+        1069
+      ],
+      "center": [
+        578.0,
+        1047.0
+      ],
+      "confidence": 0.4252795017256132,
+      "image_shape": [
+        44,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0253.png"
+    },
+    {
+      "char_id": 254,
+      "region_id": 49,
+      "char": "3",
+      "char_index_in_region": 0,
+      "bbox": [
+        765,
+        1037,
+        788,
+        1081
+      ],
+      "center": [
+        776.5,
+        1059.0
+      ],
+      "confidence": 0.9991358518600464,
+      "image_shape": [
+        44,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0254.png"
+    },
+    {
+      "char_id": 255,
+      "region_id": 49,
+      "char": "6",
+      "char_index_in_region": 1,
+      "bbox": [
+        784,
+        1037,
+        808,
+        1081
+      ],
+      "center": [
+        796.0,
+        1059.0
+      ],
+      "confidence": 0.9991358518600464,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0255.png"
+    },
+    {
+      "char_id": 256,
+      "region_id": 49,
+      "char": "2",
+      "char_index_in_region": 2,
+      "bbox": [
+        804,
+        1037,
+        827,
+        1081
+      ],
+      "center": [
+        815.5,
+        1059.0
+      ],
+      "confidence": 0.9991358518600464,
+      "image_shape": [
+        44,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0256.png"
+    },
+    {
+      "char_id": 257,
+      "region_id": 49,
+      "char": ")",
+      "char_index_in_region": 3,
+      "bbox": [
+        823,
+        1037,
+        847,
+        1081
+      ],
+      "center": [
+        835.0,
+        1059.0
+      ],
+      "confidence": 0.9991358518600464,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0257.png"
+    },
+    {
+      "char_id": 258,
+      "region_id": 50,
+      "char": "8",
+      "char_index_in_region": 0,
+      "bbox": [
+        337,
+        1061,
+        377,
+        1107
+      ],
+      "center": [
+        357.0,
+        1084.0
+      ],
+      "confidence": 0.9838899533431626,
+      "image_shape": [
+        46,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0258.png"
+    },
+    {
+      "char_id": 259,
+      "region_id": 50,
+      "char": "外",
+      "char_index_in_region": 1,
+      "bbox": [
+        373,
+        1061,
+        414,
+        1107
+      ],
+      "center": [
+        393.5,
+        1084.0
+      ],
+      "confidence": 0.9838899533431626,
+      "image_shape": [
+        46,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0259.png"
+    },
+    {
+      "char_id": 260,
+      "region_id": 50,
+      "char": "税",
+      "char_index_in_region": 2,
+      "bbox": [
+        410,
+        1061,
+        451,
+        1107
+      ],
+      "center": [
+        430.5,
+        1084.0
+      ],
+      "confidence": 0.9838899533431626,
+      "image_shape": [
+        46,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0260.png"
+    },
+    {
+      "char_id": 261,
+      "region_id": 51,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        799,
+        1073,
+        829,
+        1119
+      ],
+      "center": [
+        814.0,
+        1096.0
+      ],
+      "confidence": 0.2312075239077183,
+      "image_shape": [
+        46,
+        30,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0261.png"
+    },
+    {
+      "char_id": 262,
+      "region_id": 51,
+      "char": "0",
+      "char_index_in_region": 1,
+      "bbox": [
+        825,
+        1073,
+        856,
+        1119
+      ],
+      "center": [
+        840.5,
+        1096.0
+      ],
+      "confidence": 0.2312075239077183,
+      "image_shape": [
+        46,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0262.png"
+    },
+    {
+      "char_id": 263,
+      "region_id": 51,
+      "char": "8",
+      "char_index_in_region": 2,
+      "bbox": [
+        852,
+        1073,
+        883,
+        1119
+      ],
+      "center": [
+        867.5,
+        1096.0
+      ],
+      "confidence": 0.2312075239077183,
+      "image_shape": [
+        46,
+        31,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0263.png"
+    },
+    {
+      "char_id": 264,
+      "region_id": 52,
+      "char": "外",
+      "char_index_in_region": 0,
+      "bbox": [
+        334,
+        1094,
+        373,
+        1146
+      ],
+      "center": [
+        353.5,
+        1120.0
+      ],
+      "confidence": 0.9090454939727189,
+      "image_shape": [
+        52,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0264.png"
+    },
+    {
+      "char_id": 265,
+      "region_id": 52,
+      "char": "消",
+      "char_index_in_region": 1,
+      "bbox": [
+        369,
+        1094,
+        409,
+        1146
+      ],
+      "center": [
+        389.0,
+        1120.0
+      ],
+      "confidence": 0.9090454939727189,
+      "image_shape": [
+        52,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0265.png"
+    },
+    {
+      "char_id": 266,
+      "region_id": 52,
+      "char": "費",
+      "char_index_in_region": 2,
+      "bbox": [
+        405,
+        1094,
+        444,
+        1146
+      ],
+      "center": [
+        424.5,
+        1120.0
+      ],
+      "confidence": 0.9090454939727189,
+      "image_shape": [
+        52,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0266.png"
+    },
+    {
+      "char_id": 267,
+      "region_id": 52,
+      "char": "税",
+      "char_index_in_region": 3,
+      "bbox": [
+        440,
+        1094,
+        480,
+        1146
+      ],
+      "center": [
+        460.0,
+        1120.0
+      ],
+      "confidence": 0.9090454939727189,
+      "image_shape": [
+        52,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0267.png"
+    },
+    {
+      "char_id": 268,
+      "region_id": 52,
+      "char": "等",
+      "char_index_in_region": 4,
+      "bbox": [
+        476,
+        1094,
+        516,
+        1146
+      ],
+      "center": [
+        496.0,
+        1120.0
+      ],
+      "confidence": 0.9090454939727189,
+      "image_shape": [
+        52,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0268.png"
+    },
+    {
+      "char_id": 269,
+      "region_id": 53,
+      "char": "1",
+      "char_index_in_region": 0,
+      "bbox": [
+        797,
+        1111,
+        821,
+        1155
+      ],
+      "center": [
+        809.0,
+        1133.0
+      ],
+      "confidence": 0.43658074736595154,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0269.png"
+    },
+    {
+      "char_id": 270,
+      "region_id": 53,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        817,
+        1111,
+        842,
+        1155
+      ],
+      "center": [
+        829.5,
+        1133.0
+      ],
+      "confidence": 0.43658074736595154,
+      "image_shape": [
+        44,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0270.png"
+    },
+    {
+      "char_id": 271,
+      "region_id": 53,
+      "char": "0",
+      "char_index_in_region": 2,
+      "bbox": [
+        838,
+        1111,
+        862,
+        1155
+      ],
+      "center": [
+        850.0,
+        1133.0
+      ],
+      "confidence": 0.43658074736595154,
+      "image_shape": [
+        44,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0271.png"
+    },
+    {
+      "char_id": 272,
+      "region_id": 53,
+      "char": "8",
+      "char_index_in_region": 3,
+      "bbox": [
+        858,
+        1111,
+        883,
+        1155
+      ],
+      "center": [
+        870.5,
+        1133.0
+      ],
+      "confidence": 0.43658074736595154,
+      "image_shape": [
+        44,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0272.png"
+    },
+    {
+      "char_id": 273,
+      "region_id": 54,
+      "char": "合",
+      "char_index_in_region": 0,
+      "bbox": [
+        335,
+        1133,
+        370,
+        1179
+      ],
+      "center": [
+        352.5,
+        1156.0
+      ],
+      "confidence": 0.9674864661859869,
+      "image_shape": [
+        46,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0273.png"
+    },
+    {
+      "char_id": 274,
+      "region_id": 54,
+      "char": "計",
+      "char_index_in_region": 1,
+      "bbox": [
+        366,
+        1133,
+        401,
+        1179
+      ],
+      "center": [
+        383.5,
+        1156.0
+      ],
+      "confidence": 0.9674864661859869,
+      "image_shape": [
+        46,
+        35,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0274.png"
+    },
+    {
+      "char_id": 275,
+      "region_id": 54,
+      "char": "ノ",
+      "char_index_in_region": 2,
+      "bbox": [
+        397,
+        1133,
+        433,
+        1179
+      ],
+      "center": [
+        415.0,
+        1156.0
+      ],
+      "confidence": 0.9674864661859869,
+      "image_shape": [
+        46,
+        36,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0275.png"
+    },
+    {
+      "char_id": 276,
+      "region_id": 55,
+      "char": "1",
+      "char_index_in_region": 0,
+      "bbox": [
+        463,
+        1135,
+        505,
+        1181
+      ],
+      "center": [
+        484.0,
+        1158.0
+      ],
+      "confidence": 0.9981548042206573,
+      "image_shape": [
+        46,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0276.png"
+    },
+    {
+      "char_id": 277,
+      "region_id": 55,
+      "char": "点",
+      "char_index_in_region": 1,
+      "bbox": [
+        501,
+        1135,
+        543,
+        1181
+      ],
+      "center": [
+        522.0,
+        1158.0
+      ],
+      "confidence": 0.9981548042206573,
+      "image_shape": [
+        46,
+        42,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0277.png"
+    },
+    {
+      "char_id": 278,
+      "region_id": 56,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        662,
+        1137,
+        701,
+        1194
+      ],
+      "center": [
+        681.5,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0278.png"
+    },
+    {
+      "char_id": 279,
+      "region_id": 56,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        697,
+        1137,
+        737,
+        1194
+      ],
+      "center": [
+        717.0,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0279.png"
+    },
+    {
+      "char_id": 280,
+      "region_id": 56,
+      "char": ",",
+      "char_index_in_region": 2,
+      "bbox": [
+        733,
+        1137,
+        773,
+        1194
+      ],
+      "center": [
+        753.0,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0280.png"
+    },
+    {
+      "char_id": 281,
+      "region_id": 56,
+      "char": "4",
+      "char_index_in_region": 3,
+      "bbox": [
+        769,
+        1137,
+        808,
+        1194
+      ],
+      "center": [
+        788.5,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0281.png"
+    },
+    {
+      "char_id": 282,
+      "region_id": 56,
+      "char": "ラ",
+      "char_index_in_region": 4,
+      "bbox": [
+        804,
+        1137,
+        844,
+        1194
+      ],
+      "center": [
+        824.0,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0282.png"
+    },
+    {
+      "char_id": 283,
+      "region_id": 56,
+      "char": "5",
+      "char_index_in_region": 5,
+      "bbox": [
+        840,
+        1137,
+        880,
+        1194
+      ],
+      "center": [
+        860.0,
+        1165.5
+      ],
+      "confidence": 0.022510179047627477,
+      "image_shape": [
+        57,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0283.png"
+    },
+    {
+      "char_id": 284,
+      "region_id": 57,
+      "char": "お",
+      "char_index_in_region": 0,
+      "bbox": [
+        331,
+        1171,
+        369,
+        1217
+      ],
+      "center": [
+        350.0,
+        1194.0
+      ],
+      "confidence": 0.9872535764252586,
+      "image_shape": [
+        46,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0284.png"
+    },
+    {
+      "char_id": 285,
+      "region_id": 57,
+      "char": "預",
+      "char_index_in_region": 1,
+      "bbox": [
+        365,
+        1171,
+        404,
+        1217
+      ],
+      "center": [
+        384.5,
+        1194.0
+      ],
+      "confidence": 0.9872535764252586,
+      "image_shape": [
+        46,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0285.png"
+    },
+    {
+      "char_id": 286,
+      "region_id": 57,
+      "char": "り",
+      "char_index_in_region": 2,
+      "bbox": [
+        400,
+        1171,
+        439,
+        1217
+      ],
+      "center": [
+        419.5,
+        1194.0
+      ],
+      "confidence": 0.9872535764252586,
+      "image_shape": [
+        46,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0286.png"
+    },
+    {
+      "char_id": 287,
+      "region_id": 58,
+      "char": "ら",
+      "char_index_in_region": 0,
+      "bbox": [
+        765,
+        1185,
+        791,
+        1229
+      ],
+      "center": [
+        778.0,
+        1207.0
+      ],
+      "confidence": 0.14285768534765597,
+      "image_shape": [
+        44,
+        26,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0287.png"
+    },
+    {
+      "char_id": 288,
+      "region_id": 58,
+      "char": ",",
+      "char_index_in_region": 1,
+      "bbox": [
+        787,
+        1185,
+        814,
+        1229
+      ],
+      "center": [
+        800.5,
+        1207.0
+      ],
+      "confidence": 0.14285768534765597,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0288.png"
+    },
+    {
+      "char_id": 289,
+      "region_id": 58,
+      "char": "0",
+      "char_index_in_region": 2,
+      "bbox": [
+        810,
+        1185,
+        837,
+        1229
+      ],
+      "center": [
+        823.5,
+        1207.0
+      ],
+      "confidence": 0.14285768534765597,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0289.png"
+    },
+    {
+      "char_id": 290,
+      "region_id": 58,
+      "char": "0",
+      "char_index_in_region": 3,
+      "bbox": [
+        833,
+        1185,
+        860,
+        1229
+      ],
+      "center": [
+        846.5,
+        1207.0
+      ],
+      "confidence": 0.14285768534765597,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0290.png"
+    },
+    {
+      "char_id": 291,
+      "region_id": 58,
+      "char": "0",
+      "char_index_in_region": 4,
+      "bbox": [
+        856,
+        1185,
+        883,
+        1229
+      ],
+      "center": [
+        869.5,
+        1207.0
+      ],
+      "confidence": 0.14285768534765597,
+      "image_shape": [
+        44,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0291.png"
+    },
+    {
+      "char_id": 292,
+      "region_id": 59,
+      "char": "お",
+      "char_index_in_region": 0,
+      "bbox": [
+        327,
+        1205,
+        366,
+        1253
+      ],
+      "center": [
+        346.5,
+        1229.0
+      ],
+      "confidence": 0.9887435766868687,
+      "image_shape": [
+        48,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0292.png"
+    },
+    {
+      "char_id": 293,
+      "region_id": 59,
+      "char": "釣",
+      "char_index_in_region": 1,
+      "bbox": [
+        362,
+        1205,
+        401,
+        1253
+      ],
+      "center": [
+        381.5,
+        1229.0
+      ],
+      "confidence": 0.9887435766868687,
+      "image_shape": [
+        48,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0293.png"
+    },
+    {
+      "char_id": 294,
+      "region_id": 59,
+      "char": "り",
+      "char_index_in_region": 2,
+      "bbox": [
+        397,
+        1205,
+        437,
+        1253
+      ],
+      "center": [
+        417.0,
+        1229.0
+      ],
+      "confidence": 0.9887435766868687,
+      "image_shape": [
+        48,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0294.png"
+    },
+    {
+      "char_id": 295,
+      "region_id": 60,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        659,
+        1217,
+        705,
+        1262
+      ],
+      "center": [
+        682.0,
+        1239.5
+      ],
+      "confidence": 0.2649426472114515,
+      "image_shape": [
+        45,
+        46,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0295.png"
+    },
+    {
+      "char_id": 296,
+      "region_id": 60,
+      "char": "3",
+      "char_index_in_region": 1,
+      "bbox": [
+        701,
+        1217,
+        748,
+        1262
+      ],
+      "center": [
+        724.5,
+        1239.5
+      ],
+      "confidence": 0.2649426472114515,
+      "image_shape": [
+        45,
+        47,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0296.png"
+    },
+    {
+      "char_id": 297,
+      "region_id": 61,
+      "char": "5",
+      "char_index_in_region": 0,
+      "bbox": [
+        763,
+        1219,
+        803,
+        1267
+      ],
+      "center": [
+        783.0,
+        1243.0
+      ],
+      "confidence": 0.48874996968301126,
+      "image_shape": [
+        48,
+        40,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0297.png"
+    },
+    {
+      "char_id": 298,
+      "region_id": 61,
+      "char": "2",
+      "char_index_in_region": 1,
+      "bbox": [
+        799,
+        1219,
+        840,
+        1267
+      ],
+      "center": [
+        819.5,
+        1243.0
+      ],
+      "confidence": 0.48874996968301126,
+      "image_shape": [
+        48,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0298.png"
+    },
+    {
+      "char_id": 299,
+      "region_id": 61,
+      "char": "5",
+      "char_index_in_region": 2,
+      "bbox": [
+        836,
+        1219,
+        877,
+        1267
+      ],
+      "center": [
+        856.5,
+        1243.0
+      ],
+      "confidence": 0.48874996968301126,
+      "image_shape": [
+        48,
+        41,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0299.png"
+    },
+    {
+      "char_id": 300,
+      "region_id": 62,
+      "char": "*",
+      "char_index_in_region": 0,
+      "bbox": [
+        314,
+        1234,
+        352,
+        1311
+      ],
+      "center": [
+        333.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0300.png"
+    },
+    {
+      "char_id": 301,
+      "region_id": 62,
+      "char": "印",
+      "char_index_in_region": 1,
+      "bbox": [
+        348,
+        1234,
+        386,
+        1311
+      ],
+      "center": [
+        367.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0301.png"
+    },
+    {
+      "char_id": 302,
+      "region_id": 62,
+      "char": "は",
+      "char_index_in_region": 2,
+      "bbox": [
+        382,
+        1234,
+        421,
+        1311
+      ],
+      "center": [
+        401.5,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0302.png"
+    },
+    {
+      "char_id": 303,
+      "region_id": 62,
+      "char": "軽",
+      "char_index_in_region": 3,
+      "bbox": [
+        417,
+        1234,
+        455,
+        1311
+      ],
+      "center": [
+        436.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0303.png"
+    },
+    {
+      "char_id": 304,
+      "region_id": 62,
+      "char": "減",
+      "char_index_in_region": 4,
+      "bbox": [
+        451,
+        1234,
+        489,
+        1311
+      ],
+      "center": [
+        470.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0304.png"
+    },
+    {
+      "char_id": 305,
+      "region_id": 62,
+      "char": "税",
+      "char_index_in_region": 5,
+      "bbox": [
+        485,
+        1234,
+        524,
+        1311
+      ],
+      "center": [
+        504.5,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0305.png"
+    },
+    {
+      "char_id": 306,
+      "region_id": 62,
+      "char": "率",
+      "char_index_in_region": 6,
+      "bbox": [
+        520,
+        1234,
+        558,
+        1311
+      ],
+      "center": [
+        539.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0306.png"
+    },
+    {
+      "char_id": 307,
+      "region_id": 62,
+      "char": "(",
+      "char_index_in_region": 7,
+      "bbox": [
+        554,
+        1234,
+        592,
+        1311
+      ],
+      "center": [
+        573.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0307.png"
+    },
+    {
+      "char_id": 308,
+      "region_id": 62,
+      "char": "8",
+      "char_index_in_region": 8,
+      "bbox": [
+        588,
+        1234,
+        627,
+        1311
+      ],
+      "center": [
+        607.5,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0308.png"
+    },
+    {
+      "char_id": 309,
+      "region_id": 62,
+      "char": "8",
+      "char_index_in_region": 9,
+      "bbox": [
+        623,
+        1234,
+        661,
+        1311
+      ],
+      "center": [
+        642.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0309.png"
+    },
+    {
+      "char_id": 310,
+      "region_id": 62,
+      "char": "適",
+      "char_index_in_region": 10,
+      "bbox": [
+        657,
+        1234,
+        695,
+        1311
+      ],
+      "center": [
+        676.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0310.png"
+    },
+    {
+      "char_id": 311,
+      "region_id": 62,
+      "char": "用",
+      "char_index_in_region": 11,
+      "bbox": [
+        691,
+        1234,
+        730,
+        1311
+      ],
+      "center": [
+        710.5,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0311.png"
+    },
+    {
+      "char_id": 312,
+      "region_id": 62,
+      "char": "醐",
+      "char_index_in_region": 12,
+      "bbox": [
+        726,
+        1234,
+        764,
+        1311
+      ],
+      "center": [
+        745.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0312.png"
+    },
+    {
+      "char_id": 313,
+      "region_id": 62,
+      "char": "晶",
+      "char_index_in_region": 13,
+      "bbox": [
+        760,
+        1234,
+        798,
+        1311
+      ],
+      "center": [
+        779.0,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0313.png"
+    },
+    {
+      "char_id": 314,
+      "region_id": 62,
+      "char": "で",
+      "char_index_in_region": 14,
+      "bbox": [
+        794,
+        1234,
+        833,
+        1311
+      ],
+      "center": [
+        813.5,
+        1272.5
+      ],
+      "confidence": 0.0273752032338057,
+      "image_shape": [
+        77,
+        39,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0314.png"
+    },
+    {
+      "char_id": 315,
+      "region_id": 63,
+      "char": "レ",
+      "char_index_in_region": 0,
+      "bbox": [
+        308,
+        1380,
+        330,
+        1435
+      ],
+      "center": [
+        319.0,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0315.png"
+    },
+    {
+      "char_id": 316,
+      "region_id": 63,
+      "char": "シ",
+      "char_index_in_region": 1,
+      "bbox": [
+        326,
+        1380,
+        349,
+        1435
+      ],
+      "center": [
+        337.5,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0316.png"
+    },
+    {
+      "char_id": 317,
+      "region_id": 63,
+      "char": "-",
+      "char_index_in_region": 2,
+      "bbox": [
+        345,
+        1380,
+        367,
+        1435
+      ],
+      "center": [
+        356.0,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0317.png"
+    },
+    {
+      "char_id": 318,
+      "region_id": 63,
+      "char": "ト",
+      "char_index_in_region": 3,
+      "bbox": [
+        363,
+        1380,
+        386,
+        1435
+      ],
+      "center": [
+        374.5,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0318.png"
+    },
+    {
+      "char_id": 319,
+      "region_id": 63,
+      "char": "N",
+      "char_index_in_region": 4,
+      "bbox": [
+        382,
+        1380,
+        404,
+        1435
+      ],
+      "center": [
+        393.0,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0319.png"
+    },
+    {
+      "char_id": 320,
+      "region_id": 63,
+      "char": "o",
+      "char_index_in_region": 5,
+      "bbox": [
+        400,
+        1380,
+        423,
+        1435
+      ],
+      "center": [
+        411.5,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0320.png"
+    },
+    {
+      "char_id": 321,
+      "region_id": 63,
+      "char": "9",
+      "char_index_in_region": 6,
+      "bbox": [
+        419,
+        1380,
+        441,
+        1435
+      ],
+      "center": [
+        430.0,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0321.png"
+    },
+    {
+      "char_id": 322,
+      "region_id": 63,
+      "char": "7",
+      "char_index_in_region": 7,
+      "bbox": [
+        437,
+        1380,
+        460,
+        1435
+      ],
+      "center": [
+        448.5,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0322.png"
+    },
+    {
+      "char_id": 323,
+      "region_id": 63,
+      "char": "3",
+      "char_index_in_region": 8,
+      "bbox": [
+        456,
+        1380,
+        478,
+        1435
+      ],
+      "center": [
+        467.0,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0323.png"
+    },
+    {
+      "char_id": 324,
+      "region_id": 63,
+      "char": "0",
+      "char_index_in_region": 9,
+      "bbox": [
+        474,
+        1380,
+        497,
+        1435
+      ],
+      "center": [
+        485.5,
+        1407.5
+      ],
+      "confidence": 0.7620467862521154,
+      "image_shape": [
+        55,
+        23,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0324.png"
+    },
+    {
+      "char_id": 325,
+      "region_id": 64,
+      "char": "店",
+      "char_index_in_region": 0,
+      "bbox": [
+        705,
+        1393,
+        730,
+        1447
+      ],
+      "center": [
+        717.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0325.png"
+    },
+    {
+      "char_id": 326,
+      "region_id": 64,
+      "char": "N",
+      "char_index_in_region": 1,
+      "bbox": [
+        726,
+        1393,
+        751,
+        1447
+      ],
+      "center": [
+        738.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0326.png"
+    },
+    {
+      "char_id": 327,
+      "region_id": 64,
+      "char": "o",
+      "char_index_in_region": 2,
+      "bbox": [
+        747,
+        1393,
+        772,
+        1447
+      ],
+      "center": [
+        759.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0327.png"
+    },
+    {
+      "char_id": 328,
+      "region_id": 64,
+      "char": "O",
+      "char_index_in_region": 3,
+      "bbox": [
+        768,
+        1393,
+        793,
+        1447
+      ],
+      "center": [
+        780.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0328.png"
+    },
+    {
+      "char_id": 329,
+      "region_id": 64,
+      "char": "G",
+      "char_index_in_region": 4,
+      "bbox": [
+        789,
+        1393,
+        814,
+        1447
+      ],
+      "center": [
+        801.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0329.png"
+    },
+    {
+      "char_id": 330,
+      "region_id": 64,
+      "char": "O",
+      "char_index_in_region": 5,
+      "bbox": [
+        810,
+        1393,
+        835,
+        1447
+      ],
+      "center": [
+        822.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0330.png"
+    },
+    {
+      "char_id": 331,
+      "region_id": 64,
+      "char": "O",
+      "char_index_in_region": 6,
+      "bbox": [
+        831,
+        1393,
+        856,
+        1447
+      ],
+      "center": [
+        843.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0331.png"
+    },
+    {
+      "char_id": 332,
+      "region_id": 64,
+      "char": "5",
+      "char_index_in_region": 7,
+      "bbox": [
+        852,
+        1393,
+        877,
+        1447
+      ],
+      "center": [
+        864.5,
+        1420.0
+      ],
+      "confidence": 0.49763286797223616,
+      "image_shape": [
+        54,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0332.png"
+    },
+    {
+      "char_id": 333,
+      "region_id": 65,
+      "char": "ル",
+      "char_index_in_region": 0,
+      "bbox": [
+        653,
+        277,
+        727,
+        315
+      ],
+      "center": [
+        690.0,
+        296.0
+      ],
+      "confidence": 0.02981465335015887,
+      "image_shape": [
+        38,
+        74,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0333.png"
+    },
+    {
+      "char_id": 334,
+      "region_id": 66,
+      "char": "0",
+      "char_index_in_region": 0,
+      "bbox": [
+        656,
+        322,
+        676,
+        384
+      ],
+      "center": [
+        666.0,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        20,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0334.png"
+    },
+    {
+      "char_id": 335,
+      "region_id": 66,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        672,
+        322,
+        693,
+        384
+      ],
+      "center": [
+        682.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0335.png"
+    },
+    {
+      "char_id": 336,
+      "region_id": 66,
+      "char": "2",
+      "char_index_in_region": 2,
+      "bbox": [
+        689,
+        322,
+        710,
+        384
+      ],
+      "center": [
+        699.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0336.png"
+    },
+    {
+      "char_id": 337,
+      "region_id": 66,
+      "char": "9",
+      "char_index_in_region": 3,
+      "bbox": [
+        706,
+        322,
+        727,
+        384
+      ],
+      "center": [
+        716.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0337.png"
+    },
+    {
+      "char_id": 338,
+      "region_id": 66,
+      "char": " ",
+      "char_index_in_region": 4,
+      "bbox": [
+        723,
+        322,
+        744,
+        384
+      ],
+      "center": [
+        733.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0338.png"
+    },
+    {
+      "char_id": 339,
+      "region_id": 66,
+      "char": "I",
+      "char_index_in_region": 5,
+      "bbox": [
+        740,
+        322,
+        761,
+        384
+      ],
+      "center": [
+        750.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0339.png"
+    },
+    {
+      "char_id": 340,
+      "region_id": 66,
+      "char": "日",
+      "char_index_in_region": 6,
+      "bbox": [
+        757,
+        322,
+        778,
+        384
+      ],
+      "center": [
+        767.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0340.png"
+    },
+    {
+      "char_id": 341,
+      "region_id": 66,
+      "char": "3",
+      "char_index_in_region": 7,
+      "bbox": [
+        774,
+        322,
+        795,
+        384
+      ],
+      "center": [
+        784.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0341.png"
+    },
+    {
+      "char_id": 342,
+      "region_id": 66,
+      "char": "9",
+      "char_index_in_region": 8,
+      "bbox": [
+        791,
+        322,
+        812,
+        384
+      ],
+      "center": [
+        801.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0342.png"
+    },
+    {
+      "char_id": 343,
+      "region_id": 66,
+      "char": "1",
+      "char_index_in_region": 9,
+      "bbox": [
+        808,
+        322,
+        829,
+        384
+      ],
+      "center": [
+        818.5,
+        353.0
+      ],
+      "confidence": 0.03421911791849467,
+      "image_shape": [
+        62,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0343.png"
+    },
+    {
+      "char_id": 344,
+      "region_id": 67,
+      "char": "川",
+      "char_index_in_region": 0,
+      "bbox": [
+        587,
+        356,
+        625,
+        393
+      ],
+      "center": [
+        606.0,
+        374.5
+      ],
+      "confidence": 0.6682391861309447,
+      "image_shape": [
+        37,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0344.png"
+    },
+    {
+      "char_id": 345,
+      "region_id": 67,
+      "char": "・",
+      "char_index_in_region": 1,
+      "bbox": [
+        621,
+        356,
+        659,
+        393
+      ],
+      "center": [
+        640.0,
+        374.5
+      ],
+      "confidence": 0.6682391861309447,
+      "image_shape": [
+        37,
+        38,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0345.png"
+    },
+    {
+      "char_id": 346,
+      "region_id": 68,
+      "char": "い",
+      "char_index_in_region": 0,
+      "bbox": [
+        665,
+        355,
+        692,
+        398
+      ],
+      "center": [
+        678.5,
+        376.5
+      ],
+      "confidence": 0.017530700730023253,
+      "image_shape": [
+        43,
+        27,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0346.png"
+    },
+    {
+      "char_id": 347,
+      "region_id": 68,
+      "char": "o",
+      "char_index_in_region": 1,
+      "bbox": [
+        688,
+        355,
+        716,
+        398
+      ],
+      "center": [
+        702.0,
+        376.5
+      ],
+      "confidence": 0.017530700730023253,
+      "image_shape": [
+        43,
+        28,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0347.png"
+    },
+    {
+      "char_id": 348,
+      "region_id": 68,
+      "char": "-",
+      "char_index_in_region": 2,
+      "bbox": [
+        712,
+        355,
+        740,
+        398
+      ],
+      "center": [
+        726.0,
+        376.5
+      ],
+      "confidence": 0.017530700730023253,
+      "image_shape": [
+        43,
+        28,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0348.png"
+    },
+    {
+      "char_id": 349,
+      "region_id": 69,
+      "char": "川",
+      "char_index_in_region": 0,
+      "bbox": [
+        727,
+        367,
+        751,
+        403
+      ],
+      "center": [
+        739.0,
+        385.0
+      ],
+      "confidence": 0.10476039943948882,
+      "image_shape": [
+        36,
+        24,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0349.png"
+    },
+    {
+      "char_id": 350,
+      "region_id": 69,
+      "char": "l",
+      "char_index_in_region": 1,
+      "bbox": [
+        747,
+        367,
+        772,
+        403
+      ],
+      "center": [
+        759.5,
+        385.0
+      ],
+      "confidence": 0.10476039943948882,
+      "image_shape": [
+        36,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0350.png"
+    },
+    {
+      "char_id": 351,
+      "region_id": 69,
+      "char": "】",
+      "char_index_in_region": 2,
+      "bbox": [
+        768,
+        367,
+        793,
+        403
+      ],
+      "center": [
+        780.5,
+        385.0
+      ],
+      "confidence": 0.10476039943948882,
+      "image_shape": [
+        36,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0351.png"
+    },
+    {
+      "char_id": 352,
+      "region_id": 70,
+      "char": "ス",
+      "char_index_in_region": 0,
+      "bbox": [
+        617,
+        568,
+        638,
+        632
+      ],
+      "center": [
+        627.5,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0352.png"
+    },
+    {
+      "char_id": 353,
+      "region_id": 70,
+      "char": "キ",
+      "char_index_in_region": 1,
+      "bbox": [
+        634,
+        568,
+        656,
+        632
+      ],
+      "center": [
+        645.0,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0353.png"
+    },
+    {
+      "char_id": 354,
+      "region_id": 70,
+      "char": "ャ",
+      "char_index_in_region": 2,
+      "bbox": [
+        652,
+        568,
+        673,
+        632
+      ],
+      "center": [
+        662.5,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0354.png"
+    },
+    {
+      "char_id": 355,
+      "region_id": 70,
+      "char": "ン",
+      "char_index_in_region": 3,
+      "bbox": [
+        669,
+        568,
+        691,
+        632
+      ],
+      "center": [
+        680.0,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0355.png"
+    },
+    {
+      "char_id": 356,
+      "region_id": 70,
+      "char": "N",
+      "char_index_in_region": 4,
+      "bbox": [
+        687,
+        568,
+        708,
+        632
+      ],
+      "center": [
+        697.5,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0356.png"
+    },
+    {
+      "char_id": 357,
+      "region_id": 70,
+      "char": "o",
+      "char_index_in_region": 5,
+      "bbox": [
+        704,
+        568,
+        726,
+        632
+      ],
+      "center": [
+        715.0,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0357.png"
+    },
+    {
+      "char_id": 358,
+      "region_id": 70,
+      "char": "5",
+      "char_index_in_region": 6,
+      "bbox": [
+        722,
+        568,
+        743,
+        632
+      ],
+      "center": [
+        732.5,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0358.png"
+    },
+    {
+      "char_id": 359,
+      "region_id": 70,
+      "char": "9",
+      "char_index_in_region": 7,
+      "bbox": [
+        739,
+        568,
+        761,
+        632
+      ],
+      "center": [
+        750.0,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0359.png"
+    },
+    {
+      "char_id": 360,
+      "region_id": 70,
+      "char": "3",
+      "char_index_in_region": 8,
+      "bbox": [
+        757,
+        568,
+        778,
+        632
+      ],
+      "center": [
+        767.5,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        21,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0360.png"
+    },
+    {
+      "char_id": 361,
+      "region_id": 70,
+      "char": "9",
+      "char_index_in_region": 9,
+      "bbox": [
+        774,
+        568,
+        796,
+        632
+      ],
+      "center": [
+        785.0,
+        600.0
+      ],
+      "confidence": 0.8868479983912239,
+      "image_shape": [
+        64,
+        22,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0361.png"
+    },
+    {
+      "char_id": 362,
+      "region_id": 71,
+      "char": "半",
+      "char_index_in_region": 0,
+      "bbox": [
+        713,
+        1032,
+        738,
+        1080
+      ],
+      "center": [
+        725.5,
+        1056.0
+      ],
+      "confidence": 0.24972866207355937,
+      "image_shape": [
+        48,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0362.png"
+    },
+    {
+      "char_id": 363,
+      "region_id": 71,
+      "char": "1",
+      "char_index_in_region": 1,
+      "bbox": [
+        734,
+        1032,
+        759,
+        1080
+      ],
+      "center": [
+        746.5,
+        1056.0
+      ],
+      "confidence": 0.24972866207355937,
+      "image_shape": [
+        48,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0363.png"
+    },
+    {
+      "char_id": 364,
+      "region_id": 71,
+      "char": ",",
+      "char_index_in_region": 2,
+      "bbox": [
+        755,
+        1032,
+        780,
+        1080
+      ],
+      "center": [
+        767.5,
+        1056.0
+      ],
+      "confidence": 0.24972866207355937,
+      "image_shape": [
+        48,
+        25,
+        3
+      ],
+      "image_path": "/workspace/app/data/detected_texts/receipt/characters/char_0364.png"
+    }
+  ]
+}

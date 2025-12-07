@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー登録</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>新規登録</h1>
+    <form id="registerForm" novalidate>
+      <label for="username">ユーザー名</label>
+      <input type="text" id="username" name="username" autocomplete="username" required>
+      <br>
+      <label for="email">メールアドレス</label>
+      <input type="email" id="email" name="email" autocomplete="email" required>
+      <br>
+      <label for="password">パスワード</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
+      <br>
+      <label for="passwordConfirm">パスワード（確認）</label>
+      <input type="password" id="passwordConfirm" name="passwordConfirm" autocomplete="new-password" minlength="8" required>
+      <br>
+      <label for="birthday">生年月日 (任意)</label>
+      <input type="date" id="birthday" name="birthday">
+      <br>
+      <button type="submit">登録する</button>
+    </form>
+    <p id="message" class="status-message" role="status"></p>
+    <div class="form-footer">
+      <span>すでにアカウントをお持ちですか？</span>
+      <a class="text-link" href="index.html">ログインに戻る</a>
+    </div>
+  </div>
+
+  <script src="config.js" defer></script>
+  <script src="register.js" defer></script>
+</body>
+</html>
