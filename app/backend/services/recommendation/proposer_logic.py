@@ -4,6 +4,7 @@ from typing import Dict, List, Set, Tuple
 import numpy as np
 
 from .data_models import Ingredient, Recipe, UserParameters
+from .data_source import FEATURE_DIMENSIONS
 
 
 class RecipeProposer:
@@ -19,6 +20,7 @@ class RecipeProposer:
             for ingredient in user_inventory
         }
         self.user_profile_vector = user_profile_vector
+        self.feature_labels = list(FEATURE_DIMENSIONS)
 
         self.WEIGHT_INVENTORY = 0.7
         self.WEIGHT_PREFERENCE = 0.3
@@ -110,6 +112,10 @@ class RecipeProposer:
 
     def propose(self, params: UserParameters) -> List[Dict]:
         final_proposals: List[Dict] = []
+        try:
+            user_vector_values = [float(v) for v in np.ravel(self.user_profile_vector)]
+        except Exception:
+            user_vector_values = []
 
         for recipe in self.all_recipes:
             coverage_score, missing = self._calculate_inventory_coverage(recipe)
@@ -141,6 +147,8 @@ class RecipeProposer:
                     "final_score": final_score,
                     "coverage_score": coverage_score,
                     "preference_score": preference_score,
+                    "user_preference_vector": user_vector_values.copy(),
+                    "user_preference_labels": self.feature_labels,
                     "prep_time": recipe.prep_time,
                     "calories": recipe.calories,
                     "is_boosted": boost_factor > 0,

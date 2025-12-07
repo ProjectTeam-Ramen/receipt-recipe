@@ -12,9 +12,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const sortByEl = document.getElementById("sortBy");
   const pantryInfo = document.getElementById("pantryInfo");
   const applyRecommendBtn = document.getElementById("applyRecommendBtn");
+  const preferencePanel = document.getElementById("preferencePanel");
+  const preferenceList = document.getElementById("preferenceList");
+  const preferenceSummary = document.getElementById("preferenceSummary");
   let backendRows = [];
   let backendPantryLabel = "";
+  let backendPreferenceVector = [];
+  let backendPreferenceLabels = [];
   let staticCatalog = [];
+
+  const PREFERENCE_DIMENSIONS = [
+    { key: "is_japanese", label: "和食", description: "和食ベース" },
+    { key: "is_western", label: "洋食", description: "洋風テイスト" },
+    { key: "is_chinese", label: "中華", description: "中華・アジアン" },
+    { key: "is_main_dish", label: "主菜", description: "メイン料理" },
+    { key: "is_side_dish", label: "副菜", description: "サイドメニュー" },
+    { key: "is_soup", label: "汁物", description: "スープ・汁物" },
+    { key: "is_dessert", label: "デザート", description: "甘いメニュー" },
+    { key: "type_meat", label: "肉料理", description: "肉を使う" },
+    { key: "type_seafood", label: "魚介", description: "魚・海鮮" },
+    { key: "type_vegetarian", label: "菜食", description: "野菜中心" },
+    { key: "type_composite", label: "複合", description: "肉＋魚など" },
+    { key: "type_other", label: "その他", description: "分類外" },
+    { key: "flavor_sweet", label: "甘め", description: "甘い味付け" },
+    { key: "flavor_spicy", label: "辛め", description: "辛い味付け" },
+    { key: "flavor_salty", label: "塩味", description: "塩気のある味" },
+    { key: "texture_stewed", label: "煮込み", description: "煮る・ことこと" },
+    { key: "texture_fried", label: "揚げ物", description: "揚げた食感" },
+    { key: "texture_stir_fried", label: "炒め物", description: "炒める・ソテー" },
+  ];
 
   if (backBtn) backBtn.addEventListener("click", () => (location.href = "home.html"));
   if (maxMissing) {
@@ -114,9 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const coveragePercent =
           typeof r.coverage === "number" ? Math.round(r.coverage * 100) : null;
         const backendMeta =
-          r.fromBackend && (coveragePercent !== null || Number.isFinite(r.score))
-            ? `<p class="muted">カバー率: ${coveragePercent !== null ? `${coveragePercent}%` : "-"
-            } / スコア: ${Number.isFinite(r.score) ? r.score.toFixed(2) : "-"}</p>`
+          r.fromBackend && (coveragePercent !== null || Number.isFinite(r.score) || Number.isFinite(r.preference_score))
+            ? `<p class="muted metric-line">${[
+              coveragePercent !== null ? `カバー率: ${coveragePercent}%` : null,
+              Number.isFinite(r.preference_score) ? `好み: ${r.preference_score.toFixed(2)}` : null,
+              Number.isFinite(r.score) ? `総合: ${r.score.toFixed(2)}` : null,
+            ]
+              .filter(Boolean)
+              .join(" / ")}</p>`
             : "";
         const prepMeta =
           typeof r.prepTime === "number"
@@ -149,6 +180,48 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
       })
       .join("");
+  }
+
+  function updatePreferencePanel() {
+    if (!preferencePanel || !preferenceSummary) return;
+    const values = Array.isArray(backendPreferenceVector)
+      ? backendPreferenceVector.map((val) => (Number.isFinite(Number(val)) ? Number(val) : 0))
+      : [];
+    const hasData = values.some((val) => Number.isFinite(val));
+    if (!hasData) {
+      preferencePanel.classList.add("is-empty");
+      if (preferenceList) preferenceList.innerHTML = "";
+      preferenceSummary.textContent = "提案を取得すると嗜好ベクトルの内訳が表示されます";
+      return;
+    }
+
+    preferencePanel.classList.remove("is-empty");
+    preferenceSummary.textContent = "値が大きいほど該当カテゴリを好む傾向 (0〜1目安)";
+
+    if (!preferenceList) return;
+    const labels = backendPreferenceLabels.length
+      ? backendPreferenceLabels
+      : PREFERENCE_DIMENSIONS.map((dim) => dim.key);
+    const labelMeta = new Map(PREFERENCE_DIMENSIONS.map((dim) => [dim.key, dim]));
+    const items = labels
+      .map((key, idx) => {
+        const value = Number(values[idx]);
+        if (!Number.isFinite(value)) {
+          return null;
+        }
+        const meta = labelMeta.get(key) || { label: key, description: "" };
+        const description = meta.description ? `（${meta.description}）` : "";
+        return `<li class="preference-item" role="listitem">
+          <span>${meta.label}${description}</span>
+          <strong>${value.toFixed(2)}</strong>
+        </li>`;
+      })
+      .filter(Boolean);
+
+    preferenceList.innerHTML = items.join("") || `<li class="preference-item" role="listitem">
+        <span>嗜好ベクトル</span>
+        <strong>${values.length && Number.isFinite(values[0]) ? values[0].toFixed(2) : "0.00"}</strong>
+      </li>`;
   }
 
   function render() {
@@ -201,15 +274,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       backendRows = result.rows;
       backendPantryLabel = result.pantryLabel;
+      backendPreferenceVector = Array.isArray(result.preferenceVector) ? result.preferenceVector : [];
+      backendPreferenceLabels = Array.isArray(result.preferenceLabels) ? result.preferenceLabels : [];
       empty.textContent = "条件に合うレシピがありません";
+      updatePreferencePanel();
       render();
     } catch (error) {
       backendRows = [];
       backendPantryLabel = "";
+      backendPreferenceVector = [];
+      backendPreferenceLabels = [];
       console.debug("backend recommendation skipped:", error);
       if (showAlertOnFail && window?.alert) {
         window.alert(error?.message || "レコメンド取得に失敗しました");
       }
+      updatePreferencePanel();
       render();
     } finally {
       if (btn) {
@@ -221,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 初回
   render();
+  updatePreferencePanel();
   refreshRecommendationsFromBackend(false).catch((err) => {
     console.debug("initial backend recommendation skipped:", err);
   });
@@ -460,8 +540,16 @@ async function loadBackendRecommendations(options = {}) {
     };
   });
 
+  const preferenceSource = proposals.find((p) => Array.isArray(p.user_preference_vector));
+  const preferenceVector = Array.isArray(preferenceSource?.user_preference_vector)
+    ? preferenceSource.user_preference_vector.map((val) => (Number.isFinite(Number(val)) ? Number(val) : 0))
+    : [];
+  const preferenceLabels = Array.isArray(preferenceSource?.user_preference_labels)
+    ? preferenceSource.user_preference_labels.map((label) => String(label))
+    : [];
+
   const pantryLabel = `${inventorySource === "api" ? "サーバー在庫" : "ローカル在庫"} ${inventory.length}件 / 提案 ${rows.length}件`;
-  return { rows, pantryLabel };
+  return { rows, pantryLabel, preferenceVector, preferenceLabels };
 }
 
 // Token refresh utilities (copied minimal from other frontend files)

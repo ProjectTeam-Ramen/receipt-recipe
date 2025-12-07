@@ -167,6 +167,18 @@
       <div id="suggestGrid" class="card-grid" role="list"></div>
       <p id="empty" class="muted" style="display:none;">条件に合うレシピがありません</p>
     </section>
+
+    <section class="preference-panel" id="preferencePanel" aria-live="polite">
+      <div class="preference-panel__headline">
+        <div>
+          <p class="eyebrow">提案プロファイル</p>
+          <h2>ユーザー嗜好ベクトル</h2>
+        </div>
+        <p class="muted preference-panel__status" id="preferenceSummary">提案を取得すると嗜好ベクトルの内訳が表示されます</p>
+      </div>
+      <ul class="preference-grid" id="preferenceList" role="list"></ul>
+    </section>
+
   </main>
 
   <script src="config.js" defer></script>

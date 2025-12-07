@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import date
 from typing import Dict, List, Optional
+
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Session
@@ -31,6 +32,8 @@ class RecommendationResult(BaseModel):
     final_score: float
     coverage_score: float
     preference_score: float
+    user_preference_vector: List[float]
+    user_preference_labels: List[str]
     prep_time: int
     calories: int
     is_boosted: bool
