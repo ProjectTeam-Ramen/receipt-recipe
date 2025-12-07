@@ -11,10 +11,12 @@ MySQL でスキーマを作成し、アプリ用ユーザーに権限を付与�
 mysql -u root -p < init.sql
 ```
 
-既存のデータベースを使い回している場合は、最新スキーマとの差分を反映するために `migrations/20231206_add_calories_to_recipes.sql` も忘れずに適用してください。
+既存のデータベースを使い回している場合は、最新スキーマとの差分を反映するために `migrations/20231206_add_calories_to_recipes.sql` と `migrations/20231207_add_recipe_cook_source_type.sql` も忘れずに適用してください。
 
 ```bash
 mysql -u root -p receipt_recipe_db < migrations/20231206_add_calories_to_recipes.sql
+mysql -u root -p receipt_recipe_db < migrations/20231207_add_recipe_cook_source_type.sql
+mysql -u root -p receipt_recipe_db < migrations/20231208_add_recipe_feature_flags.sql
 ```
 
 `.env` もしくは環境変数で `DATABASE_URL`（例: `mysql+pymysql://user:password@127.0.0.1/receipt_recipe_db`）を指定してください。未設定の場合は `mysql+pymysql://user:password@db:3306/receipt_recipe_db` に接続します（`docker-compose.override.yml` の `db` サービス）。

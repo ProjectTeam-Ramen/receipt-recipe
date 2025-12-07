@@ -6,7 +6,7 @@ from .food import (
     UserFood,
     UserFoodTransaction,
 )
-from .recipe import Recipe, RecipeFood
+from .recipe import Recipe, RecipeFood, UserRecipeHistory
 from .refresh_token import RefreshToken
 from .user import User
 
@@ -21,4 +21,5 @@ __all__ = [
     "UserFoodTransaction",
     "Recipe",
     "RecipeFood",
+    "UserRecipeHistory",
 ]

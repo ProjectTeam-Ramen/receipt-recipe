@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from datetime import date
 from typing import Dict, List, Optional
-
-import numpy as np
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Session
@@ -127,9 +125,10 @@ def propose_recommendations(
             detail="レシピデータが登録されていません。",
         )
 
-    vector_length = len(recipes[0].feature_vector) if recipes else 0
     if body.history and body.recipes:
-        user_profile_vector = np.zeros(vector_length or 1, dtype=np.float64)
+        user_profile_vector = recipe_source.build_profile_vector_from_payload(
+            body.history, body.recipes
+        )
     else:
         user_profile_vector = recipe_source.create_user_profile_vector(target_user_id)
 

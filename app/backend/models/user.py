@@ -33,3 +33,9 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+
+    recipe_history = relationship(
+        "UserRecipeHistory",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )

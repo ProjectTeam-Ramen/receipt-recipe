@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const applyRecommendBtn = document.getElementById("applyRecommendBtn");
   let backendRows = [];
   let backendPantryLabel = "";
+  let staticCatalog = [];
 
   if (backBtn) backBtn.addEventListener("click", () => (location.href = "home.html"));
   if (maxMissing) {
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // レシピ（ダミー）
-  const catalog = [
+  const DEFAULT_SAMPLE_RECIPES = [
     {
       id: "caprese", title: "トマトとモッツァレラのカプレーゼ", image: "https://picsum.photos/seed/caprese/600/400", url: "#",
       ingredients: ["トマト", "モッツァレラ", "バジル", "オリーブオイル", "塩", "こしょう"]
@@ -104,7 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
     empty.style.display = "none";
     grid.innerHTML = list
       .map((r) => {
-        const href = r.url || `recipes/${r.id}.html`;
+        const hasBackendDetail = r.fromBackend && (r.id !== undefined && r.id !== null);
+        const detailHref = hasBackendDetail
+          ? `recipe-detail.html?id=${encodeURIComponent(r.id)}`
+          : r.url || `recipes/${r.id}.html`;
+        const linkTarget = hasBackendDetail ? "_self" : "_blank";
+        const relAttr = linkTarget === "_blank" ? ' rel="noopener"' : "";
         const coveragePercent =
           typeof r.coverage === "number" ? Math.round(r.coverage * 100) : null;
         const backendMeta =
@@ -117,6 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<p class="muted">調理時間: ${r.prepTime}分${typeof r.calories === "number" ? ` / 約${r.calories}kcal` : ""
             }</p>`
             : "";
+        const detailBadge = hasBackendDetail
+          ? '<p class="muted"><span class="badge">詳細ページあり</span></p>'
+          : "";
         const badgeBlock = r.canMake
           ? `<span class="badge ok">作れる</span>`
           : `<div class="badgeGroup">
@@ -127,12 +136,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return `
       <article class="card" role="listitem">
-        <a href="${href}" class="card-link" target="_blank" rel="noopener">
+        <a href="${detailHref}" class="card-link" target="${linkTarget}"${relAttr}>
           <div class="card-body">
             <h3 class="card-title">${r.title}</h3>
             ${badgeBlock}
             ${backendMeta}
             ${prepMeta}
+            ${detailBadge}
           </div>
         </a>
       </article>
@@ -153,7 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (pantryInfo) {
         pantryInfo.textContent = `手持ち: ${pantry.length} 点（localStorage参照。未設定なら仮データ）`;
       }
-      rows = catalog.map((r) => scoreRecipe(r, pantry));
+      const sourceCatalog = staticCatalog.length ? staticCatalog : DEFAULT_SAMPLE_RECIPES;
+      rows = sourceCatalog.map((r) => scoreRecipe(r, pantry));
     }
 
     const maxM = maxMissing ? Number(maxMissing.value) : 5;
@@ -213,10 +224,86 @@ document.addEventListener("DOMContentLoaded", () => {
   refreshRecommendationsFromBackend(false).catch((err) => {
     console.debug("initial backend recommendation skipped:", err);
   });
+
+  loadStaticCatalogFromApi()
+    .then((rows) => {
+      staticCatalog = rows;
+      render();
+    })
+    .catch((err) => {
+      console.debug("static catalog load skipped:", err);
+    });
 });
+
+async function loadStaticCatalogFromApi() {
+  const resp = await fetch(`${API_BASE_URL}/recipes/static-catalog`);
+  if (!resp.ok) {
+    const body = await resp.json().catch(() => ({}));
+    throw new Error(body?.detail || `static catalog error ${resp.status}`);
+  }
+  const payload = await resp.json();
+  if (!Array.isArray(payload)) return [];
+  return payload
+    .map((item, idx) => {
+      const url = buildStaticRecipeUrl(item?.detail_path, item?.id ?? idx + 1);
+      return {
+        id: item?.id ?? `static-${idx}`,
+        title: item?.title ?? `レシピ ${idx + 1}`,
+        ingredients: Array.isArray(item?.ingredients) ? item.ingredients : [],
+        url,
+        prepTime: typeof item?.cooking_time === "number" ? item.cooking_time : null,
+        calories: typeof item?.calories === "number" ? item.calories : null,
+        fromStaticCatalog: true,
+      };
+    })
+    .filter((row) => row.url && row.url !== "#");
+}
+
+function buildStaticRecipeUrl(detailPath, fallbackId) {
+  let relativePath = null;
+  if (typeof detailPath === "string" && detailPath.trim()) {
+    const trimmed = detailPath.trim();
+    relativePath = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  } else if (fallbackId !== undefined && fallbackId !== null) {
+    const padded = padRecipeId(fallbackId);
+    if (padded) {
+      relativePath = `${STATIC_HTML_BASE_PATH}/${padded}.html`;
+    }
+  }
+  if (!relativePath) return "#";
+  if (/^https?:\/\//i.test(relativePath)) {
+    return relativePath;
+  }
+  return `${BACKEND_BASE_URL}${relativePath}`;
+}
+
+function padRecipeId(value) {
+  const num = Number(value);
+  if (Number.isFinite(num)) {
+    return String(num).padStart(4, "0");
+  }
+  const text = String(value ?? "").trim();
+  return text ? text.padStart(4, "0") : null;
+}
+
+function deriveBackendBaseUrl() {
+  try {
+    const resolved = new URL(API_BASE_URL, window.location.origin);
+    const origin = `${resolved.protocol}//${resolved.host}`;
+    const trimmedPath = resolved.pathname.replace(/\/$/, "");
+    const basePath = trimmedPath.endsWith("/api/v1")
+      ? trimmedPath.slice(0, -"/api/v1".length)
+      : trimmedPath;
+    return basePath ? `${origin}${basePath}` : origin;
+  } catch (err) {
+    return window.location.origin.replace(/\/$/, "");
+  }
+}
 
 // ---------------------- backend recommendation integration ----------------------
 const API_BASE_URL = window.APP_CONFIG?.apiBaseUrl ?? "http://127.0.0.1:8000/api/v1";
+const STATIC_HTML_BASE_PATH = "/recipe-pages";
+const BACKEND_BASE_URL = deriveBackendBaseUrl();
 const STORAGE_KEYS = window.APP_CONFIG?.storageKeys ?? {
   accessToken: "rr.access_token",
   refreshToken: "rr.refresh_token",

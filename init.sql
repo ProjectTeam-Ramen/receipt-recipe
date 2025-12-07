@@ -44,7 +44,7 @@ CREATE TABLE user_food_transactions (
     user_food_id INT NULL,
     delta_g DECIMAL(10,2) NOT NULL,
     quantity_after_g DECIMAL(10,2) NOT NULL,
-    source_type ENUM('manual_add','manual_consume','ocr_import','sync','adjustment') NOT NULL,
+    source_type ENUM('manual_add','manual_consume','ocr_import','sync','adjustment','recipe_cook') NOT NULL,
     source_reference VARCHAR(255) NULL,
     note VARCHAR(255) NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -60,7 +60,25 @@ CREATE TABLE recipes (
     instructions TEXT NULL,
     cooking_time INT UNSIGNED NULL,
     calories INT NULL,
-    image_url VARCHAR(1000) NULL
+    image_url VARCHAR(1000) NULL,
+    is_japanese TINYINT(1) NOT NULL DEFAULT 0,
+    is_western TINYINT(1) NOT NULL DEFAULT 0,
+    is_chinese TINYINT(1) NOT NULL DEFAULT 0,
+    is_main_dish TINYINT(1) NOT NULL DEFAULT 0,
+    is_side_dish TINYINT(1) NOT NULL DEFAULT 0,
+    is_soup TINYINT(1) NOT NULL DEFAULT 0,
+    is_dessert TINYINT(1) NOT NULL DEFAULT 0,
+    type_meat TINYINT(1) NOT NULL DEFAULT 0,
+    type_seafood TINYINT(1) NOT NULL DEFAULT 0,
+    type_vegetarian TINYINT(1) NOT NULL DEFAULT 0,
+    type_composite TINYINT(1) NOT NULL DEFAULT 0,
+    type_other TINYINT(1) NOT NULL DEFAULT 0,
+    flavor_sweet TINYINT(1) NOT NULL DEFAULT 0,
+    flavor_spicy TINYINT(1) NOT NULL DEFAULT 0,
+    flavor_salty TINYINT(1) NOT NULL DEFAULT 0,
+    texture_stewed TINYINT(1) NOT NULL DEFAULT 0,
+    texture_fried TINYINT(1) NOT NULL DEFAULT 0,
+    texture_stir_fried TINYINT(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE recipe_foods (
@@ -70,6 +88,18 @@ CREATE TABLE recipe_foods (
     quantity_g DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (quantity_g >= 0),
     FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE user_recipe_history (
+    history_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    servings DECIMAL(6,2) NOT NULL DEFAULT 1.00 CHECK (servings > 0),
+    calories_total INT NULL,
+    cooked_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    note VARCHAR(255) NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE receipts (
@@ -106,6 +136,8 @@ CREATE INDEX idx_user_food_transactions_user_food ON user_food_transactions(user
 CREATE INDEX idx_user_food_transactions_user_food_id ON user_food_transactions(user_food_id);
 CREATE INDEX idx_recipe_foods_recipe_id ON recipe_foods(recipe_id);
 CREATE INDEX idx_recipe_foods_food_id ON recipe_foods(food_id);
+CREATE INDEX idx_user_recipe_history_user ON user_recipe_history(user_id, cooked_at DESC);
+CREATE INDEX idx_user_recipe_history_recipe ON user_recipe_history(recipe_id);
 CREATE INDEX idx_receipts_user_id ON receipts(user_id);
 CREATE INDEX idx_raw_food_mappings_food_id ON raw_food_mappings(food_id);
 

@@ -29,6 +29,7 @@ class InventoryChangeSource(str, Enum):
     OCR_IMPORT = "ocr_import"
     SYNC = "sync"
     ADJUSTMENT = "adjustment"
+    RECIPE_COOK = "recipe_cook"
 
 
 class FoodCategory(Base):

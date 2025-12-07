@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 # routers
 from app.backend.api.routers.auth_routes import (
@@ -11,6 +12,13 @@ from app.backend.api.routers.ingredients import (
 )
 from app.backend.api.routers.receipts import (
     router as receipts_router,  # type: ignore[import]
+)
+from app.backend.api.routers.recipes import (
+    RECIPE_PAGES_ROUTE,
+    STATIC_RECIPE_HTML_DIR,
+)
+from app.backend.api.routers.recipes import (
+    router as recipes_router,  # type: ignore[import]
 )
 from app.backend.api.routers.recommendation import (
     router as recommendation_router,  # type: ignore[import]
@@ -34,6 +42,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+if STATIC_RECIPE_HTML_DIR.exists():
+    app.mount(
+        RECIPE_PAGES_ROUTE,
+        StaticFiles(directory=str(STATIC_RECIPE_HTML_DIR)),
+        name="recipe-pages",
+    )
+
 
 @app.get("/api/v1/health")
 def health():
@@ -51,6 +66,7 @@ app.include_router(
     prefix="/api/v1/recommendation",
     tags=["recommendation"],
 )
+app.include_router(recipes_router, prefix="/api/v1/recipes", tags=["recipes"])
 app.include_router(receipts_router, prefix="/api/v1/receipts", tags=["receipts"])
 app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 

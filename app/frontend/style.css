@@ -348,3 +348,138 @@ main {
   color: #475569;
   cursor: not-allowed;
 }
+
+/* ==============================
+   レシピ詳細ページ (recipe-detail.html)
+============================== */
+.recipe-detail-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detail-header h2 {
+  margin: 8px 0;
+  font-size: 1.8rem;
+}
+
+.detail-description {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.detail-panel {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detail-table th,
+.detail-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.detail-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-chip.ok {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-chip.warn {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.instructions-block {
+  white-space: pre-line;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  color: #374151;
+  min-height: 80px;
+}
+
+.cook-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cook-form input[type="number"] {
+  max-width: 200px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+
+.primary-btn {
+  background-color: #2563eb;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.primary-btn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+#cookMessage {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+#cookMessage.ok {
+  color: #047857;
+}
+
+#cookMessage.warn {
+  color: #b91c1c;
+}
