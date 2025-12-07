@@ -32,7 +32,27 @@
         "name": "砂糖",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "豚の生姜焼き",
@@ -63,7 +83,27 @@
         "name": "酒",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "ハンバーグ",
@@ -94,7 +134,27 @@
         "name": "ケチャップ・ソース",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "鶏の唐揚げ",
@@ -129,7 +189,27 @@
         "name": "揚げ油",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ロールキャベツ",
@@ -156,7 +236,27 @@
         "name": "水",
         "quantity_g": 400.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "筑前煮",
@@ -199,7 +299,27 @@
         "name": "砂糖",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ピーマンの肉詰め",
@@ -230,7 +350,27 @@
         "name": "小麦粉",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "豚肉と野菜のスタミナ炒め",
@@ -269,7 +409,27 @@
         "name": "ごま油",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "鶏肉のクリーム煮",
@@ -304,7 +464,27 @@
         "name": "バター",
         "quantity_g": 20.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "すき焼き風煮",
@@ -347,7 +527,27 @@
         "name": "酒",
         "quantity_g": 30.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "鮭のムニエル",
@@ -374,7 +574,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "サバの味噌煮",
@@ -409,7 +629,27 @@
         "name": "水",
         "quantity_g": 200.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ブリ大根",
@@ -448,7 +688,27 @@
         "name": "水",
         "quantity_g": 300.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "アジの南蛮漬け",
@@ -487,7 +747,27 @@
         "name": "片栗粉",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "エビチリ",
@@ -530,7 +810,27 @@
         "name": "唐辛子",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": false,
+      "is_chinese": true,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": true,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "イカと大根の煮物",
@@ -557,7 +857,27 @@
         "name": "砂糖",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "タコときゅうりの酢の物",
@@ -588,7 +908,27 @@
         "name": "醤油",
         "quantity_g": 5.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": false,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "アサリの酒蒸し",
@@ -615,7 +955,27 @@
         "name": "ネギ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "マグロアボカドユッケ",
@@ -646,7 +1006,27 @@
         "name": "白ごま",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": true,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "鮭のホイル焼き",
@@ -677,7 +1057,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "親子丼",
@@ -712,7 +1112,27 @@
         "name": "米",
         "quantity_g": 200.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "カレーライス",
@@ -747,7 +1167,27 @@
         "name": "米",
         "quantity_g": 200.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": true,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "チャーハン",
@@ -782,7 +1222,27 @@
         "name": "ごま油",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": false,
+      "is_chinese": true,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "ナポリタン",
@@ -817,7 +1277,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "カルボナーラ",
@@ -852,7 +1332,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "タラコスパゲッティ",
@@ -879,7 +1379,27 @@
         "name": "わかめ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "焼きそば",
@@ -910,7 +1430,27 @@
         "name": "ソース",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "鍋焼きうどん",
@@ -945,7 +1485,27 @@
         "name": "みりん",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "牛丼",
@@ -980,7 +1540,27 @@
         "name": "生姜",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "きのこリゾット",
@@ -1015,7 +1595,27 @@
         "name": "水",
         "quantity_g": 600.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ポテトサラダ",
@@ -1050,7 +1650,27 @@
         "name": "酢",
         "quantity_g": 5.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "きんぴらごぼう",
@@ -1085,7 +1705,27 @@
         "name": "白ごま",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": true
+    }
   },
   {
     "name": "ほうれん草の胡麻和え",
@@ -1108,7 +1748,27 @@
         "name": "砂糖",
         "quantity_g": 10.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "揚げ出し豆腐",
@@ -1143,7 +1803,27 @@
         "name": "揚げ油",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "カボチャの煮付け",
@@ -1170,7 +1850,27 @@
         "name": "水",
         "quantity_g": 300.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "コールスローサラダ",
@@ -1205,7 +1905,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ナスの揚げ浸し",
@@ -1236,7 +1956,27 @@
         "name": "揚げ油",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ツナサラダ",
@@ -1271,7 +2011,27 @@
         "name": "塩コショウ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "厚揚げとほうれん草の煮浸し",
@@ -1294,7 +2054,27 @@
         "name": "みりん",
         "quantity_g": 15.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "冷奴",
@@ -1321,7 +2101,27 @@
         "name": "わかめ",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": true,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "豚汁",
@@ -1356,7 +2156,27 @@
         "name": "味噌",
         "quantity_g": 45.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": true,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "クラムチャウダー",
@@ -1395,7 +2215,27 @@
         "name": "バター",
         "quantity_g": 20.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": true,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": true,
+      "type_vegetarian": false,
+      "type_composite": true,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ミネストローネ",
@@ -1426,7 +2266,27 @@
         "name": "水",
         "quantity_g": 600.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": true,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "わかめと卵のスープ",
@@ -1457,7 +2317,27 @@
         "name": "ごま油",
         "quantity_g": 5.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": true,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "お味噌汁",
@@ -1480,7 +2360,27 @@
         "name": "味噌",
         "quantity_g": 45.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": true,
+      "is_western": false,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": true,
+      "is_dessert": false,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": true,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "サンドイッチ",
@@ -1515,7 +2415,27 @@
         "name": "バター",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "フレンチトースト",
@@ -1542,7 +2462,27 @@
         "name": "バター",
         "quantity_g": 20.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": true,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": false,
+      "texture_stewed": false,
+      "texture_fried": true,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ピザトースト",
@@ -1573,7 +2513,27 @@
         "name": "チーズ",
         "quantity_g": 80.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "フルーツヨーグルト",
@@ -1596,7 +2556,27 @@
         "name": "りんご",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": false,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": true,
+      "type_meat": false,
+      "type_seafood": false,
+      "type_vegetarian": true,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": true,
+      "flavor_spicy": false,
+      "flavor_salty": false,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   },
   {
     "name": "ホットサンド",
@@ -1627,6 +2607,26 @@
         "name": "バター",
         "quantity_g": 100.0
       }
-    ]
+    ],
+    "flags": {
+      "is_japanese": false,
+      "is_western": true,
+      "is_chinese": false,
+      "is_main_dish": true,
+      "is_side_dish": false,
+      "is_soup": false,
+      "is_dessert": false,
+      "type_meat": true,
+      "type_seafood": false,
+      "type_vegetarian": false,
+      "type_composite": false,
+      "type_other": false,
+      "flavor_sweet": false,
+      "flavor_spicy": false,
+      "flavor_salty": true,
+      "texture_stewed": false,
+      "texture_fried": false,
+      "texture_stir_fried": false
+    }
   }
 ]

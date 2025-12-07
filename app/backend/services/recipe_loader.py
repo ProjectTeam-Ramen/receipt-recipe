@@ -292,10 +292,6 @@ def _parse_flag_values(entry: Dict[str, Any]) -> Dict[str, bool]:
         elif flag_name in entry:
             candidate = entry.get(flag_name)
         result[flag_name] = _coerce_bool(candidate)
-    inferred = _infer_flags_from_name(_coerce_text(entry.get("name")))
-    for flag_name, inferred_value in inferred.items():
-        if not result.get(flag_name) and inferred_value:
-            result[flag_name] = True
     return result
 
 

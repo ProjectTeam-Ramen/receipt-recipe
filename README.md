@@ -56,6 +56,42 @@ python -m http.server 5500
 - `docs` — API 設計書、DB 設計書など
 - `init.sql` — MySQL 用のテーブル/トリガー定義
 
+## 🍲 レシピデータの追加・更新
+
+- `data/recipes.json` の各オブジェクトは `flags` ブロックを必ず持ち、以下 18 個の特徴フラグ（和/洋/中、主菜/副菜/スープ/デザート、食材タイプ、味・食感）を明示的に `true` / `false` で設定してください。
+- 例:
+
+```json
+{
+	"name": "肉じゃが",
+	"cooking_time": 31,
+	"calories": 465,
+	"ingredients": [...],
+	"flags": {
+		"is_japanese": true,
+		"is_western": false,
+		"is_chinese": false,
+		"is_main_dish": true,
+		"is_side_dish": false,
+		"is_soup": false,
+		"is_dessert": false,
+		"type_meat": true,
+		"type_seafood": false,
+		"type_vegetarian": false,
+		"type_composite": false,
+		"type_other": false,
+		"flavor_sweet": false,
+		"flavor_spicy": false,
+		"flavor_salty": false,
+		"texture_stewed": false,
+		"texture_fried": false,
+		"texture_stir_fried": false
+	}
+}
+```
+
+- JSON を保存したら `sync_recipe_master()` を再実行して DB の `recipes` / `recipe_foods` を更新します（`app/backend/services/recipe_loader.py` 参照）。
+
 ## ✅ テスト
 
 ```bash
