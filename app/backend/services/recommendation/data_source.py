@@ -10,7 +10,7 @@ from .data_models import Ingredient, Recipe # Ingredient, Recipe クラスをイ
 FEATURE_DIMENSIONS = [
     '和食', '洋食', '中華', '主菜', '副菜', '汁物', 'デザート',
     '肉類', '魚介類', 'ベジタリアン', '複合', 'その他', 
-    '辛味', '甘味', '酸味', '煮込み', '揚げ物', '炒め物' 
+    '辛味', '甘味', '塩味', '煮込み', '揚げ物', '炒め物' 
 ]
 
 class RecipeDataSource:
