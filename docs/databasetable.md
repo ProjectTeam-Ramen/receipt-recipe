@@ -1,94 +1,161 @@
-# データベース設計書
+# 現行データベース構造まとめ
 
-## 1. users (ユーザー)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **user_id** | INT | **PK** | AUTO_INCREMENT | ユーザーID |
-| username | VARCHAR(100) | | NOT NULL | ユーザー名 |
-| email | VARCHAR(255) | UNI | NOT NULL | メールアドレス |
-| password_hash | VARCHAR(255) | | NOT NULL | パスワード（ハッシュ化済） |
-| birthday | DATE | | NULL | 生年月日 |
-| created_at | TIMESTAMP | | CURRENT_TIMESTAMP | 作成日時 |
+FastAPI バックエンド (`app/backend/models/`) に定義されている SQLAlchemy モデルをもとに、現在運用しているテーブルと主なカラム・リレーションを整理した。以下は 2025-12-08 時点の実装に一致する。
 
-## 2. categories (カテゴリ)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **category_id** | INT | **PK** | AUTO_INCREMENT | カテゴリID |
-| category_name | VARCHAR(100) | UNI | NOT NULL | カテゴリ名 (野菜, 肉, 調味料等) |
+## エンティティ一覧
 
-## 3. foods (食材マスタ)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **food_id** | INT | **PK** | AUTO_INCREMENT | 食材ID |
-| food_name | VARCHAR(200) | UNI | NOT NULL | 正式な食材名 |
-| category_id | INT | FK | NOT NULL | カテゴリID |
-| **is_trackable** | TINYINT(1) | | 1 (True) | **管理対象フラグ** (0:管理外, 1:管理対象) |
+| テーブル | 役割 | 主な関連先 |
+| :-- | :-- | :-- |
+| `users` | 認証済みユーザー | `refresh_tokens`, `user_foods`, `user_food_transactions`, `user_recipe_history` |
+| `refresh_tokens` | リフレッシュトークン管理 | `users` |
+| `food_categories` | 食材カテゴリ (野菜/調味料など) | `foods` |
+| `foods` | 食材マスタ | `food_categories`, `user_foods`, `user_food_transactions`, `recipe_foods` |
+| `user_foods` | ユーザーの在庫アイテム | `users`, `foods`, `user_food_transactions` |
+| `user_food_transactions` | 在庫変動の履歴 | `users`, `foods`, `user_foods` |
+| `recipes` | レシピ本体（特徴フラグを含む） | `recipe_foods`, `user_recipe_history` |
+| `recipe_foods` | レシピと食材の中間 (必要量) | `recipes`, `foods` |
+| `user_recipe_history` | ユーザーが作ったレシピ履歴 | `users`, `recipes` |
 
-## 4. user_foods (ユーザー所有食材)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **user_food_id** | INT | **PK** | AUTO_INCREMENT | ID |
-| user_id | INT | FK | NOT NULL | ユーザーID |
-| food_id | INT | FK | NOT NULL | 食材ID |
-| **quantity_g** | DECIMAL(10,2) | | 0.00 | **数量 (単位: g)** |
-| expiration_date | DATE | | NULL | 賞味期限 |
-| purchase_date | DATE | | NULL | 購入日 |
+> ※ 以前の設計書に記載されていた `receipts` や `raw_food_mappings` テーブルは現行コードベースには存在しない。
 
-## 5. recipes (レシピ基本情報)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **recipe_id** | INT | **PK** | AUTO_INCREMENT | レシピID |
-| recipe_name | VARCHAR(255) | | NOT NULL | 料理名 |
-| description | TEXT | | NULL | 説明 |
-| instructions | TEXT | | NULL | 作り方 |
-| cooking_time | INT UNSIGNED | | NULL | 調理時間(分) |
-| image_url | VARCHAR(1000) | | NULL | 画像URL |
-| calories | INT UNSIGNED | | NULL | カロリー(kcal) |
+---
 
-### 5-2. recipes (特徴フラグ)
-※ `recipes` テーブルに含まれるフラグカラム一覧
+## users
 
-| 分類 | カラム名 | データ型 | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **様式** | is_japanese | TINYINT(1) | 0 | 和食 |
-| | is_western | TINYINT(1) | 0 | 洋食 |
-| | is_chinese | TINYINT(1) | 0 | 中華 |
-| **種類** | is_main_dish | TINYINT(1) | 0 | 主菜 |
-| | is_side_dish | TINYINT(1) | 0 | 副菜 |
-| | is_soup | TINYINT(1) | 0 | 汁物 |
-| | is_dessert | TINYINT(1) | 0 | デザート |
-| **食材タイプ** | type_meat | TINYINT(1) | 0 | 肉類 |
-| | type_seafood | TINYINT(1) | 0 | 魚介類 |
-| | type_vegetarian | TINYINT(1) | 0 | ベジタリアン |
-| | type_composite | TINYINT(1) | 0 | 複合 |
-| | type_other | TINYINT(1) | 0 | その他 |
-| **味覚** | flavor_sweet | TINYINT(1) | 0 | 甘味 |
-| | flavor_spicy | TINYINT(1) | 0 | 辛味 |
-| | flavor_salty | TINYINT(1) | 0 | 塩味 |
-| **調理法** | texture_stewed | TINYINT(1) | 0 | 煮込み |
-| | texture_fried | TINYINT(1) | 0 | 揚げ物 |
-| | texture_stir_fried| TINYINT(1) | 0 | 炒め物 |
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `user_id` | INT | PK, AUTO_INCREMENT | ユーザーID |
+| `username` | VARCHAR(100) | NOT NULL | 表示名 |
+| `email` | VARCHAR(255) | UNIQUE, NOT NULL | ログイン用メール |
+| `password_hash` | VARCHAR(255) | NOT NULL | ハッシュ済みパスワード |
+| `birthday` | DATE | NULL | 生年月日 (任意) |
+| `created_at` | TIMESTAMP WITH TZ | DEFAULT `CURRENT_TIMESTAMP` | 登録日時 |
 
-## 6. recipe_foods (レシピ材料)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **recipe_food_id** | INT | **PK** | AUTO_INCREMENT | ID |
-| recipe_id | INT | FK | NOT NULL | レシピID |
-| food_id | INT | FK | NOT NULL | 食材ID |
-| quantity_g | DECIMAL(10,2) | | 0.00 | 必要数量 (単位: g) |
+リレーション: `refresh_tokens`, `user_foods`, `user_food_transactions`, `user_recipe_history` が `users.user_id` を参照。
 
-## 7. receipts (レシート)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **receipt_id** | INT | **PK** | AUTO_INCREMENT | レシートID |
-| user_id | INT | FK | NOT NULL | ユーザーID |
-| store_name | VARCHAR(255) | | NULL | 店名 |
-| purchase_datetime | TIMESTAMP | | CURRENT_TIMESTAMP | 購入日時 |
+## refresh_tokens
 
-## 8. raw_food_mappings (読み取り食材辞書)
-| カラム名 | データ型 | Key | Default | 説明 |
-| :--- | :--- | :--- | :--- | :--- |
-| **mapping_id** | INT | **PK** | AUTO_INCREMENT | 辞書ID |
-| raw_name | VARCHAR(255) | UNI | NOT NULL | 読み取ったままの文字列 |
-| food_id | INT | FK | NULL | 正式な食材ID (紐付け先) |
-| status | VARCHAR(50) | | '未処理' | 状態 ('未処理', '処理済' 等) |
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `id` | INT | PK, AUTO_INCREMENT | トークン行ID |
+| `token` | VARCHAR(512) | UNIQUE, NOT NULL | リフレッシュトークン文字列 |
+| `user_id` | INT | FK (`users.user_id`), NOT NULL | 所有ユーザー |
+| `created_at` | DATETIME | DEFAULT `NOW()` | 発行日時 |
+| `expires_at` | DATETIME | NOT NULL | 失効日時 |
+
+## food_categories
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `category_id` | INT | PK, AUTO_INCREMENT | カテゴリID |
+| `category_name` | VARCHAR(100) | UNIQUE, NOT NULL | カテゴリ名 (例: 野菜/肉/調味料) |
+
+`foods.category_id` が参照。
+
+## foods
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `food_id` | INT | PK, AUTO_INCREMENT | 食材ID |
+| `food_name` | VARCHAR(200) | UNIQUE, NOT NULL | 正式名称 (在庫/レシピで統一) |
+| `category_id` | INT | FK (`food_categories.category_id`), NOT NULL | 食材カテゴリ |
+| `is_trackable` | BOOLEAN | DEFAULT TRUE | 在庫管理対象フラグ |
+
+リレーション: `user_foods`, `user_food_transactions`, `recipe_foods` から参照。
+
+## user_foods
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `user_food_id` | INT | PK, AUTO_INCREMENT | 在庫アイテムID |
+| `user_id` | INT | FK (`users.user_id`), NOT NULL | 所有ユーザー |
+| `food_id` | INT | FK (`foods.food_id`), NOT NULL | 食材 |
+| `quantity_g` | DECIMAL(10,2) | DEFAULT 0 | 現在量 (g) |
+| `expiration_date` | DATE | NULL | 消費期限 |
+| `purchase_date` | DATE | NULL | 購入日 |
+| `status` | ENUM(`unused`,`used`,`deleted`) | DEFAULT `unused` | 在庫状態 (`IngredientStatus`) |
+
+`user_food_transactions.user_food_id` が任意参照。
+
+### status の意味
+- `unused` : 在庫中
+- `used` : 消費済み
+- `deleted` : 手動削除などの無効化
+
+## user_food_transactions
+
+在庫変動を時系列で記録する監査テーブル。
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `transaction_id` | INT | PK, AUTO_INCREMENT | 取引ID |
+| `user_id` | INT | FK (`users.user_id`), NOT NULL | 操作ユーザー |
+| `food_id` | INT | FK (`foods.food_id`), NOT NULL | 対象食材 |
+| `user_food_id` | INT | FK (`user_foods.user_food_id`), NULL | 対応する在庫行 (無い場合もあり) |
+| `delta_g` | DECIMAL(10,2) | NOT NULL | 変動量。消費時はマイナス |
+| `quantity_after_g` | DECIMAL(10,2) | NOT NULL | 変動後の在庫量 |
+| `source_type` | ENUM | NOT NULL | 変動理由 (`InventoryChangeSource`) |
+| `source_reference` | VARCHAR(255) | NULL | 外部IDなど |
+| `note` | VARCHAR(255) | NULL | 補足 |
+| `created_at` | TIMESTAMP WITH TZ | DEFAULT `CURRENT_TIMESTAMP` | 記録日時 |
+
+`source_type` 例: `manual_add`, `manual_consume`, `ocr_import`, `sync`, `adjustment`, `recipe_cook`。
+
+## recipes
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `recipe_id` | INT | PK, AUTO_INCREMENT | レシピID |
+| `recipe_name` | VARCHAR(255) | UNIQUE, NOT NULL | レシピ名 |
+| `description` | VARCHAR(2000) | NULL | 概要 |
+| `instructions` | VARCHAR(4000) | NULL | 手順 |
+| `cooking_time` | INT | NULL | 調理時間 (分) |
+| `calories` | INT | NULL | カロリー |
+| `image_url` | VARCHAR(1000) | NULL | 画像URL |
+| *特徴フラグ* | BOOLEAN | DEFAULT FALSE | 下記参照 |
+
+### 特徴フラグ (recipes 内)
+
+| 分類 | カラム | 意味 |
+| :-- | :-- | :-- |
+| 料理様式 | `is_japanese`, `is_western`, `is_chinese` | 和/洋/中 |
+| コース | `is_main_dish`, `is_side_dish`, `is_soup`, `is_dessert` | 主菜/副菜/汁物/デザート |
+| タンパク源 | `type_meat`, `type_seafood`, `type_vegetarian`, `type_composite`, `type_other` | 肉/魚/菜食など |
+| 味付け | `flavor_sweet`, `flavor_spicy`, `flavor_salty` | 甘味/辛味/塩味 |
+| 調理法 | `texture_stewed`, `texture_fried`, `texture_stir_fried` | 煮/揚/炒 |
+
+リレーション: `recipe_foods`, `user_recipe_history`。
+
+## recipe_foods
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `recipe_food_id` | INT | PK, AUTO_INCREMENT | 行ID |
+| `recipe_id` | INT | FK (`recipes.recipe_id`), NOT NULL | 親レシピ |
+| `food_id` | INT | FK (`foods.food_id`), NOT NULL | 必要食材 |
+| `quantity_g` | DECIMAL(10,2) | DEFAULT 0 | 必要量 (g) |
+
+## user_recipe_history
+
+ユーザーが調理した実績を保持し、推薦アルゴリズムの嗜好ベクトル入力として利用。
+
+| カラム | 型 | Key/Default | 説明 |
+| :-- | :-- | :-- | :-- |
+| `history_id` | INT | PK, AUTO_INCREMENT | 履歴ID |
+| `user_id` | INT | FK (`users.user_id`), NOT NULL | ユーザー |
+| `recipe_id` | INT | FK (`recipes.recipe_id`), NOT NULL | 料理 |
+| `servings` | DECIMAL(6,2) | DEFAULT 1.0 | 何人前を作ったか |
+| `calories_total` | INT | NULL | 総カロリー (任意) |
+| `cooked_at` | TIMESTAMP WITH TZ | DEFAULT `CURRENT_TIMESTAMP` | 調理日時 |
+| `note` | VARCHAR(255) | NULL | メモ |
+
+---
+
+## リレーション概要
+
+- **ユーザー系**: `users` → `refresh_tokens`, `user_foods`, `user_food_transactions`, `user_recipe_history`
+- **マスタ系**: `food_categories` ⇄ `foods`
+- **在庫系**: `foods` ⇄ `user_foods` ⇄ `user_food_transactions`
+- **レシピ系**: `recipes` ⇄ `recipe_foods` ⇄ `foods`、`users` ⇄ `user_recipe_history`
+
+各テーブルは `CASCADE`/`RESTRICT` を適宜設定済み。例えばレシピ削除時は関連する `recipe_foods` と `user_recipe_history` も自動削除、食材カテゴリ削除時は参照する食材があれば `RESTRICT` によってブロックされる。
