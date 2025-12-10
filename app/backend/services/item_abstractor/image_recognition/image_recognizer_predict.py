@@ -6,9 +6,9 @@ from PIL import Image
 import os
 
 # --- 1. 設定 ---
-model_path = 'my_food_model.pth'
-image_path = '牛肉.jpeg' #ここに予測したい画像ファイル#
-data_dir = './dataset/train'
+model_path = "my_food_model.pth"
+image_path = "牛肉.jpeg"  # ここに予測したい画像ファイル#
+data_dir = "./dataset/train"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -28,16 +28,18 @@ model.to(device)
 model.eval()
 
 # --- 3. 画像の前処理 ---
-preprocess = transforms.Compose([
-    transforms.Resize(256),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-])
+preprocess = transforms.Compose(
+    [
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+    ]
+)
 
 # --- 4. 予測の実行 ---
 try:
-    img = Image.open(image_path).convert('RGB')
+    img = Image.open(image_path).convert("RGB")
     input_tensor = preprocess(img)
     input_batch = input_tensor.unsqueeze(0).to(device)
 
