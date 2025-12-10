@@ -1,23 +1,27 @@
+
 import torch
 import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
-import os
 
 # --- 1. 設定 ---
 model_path = "my_food_model.pth"
-image_path = "牛肉.jpeg"  # ここに予測したい画像ファイル#
+image_path = "tomato.jpeg"  # ここに予測したい画像ファイル
 data_dir = "./dataset/train"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+"""
 if os.path.exists(data_dir):
     class_names = sorted([d.name for d in os.scandir(data_dir) if d.is_dir()])
     num_classes = len(class_names)
 else:
     num_classes = 77
     class_names = [str(i) for i in range(num_classes)]
+"""
+num_classes = 77
+class_names = [str(i) for i in range(num_classes)]
+
 
 # --- 2. モデルのロード ---
 model = models.resnet18(weights=None)
@@ -54,7 +58,6 @@ try:
     all_results_dict = {}
     for i in range(len(class_names)):
         all_results_dict[class_names[i]] = probabilities[i].item()
-
     # ★画面表示（print）は行いません。
     # この時点で all_results_dict にすべてのデータが入っています。
     # 後続の処理でこの変数を利用してください。
