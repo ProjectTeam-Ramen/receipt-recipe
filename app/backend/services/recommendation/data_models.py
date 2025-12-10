@@ -42,7 +42,7 @@ class Recipe:
 
 
 class RecommendationRequest(BaseModel):
-    user_id: int
+    user_id: Optional[int] = None
     max_time: int
     max_calories: int
     allergies: Optional[List[str]] = []

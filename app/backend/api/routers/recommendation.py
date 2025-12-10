@@ -41,6 +41,9 @@ class RecommendationResult(BaseModel):
     required_qty: Dict[str, float]
     req_count: int
     image_url: Optional[str] = None
+    inventory_source: Optional[str] = None
+    inventory_count: Optional[int] = None
+    inventory_label: Optional[str] = None
 
 
 def _optional_current_user(
@@ -81,18 +84,9 @@ def _parse_inventory_payload(payload: List[Dict]) -> List[Ingredient]:
     return parsed
 
 
-@router.post("/propose", response_model=List[RecommendationResult])
-def propose_recommendations(
-    body: RecommendationRequest,
-    db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(_optional_current_user),
-):
-    target_user_id = body.user_id
-    if not isinstance(target_user_id, int):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="user_id must be an integer",
-        )
+def _resolve_target_user(
+    body: RecommendationRequest, current_user: Optional[User]
+) -> tuple[int, bool]:
     if current_user:
         current_user_id = getattr(current_user, "user_id", None)
         if not isinstance(current_user_id, int):
@@ -105,20 +99,44 @@ def propose_recommendations(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Cannot request recommendations for another user",
             )
-        target_user_id = current_user_id
+        return current_user_id, True
 
-    inventory_items: List[Ingredient]
-    if body.inventory:
-        inventory_items = _parse_inventory_payload(body.inventory)
-    elif current_user:
-        inventory_items = InventoryManager(db_session=db).get_current_inventory(
-            target_user_id
+    if not isinstance(body.user_id, int):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="user_id must be an integer when unauthenticated",
         )
-    else:
+    return body.user_id, False
+
+
+def _resolve_inventory(
+    body: RecommendationRequest,
+    db: Session,
+    user_id: int,
+    is_authenticated: bool,
+) -> tuple[List[Ingredient], str]:
+    if is_authenticated:
+        items = InventoryManager(db_session=db).get_current_inventory(user_id)
+        return items, "server"
+
+    if not body.inventory:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="在庫データが指定されていません。ログインするか inventory を指定してください。",
         )
+    return _parse_inventory_payload(body.inventory), "client"
+
+
+@router.post("/propose", response_model=List[RecommendationResult])
+def propose_recommendations(
+    body: RecommendationRequest,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(_optional_current_user),
+):
+    target_user_id, is_authenticated = _resolve_target_user(body, current_user)
+    inventory_items, inventory_source = _resolve_inventory(
+        body, db, target_user_id, is_authenticated
+    )
 
     recipe_source = RecipeDataSource(db_session=db)
     recipes = recipe_source.load_and_vectorize_recipes()
@@ -153,5 +171,16 @@ def propose_recommendations(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="現在の在庫と条件に合うレシピが見つかりません。",
         )
+
+    inventory_count = len(inventory_items)
+    inventory_label = (
+        f"サーバー在庫 {inventory_count}件"
+        if inventory_source == "server"
+        else f"指定在庫 {inventory_count}件"
+    )
+    for proposal in proposals:
+        proposal.setdefault("inventory_source", inventory_source)
+        proposal.setdefault("inventory_count", inventory_count)
+        proposal.setdefault("inventory_label", inventory_label)
 
     return proposals

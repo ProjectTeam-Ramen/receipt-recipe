@@ -395,9 +395,8 @@ async function loadBackendRecommendations(options = {}) {
   const maxCalories = Number.isFinite(options.maxCalories) ? options.maxCalories : 2000;
   const allergies = Array.isArray(options.allergies) ? options.allergies : [];
 
-  let inventory = [];
-  let inventorySource = "local";
-  let userId = 1;
+  let resolvedUserId = null;
+  let clientInventory = [];
 
   const refreshToken = localStorage.getItem(STORAGE_KEYS.refreshToken);
   let authToken = null;
@@ -416,62 +415,34 @@ async function loadBackendRecommendations(options = {}) {
       });
       if (meResp.ok) {
         const me = await meResp.json();
-        if (me?.id) userId = me.id;
+        if (me?.id) resolvedUserId = me.id;
       }
     } catch (err) {
       console.debug("users/me fetch failed", err);
     }
-
-    try {
-      const ingResp = await fetch(`${API_BASE_URL}/ingredients`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      });
-      if (ingResp.ok) {
-        const data = await ingResp.json();
-        const items = Array.isArray(data?.ingredients) ? data.ingredients : [];
-        inventory = items
-          .map((it) => ({
-            name: String(it.food_name ?? it.name ?? "").trim(),
-            quantity: String(Number(it.quantity_g ?? it.quantity ?? 0) || 0),
-            unit: "g",
-            expiration_date: it.expiration_date || null,
-          }))
-          .filter((row) => row.name);
-        if (inventory.length) {
-          inventorySource = "api";
-        }
-      }
-    } catch (err) {
-      console.debug("ingredient fetch failed", err);
-    }
-  }
-
-  if (!inventory.length) {
-    let names = [];
-    try {
-      const raw = localStorage.getItem("fridgeItems");
-      const arr = raw ? JSON.parse(raw) : null;
-      names = Array.isArray(arr) ? arr : [];
-    } catch (err) {
-      console.debug("local fridge parse failed", err);
-    }
-    if (!names.length) names = ["たまねぎ", "にんじん", "じゃがいも"];
-    inventory = names.map((n) => ({
+  } else {
+    const names = getFridgeItems();
+    clientInventory = names.map((n) => ({
       name: n,
       quantity: "100",
       unit: "g",
       expiration_date: null,
     }));
-    inventorySource = "local";
+    resolvedUserId = 1;
   }
 
   const payload = {
-    user_id: userId,
     max_time: maxTime,
     max_calories: maxCalories,
     allergies,
-    inventory,
   };
+
+  if (Number.isInteger(resolvedUserId)) {
+    payload.user_id = resolvedUserId;
+  }
+  if (!authToken) {
+    payload.inventory = clientInventory;
+  }
 
   const headers = { "Content-Type": "application/json" };
   if (authToken) headers.Authorization = `Bearer ${authToken}`;
@@ -540,6 +511,14 @@ async function loadBackendRecommendations(options = {}) {
     };
   });
 
+  const responseMeta = proposals[0] || {};
+  const responseInventoryCount = Number(responseMeta.inventory_count ?? 0);
+  const fallbackCount = authToken ? responseInventoryCount : clientInventory.length;
+  const fallbackLabel = authToken
+    ? `サーバー在庫 ${fallbackCount}件`
+    : `ローカル在庫 ${fallbackCount || clientInventory.length}件`;
+  const inventoryLabelText = responseMeta.inventory_label || fallbackLabel;
+
   const preferenceSource = proposals.find((p) => Array.isArray(p.user_preference_vector));
   const preferenceVector = Array.isArray(preferenceSource?.user_preference_vector)
     ? preferenceSource.user_preference_vector.map((val) => (Number.isFinite(Number(val)) ? Number(val) : 0))
@@ -548,7 +527,7 @@ async function loadBackendRecommendations(options = {}) {
     ? preferenceSource.user_preference_labels.map((label) => String(label))
     : [];
 
-  const pantryLabel = `${inventorySource === "api" ? "サーバー在庫" : "ローカル在庫"} ${inventory.length}件 / 提案 ${rows.length}件`;
+  const pantryLabel = `${inventoryLabelText} / 提案 ${rows.length}件`;
   return { rows, pantryLabel, preferenceVector, preferenceLabels };
 }
 
