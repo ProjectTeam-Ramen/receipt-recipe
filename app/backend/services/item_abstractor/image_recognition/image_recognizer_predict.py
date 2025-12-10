@@ -3,30 +3,31 @@ import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
+import os
 
 # --- 1. 設定 ---
-# ステップ2で学習・保存したモデルのパス
 model_path = 'my_food_model.pth'
-# 予測したい画像
-image_path = 'zakoshi.jpeg'
+image_path = '牛肉.jpeg' #ここに予測したい画像ファイル#
+data_dir = './dataset/train'
 
-# ★重要：学習時と全く同じクラス名を、同じ順番で定義する
-# （ステップ1のフォルダ構成 '00_egg', '01_rice', '02_flour' に対応）
-class_names = ['tomato']
-num_classes = len(class_names)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+if os.path.exists(data_dir):
+    class_names = sorted([d.name for d in os.scandir(data_dir) if d.is_dir()])
+    num_classes = len(class_names)
+else:
+    num_classes = 77
+    class_names = [str(i) for i in range(num_classes)]
 
 # --- 2. モデルのロード ---
-# まず、学習時と同じモデルの「構造」を定義する
-model = models.resnet18(weights=None) # 重みはロードするので None
+model = models.resnet18(weights=None)
 num_ftrs = model.fc.in_features
-model.fc = nn.Linear(num_ftrs, num_classes) # 最終層を学習時と同じクラス数に差し替える
-
-# 学習済みの「重み」をロードする
-model.load_state_dict(torch.load(model_path))
-model.eval() # 評価モードに設定
+model.fc = nn.Linear(num_ftrs, num_classes)
+model.load_state_dict(torch.load(model_path, map_location=device))
+model.to(device)
+model.eval()
 
 # --- 3. 画像の前処理 ---
-# 学習時の 'val'（検証用）と同じ前処理を行う
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -38,21 +39,23 @@ preprocess = transforms.Compose([
 try:
     img = Image.open(image_path).convert('RGB')
     input_tensor = preprocess(img)
-    input_batch = input_tensor.unsqueeze(0) # バッチ次元 [1, 3, 224, 224] を追加
+    input_batch = input_tensor.unsqueeze(0).to(device)
 
     with torch.no_grad():
         output = model(input_batch)
 
-    # 確率に変換
+    # 確率計算
     probabilities = torch.nn.functional.softmax(output[0], dim=0)
 
-    # 最も確率の高いクラスを取得
-    top_prob, top_catid = torch.max(probabilities, 0)
-    predicted_label = class_names[top_catid]
+    # ★全77食材のデータを辞書として内部保存する（ここが重要）
+    # 例: {'00_ジャガイモ': 0.001, ... '03_牛肉': 0.836, ...}
+    all_results_dict = {}
+    for i in range(len(class_names)):
+        all_results_dict[class_names[i]] = probabilities[i].item()
 
-    print(f"画像: {image_path}")
-    print(f"予測された食材名: {predicted_label}")
-    print(f"確信度: {top_prob.item() * 100:.2f}%")
+    # ★画面表示（print）は行いません。
+    # この時点で all_results_dict にすべてのデータが入っています。
+    # 後続の処理でこの変数を利用してください。
 
 except FileNotFoundError:
     print(f"エラー: 画像ファイル '{image_path}' が見つかりません。")
