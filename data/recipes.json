@@ -1,7 +1,7 @@
 [
   {
     "name": "肉じゃが",
-    "cooking_time": 31,
+    "cooking_time": 30,
     "calories": 465,
     "ingredients": [
       {
@@ -56,7 +56,7 @@
   },
   {
     "name": "豚の生姜焼き",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -107,7 +107,7 @@
   },
   {
     "name": "ハンバーグ",
-    "cooking_time": 28,
+    "cooking_time": 30,
     "calories": 420,
     "ingredients": [
       {
@@ -158,8 +158,8 @@
   },
   {
     "name": "鶏の唐揚げ",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 800,
     "ingredients": [
       {
         "name": "鶏肉",
@@ -213,8 +213,8 @@
   },
   {
     "name": "ロールキャベツ",
-    "cooking_time": 25,
-    "calories": 375,
+    "cooking_time": 30,
+    "calories": 400,
     "ingredients": [
       {
         "name": "キャベツ",
@@ -260,8 +260,8 @@
   },
   {
     "name": "筑前煮",
-    "cooking_time": 37,
-    "calories": 555,
+    "cooking_time": 50,
+    "calories": 520,
     "ingredients": [
       {
         "name": "鶏肉",
@@ -323,7 +323,7 @@
   },
   {
     "name": "ピーマンの肉詰め",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -374,7 +374,7 @@
   },
   {
     "name": "豚肉と野菜のスタミナ炒め",
-    "cooking_time": 34,
+    "cooking_time": 30,
     "calories": 510,
     "ingredients": [
       {
@@ -433,7 +433,7 @@
   },
   {
     "name": "鶏肉のクリーム煮",
-    "cooking_time": 31,
+    "cooking_time": 40,
     "calories": 465,
     "ingredients": [
       {
@@ -488,8 +488,8 @@
   },
   {
     "name": "すき焼き風煮",
-    "cooking_time": 37,
-    "calories": 555,
+    "cooking_time": 40,
+    "calories": 650,
     "ingredients": [
       {
         "name": "牛肉",
@@ -551,8 +551,8 @@
   },
   {
     "name": "鮭のムニエル",
-    "cooking_time": 25,
-    "calories": 375,
+    "cooking_time": 20,
+    "calories": 350,
     "ingredients": [
       {
         "name": "鮭",
@@ -598,8 +598,8 @@
   },
   {
     "name": "サバの味噌煮",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 350,
     "ingredients": [
       {
         "name": "鯖",
@@ -653,8 +653,8 @@
   },
   {
     "name": "ブリ大根",
-    "cooking_time": 34,
-    "calories": 510,
+    "cooking_time": 20,
+    "calories": 500,
     "ingredients": [
       {
         "name": "ブリ",
@@ -712,7 +712,7 @@
   },
   {
     "name": "アジの南蛮漬け",
-    "cooking_time": 34,
+    "cooking_time": 30,
     "calories": 510,
     "ingredients": [
       {
@@ -771,8 +771,8 @@
   },
   {
     "name": "エビチリ",
-    "cooking_time": 37,
-    "calories": 555,
+    "cooking_time": 30,
+    "calories": 600,
     "ingredients": [
       {
         "name": "えび",
@@ -834,7 +834,7 @@
   },
   {
     "name": "イカと大根の煮物",
-    "cooking_time": 25,
+    "cooking_time": 30,
     "calories": 375,
     "ingredients": [
       {
@@ -881,7 +881,7 @@
   },
   {
     "name": "タコときゅうりの酢の物",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -932,7 +932,7 @@
   },
   {
     "name": "アサリの酒蒸し",
-    "cooking_time": 25,
+    "cooking_time": 30,
     "calories": 375,
     "ingredients": [
       {
@@ -979,7 +979,7 @@
   },
   {
     "name": "マグロアボカドユッケ",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -1030,7 +1030,7 @@
   },
   {
     "name": "鮭のホイル焼き",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -1081,8 +1081,8 @@
   },
   {
     "name": "親子丼",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 20,
+    "calories": 700,
     "ingredients": [
       {
         "name": "鶏肉",
@@ -1136,8 +1136,8 @@
   },
   {
     "name": "カレーライス",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 50,
+    "calories": 800,
     "ingredients": [
       {
         "name": "豚肉",
@@ -1191,8 +1191,8 @@
   },
   {
     "name": "チャーハン",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 20,
+    "calories": 600,
     "ingredients": [
       {
         "name": "米",
@@ -1246,8 +1246,8 @@
   },
   {
     "name": "ナポリタン",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 20,
+    "calories": 480,
     "ingredients": [
       {
         "name": "パスタ",
@@ -1301,8 +1301,8 @@
   },
   {
     "name": "カルボナーラ",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 600,
     "ingredients": [
       {
         "name": "パスタ",
@@ -1356,8 +1356,8 @@
   },
   {
     "name": "タラコスパゲッティ",
-    "cooking_time": 25,
-    "calories": 375,
+    "cooking_time": 30,
+    "calories": 500,
     "ingredients": [
       {
         "name": "パスタ",
@@ -1374,10 +1374,6 @@
       {
         "name": "醤油",
         "quantity_g": 5.0
-      },
-      {
-        "name": "わかめ",
-        "quantity_g": 100.0
       }
     ],
     "flags": {
@@ -1403,7 +1399,7 @@
   },
   {
     "name": "焼きそば",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -1454,8 +1450,8 @@
   },
   {
     "name": "鍋焼きうどん",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 650,
     "ingredients": [
       {
         "name": "うどん",
@@ -1509,8 +1505,8 @@
   },
   {
     "name": "牛丼",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 10,
+    "calories": 670,
     "ingredients": [
       {
         "name": "牛肉",
@@ -1564,8 +1560,8 @@
   },
   {
     "name": "きのこリゾット",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 520,
     "ingredients": [
       {
         "name": "米",
@@ -1619,8 +1615,8 @@
   },
   {
     "name": "ポテトサラダ",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 320,
     "ingredients": [
       {
         "name": "じゃがいも",
@@ -1674,8 +1670,8 @@
   },
   {
     "name": "きんぴらごぼう",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 480,
     "ingredients": [
       {
         "name": "ごぼう",
@@ -1729,8 +1725,8 @@
   },
   {
     "name": "ほうれん草の胡麻和え",
-    "cooking_time": 22,
-    "calories": 330,
+    "cooking_time": 20,
+    "calories": 280,
     "ingredients": [
       {
         "name": "ほうれん草",
@@ -1772,7 +1768,7 @@
   },
   {
     "name": "揚げ出し豆腐",
-    "cooking_time": 31,
+    "cooking_time": 30,
     "calories": 465,
     "ingredients": [
       {
@@ -1827,8 +1823,8 @@
   },
   {
     "name": "カボチャの煮付け",
-    "cooking_time": 25,
-    "calories": 375,
+    "cooking_time": 30,
+    "calories": 370,
     "ingredients": [
       {
         "name": "カボチャ",
@@ -1874,8 +1870,8 @@
   },
   {
     "name": "コールスローサラダ",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 20,
+    "calories": 460,
     "ingredients": [
       {
         "name": "キャベツ",
@@ -1929,8 +1925,8 @@
   },
   {
     "name": "ナスの揚げ浸し",
-    "cooking_time": 28,
-    "calories": 420,
+    "cooking_time": 20,
+    "calories": 350,
     "ingredients": [
       {
         "name": "ナス",
@@ -1980,8 +1976,8 @@
   },
   {
     "name": "ツナサラダ",
-    "cooking_time": 31,
-    "calories": 465,
+    "cooking_time": 30,
+    "calories": 460,
     "ingredients": [
       {
         "name": "レタス",
@@ -2035,7 +2031,7 @@
   },
   {
     "name": "厚揚げとほうれん草の煮浸し",
-    "cooking_time": 22,
+    "cooking_time": 20,
     "calories": 330,
     "ingredients": [
       {
@@ -2078,8 +2074,8 @@
   },
   {
     "name": "冷奴",
-    "cooking_time": 25,
-    "calories": 375,
+    "cooking_time": 10,
+    "calories": 200,
     "ingredients": [
       {
         "name": "豆腐",
@@ -2095,10 +2091,6 @@
       },
       {
         "name": "醤油",
-        "quantity_g": 100.0
-      },
-      {
-        "name": "わかめ",
         "quantity_g": 100.0
       }
     ],
@@ -2125,7 +2117,7 @@
   },
   {
     "name": "豚汁",
-    "cooking_time": 31,
+    "cooking_time": 30,
     "calories": 465,
     "ingredients": [
       {
@@ -2180,7 +2172,7 @@
   },
   {
     "name": "クラムチャウダー",
-    "cooking_time": 34,
+    "cooking_time": 40,
     "calories": 510,
     "ingredients": [
       {
@@ -2239,7 +2231,7 @@
   },
   {
     "name": "ミネストローネ",
-    "cooking_time": 28,
+    "cooking_time": 30,
     "calories": 420,
     "ingredients": [
       {
@@ -2290,7 +2282,7 @@
   },
   {
     "name": "わかめと卵のスープ",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -2341,7 +2333,7 @@
   },
   {
     "name": "お味噌汁",
-    "cooking_time": 22,
+    "cooking_time": 20,
     "calories": 330,
     "ingredients": [
       {
@@ -2384,7 +2376,7 @@
   },
   {
     "name": "サンドイッチ",
-    "cooking_time": 31,
+    "cooking_time": 30,
     "calories": 465,
     "ingredients": [
       {
@@ -2439,7 +2431,7 @@
   },
   {
     "name": "フレンチトースト",
-    "cooking_time": 25,
+    "cooking_time": 20,
     "calories": 375,
     "ingredients": [
       {
@@ -2486,7 +2478,7 @@
   },
   {
     "name": "ピザトースト",
-    "cooking_time": 28,
+    "cooking_time": 20,
     "calories": 420,
     "ingredients": [
       {
@@ -2537,7 +2529,7 @@
   },
   {
     "name": "フルーツヨーグルト",
-    "cooking_time": 22,
+    "cooking_time": 20,
     "calories": 330,
     "ingredients": [
       {
@@ -2580,7 +2572,7 @@
   },
   {
     "name": "ホットサンド",
-    "cooking_time": 28,
+    "cooking_time": 10,
     "calories": 420,
     "ingredients": [
       {
