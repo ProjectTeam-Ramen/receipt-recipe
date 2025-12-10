@@ -1,12 +1,14 @@
+from datetime import datetime
 from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
+import uvicorn  # 修正: F821 Undefined name 'uvicorn' 対応
 from fastapi import Depends, FastAPI, HTTPException
 from starlette.concurrency import run_in_threadpool  # 同期処理を非同期環境で実行
 
 # 依存するモジュールから必要なクラスをインポート
 from .data_models import Ingredient, Recipe, RecommendationRequest, UserParameters
-from .data_source import InventoryManager, RecipeDataSource
+from .data_source import FEATURE_DIMENSIONS, InventoryManager, RecipeDataSource
 from .proposer_logic import RecipeProposer
 
 # --- API設定と初期データロード ---
@@ -28,6 +30,87 @@ def get_inventory_manager():
     return InventoryManager(db_api_url=DB_API_HOST)
 
 
+# --- ヘルパー関数 (複雑度低減のため切り出し) ---
+
+
+def _parse_inventory(inventory_data: List[Dict[str, Any]]) -> List[Ingredient]:
+    """リクエストの辞書リストをIngredientオブジェクトのリストに変換する"""
+    current_inventory = []
+    for d in inventory_data:
+        expiry = None
+        exp_raw = d.get("expiration_date")
+        if exp_raw:
+            try:
+                expiry = datetime.strptime(str(exp_raw), "%Y-%m-%d").date()
+            except Exception:
+                expiry = None
+
+        name_val = d.get("name") or ""
+        qty_raw = d.get("quantity")
+        try:
+            qty_val = float(qty_raw) if qty_raw is not None else 0.0
+        except Exception:
+            qty_val = 0.0
+
+        current_inventory.append(
+            Ingredient(name=name_val, quantity=qty_val, expiration_date=expiry)
+        )
+    return current_inventory
+
+
+def _parse_recipes(recipes_data: List[Dict[str, Any]]) -> List[Recipe]:
+    """リクエストの辞書リストをRecipeオブジェクトのリストに変換する"""
+    all_recipes_local = []
+    for rd in recipes_data:
+        vector = np.array(
+            [rd.get("features", {}).get(dim, 0) for dim in FEATURE_DIMENSIONS],
+            dtype=np.float64,
+        )
+        recipe_obj = Recipe(
+            id=int(rd.get("id") or 0),
+            name=rd.get("name") or "",
+            req_qty=rd.get("required_qty", {}),
+            prep_time=int(rd.get("prep_time") or 0),
+            calories=int(rd.get("calories") or 0),
+            feature_vector=vector,
+        )
+        all_recipes_local.append(recipe_obj)
+    return all_recipes_local
+
+
+def _calculate_user_profile_from_history(
+    history_data: List[Dict[str, Any]], recipes: List[Recipe]
+) -> np.ndarray:
+    """履歴データと現在のレシピリストからユーザープロファイルベクトルを動的に計算する"""
+    recipe_vector_map = {r.id: r.feature_vector for r in recipes}
+    total_vec = np.zeros(len(FEATURE_DIMENSIONS), dtype=np.float64)
+    total_w = 0.0
+    now = datetime.now()
+
+    for rec in history_data:
+        rid = rec.get("recipe_id")
+        if rid is None:
+            continue
+        vec = recipe_vector_map.get(rid)
+        if vec is None:
+            continue
+        completed_at = rec.get("completed_at")
+        if not completed_at:
+            continue
+        try:
+            completed_dt = datetime.fromisoformat(completed_at.replace("Z", "+00:00"))
+        except Exception:
+            continue
+        days = (now - completed_dt).total_seconds() / (60 * 60 * 24)
+        weight = np.exp(-0.05 * days)
+        total_vec += vec * weight
+        total_w += weight
+
+    if total_w > 0:
+        return total_vec / total_w
+    return USER_PROFILE_VECTOR
+
+
 # --- アプリケーションAPIのエンドポイント ---
 
 
@@ -41,32 +124,8 @@ async def propose_recipes_api(
     """
     try:
         # 1. 動的な在庫データを取得
-        #    - リクエスト本文に在庫が含まれていればそれを使う（テスト/デバッグ用）
-        #    - 含まれていなければ InventoryManager 経由で取得する
         if request_data.inventory:
-            # convert incoming dicts to Ingredient objects (robust parsing)
-            current_inventory = []
-            from datetime import datetime
-
-            for d in request_data.inventory:
-                expiry = None
-                exp_raw = d.get("expiration_date")
-                if exp_raw:
-                    try:
-                        expiry = datetime.strptime(str(exp_raw), "%Y-%m-%d").date()
-                    except Exception:
-                        expiry = None
-
-                name_val = d.get("name") or ""
-                qty_raw = d.get("quantity")
-                try:
-                    qty_val = float(qty_raw) if qty_raw is not None else 0.0
-                except Exception:
-                    qty_val = 0.0
-
-                current_inventory.append(
-                    Ingredient(name=name_val, quantity=qty_val, expiration_date=expiry)
-                )
+            current_inventory = _parse_inventory(request_data.inventory)
         else:
             # run_in_threadpool: ブロッキングな処理を別スレッドで実行し、メインの非同期ループをブロックしない
             current_inventory = await run_in_threadpool(
@@ -80,68 +139,21 @@ async def propose_recipes_api(
             allergies=request_data.allergies,
         )
 
-        # 3. RecipeProposerを初期化し、提案を実行 (コアロジック)
         # 3. 使用するレシピ集合を決定（リクエスト内で指定があればそれを優先）
         if request_data.recipes:
-            # build Recipe objects from provided recipe dicts
-            from .data_source import FEATURE_DIMENSIONS
-
-            all_recipes_local = []
-            for rd in request_data.recipes:
-                vector = np.array(
-                    [rd.get("features", {}).get(dim, 0) for dim in FEATURE_DIMENSIONS],
-                    dtype=np.float64,
-                )
-                recipe_obj = Recipe(
-                    id=int(rd.get("id") or 0),
-                    name=rd.get("name") or "",
-                    req_qty=rd.get("required_qty", {}),
-                    prep_time=int(rd.get("prep_time") or 0),
-                    calories=int(rd.get("calories") or 0),
-                    feature_vector=vector,
-                )
-                all_recipes_local.append(recipe_obj)
+            all_recipes_local = _parse_recipes(request_data.recipes)
         else:
             all_recipes_local = ALL_RECIPES
 
         # 4. ユーザープロファイルベクトル
         if request_data.history and request_data.recipes:
-            # build recipe vector map and compute weighted average similar to RecipeDataSource.create_user_profile_vector
-            from datetime import datetime
-
-            from .data_source import FEATURE_DIMENSIONS
-
-            recipe_vector_map = {r.id: r.feature_vector for r in all_recipes_local}
-            total_vec = np.zeros(len(FEATURE_DIMENSIONS), dtype=np.float64)
-            total_w = 0.0
-            now = datetime.now()
-            for rec in request_data.history:
-                rid = rec.get("recipe_id")
-                if rid is None:
-                    continue
-                vec = recipe_vector_map.get(rid)
-                if vec is None:
-                    continue
-                completed_at = rec.get("completed_at")
-                if not completed_at:
-                    continue
-                try:
-                    completed_dt = datetime.fromisoformat(
-                        completed_at.replace("Z", "+00:00")
-                    )
-                except Exception:
-                    continue
-                days = (now - completed_dt).total_seconds() / (60 * 60 * 24)
-                weight = np.exp(-0.05 * days)
-                total_vec += vec * weight
-                total_w += weight
-            if total_w > 0:
-                user_profile_vector = total_vec / total_w
-            else:
-                user_profile_vector = USER_PROFILE_VECTOR
+            user_profile_vector = _calculate_user_profile_from_history(
+                request_data.history, all_recipes_local
+            )
         else:
             user_profile_vector = USER_PROFILE_VECTOR
 
+        # 5. RecipeProposerを初期化し、提案を実行
         proposer = RecipeProposer(
             all_recipes=all_recipes_local,
             user_inventory=current_inventory,
@@ -160,6 +172,9 @@ async def propose_recipes_api(
         # 提案リスト (List[Dict]) をJSONレスポンスとして返す
         return proposals
 
+    except HTTPException:
+        # 意図的に投げたHTTPExceptionはそのまま再送出
+        raise
     except Exception as e:
         # データベース接続エラー、ロジックエラーなどをキャッチ
         print(f"ERROR during proposal: {e}")
