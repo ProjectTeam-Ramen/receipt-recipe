@@ -8,11 +8,11 @@ from PIL import Image
 # ステップ2で学習・保存したモデルのパス
 model_path = 'my_food_model.pth'
 # 予測したい画像
-image_path = 'zakoshi.jpeg' 
+image_path = 'zakoshi.jpeg'
 
 # ★重要：学習時と全く同じクラス名を、同じ順番で定義する
 # （ステップ1のフォルダ構成 '00_egg', '01_rice', '02_flour' に対応）
-class_names = ['tomato'] 
+class_names = ['tomato']
 num_classes = len(class_names)
 
 # --- 2. モデルのロード ---
@@ -45,7 +45,7 @@ try:
 
     # 確率に変換
     probabilities = torch.nn.functional.softmax(output[0], dim=0)
-    
+
     # 最も確率の高いクラスを取得
     top_prob, top_catid = torch.max(probabilities, 0)
     predicted_label = class_names[top_catid]
