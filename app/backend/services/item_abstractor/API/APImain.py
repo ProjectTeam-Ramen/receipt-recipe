@@ -1,99 +1,146 @@
 import os
+import sys
 import time
+import random  
 import requests
-import base64
 from pathlib import Path
+from typing import List
+from duckduckgo_search import DDGS
+from dotenv import load_dotenv, find_dotenv
 
-# 画像を保存するフォルダ
-SAVE_DIR = Path("images")
+# --- 1. 環境設定 ---
+env_path = find_dotenv()
+if env_path:
+    load_dotenv(env_path)
 
-def fetch_images(query, total_num=50):
-    """
-    指定されたクエリで画像を検索し、保存する関数
-    """
-    print(f"🔍 '{query}' の画像を収集開始...")
+API_KEY = os.getenv("GOOGLE_API_KEY")
+SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
+BASE_DIR = Path("./data/ingredients")
+
+# --- 2. 共通: 画像ダウンロード関数 ---
+def download_images(urls: List[str], save_dir: Path, prefix: str):
+    save_dir.mkdir(parents=True, exist_ok=True)
+    success_count = 0
     
-    # 1. 環境変数の取得
-    api_key = os.environ.get("GOOGLE_API_KEY")
-    cx = os.environ.get("SEARCH_ENGINE_ID")
-
-    if not api_key or not cx:
-        print("❌ エラー: .envファイルの設定を確認してください")
+    # 既存ファイルの枚数をチェック（既に50枚あるならダウンロードしない）
+    existing = len(list(save_dir.glob("*.*")))
+    if existing >= 50:
+        print(f"⏩ {prefix} は既に {existing} 枚あるためスキップします。")
         return
 
-    # 保存用ディレクトリ作成 (例: images/アボカド/)
-    save_path = SAVE_DIR / query
-    save_path.mkdir(parents=True, exist_ok=True)
+    print(f"📥 ダウンロード開始: {len(urls)} 件 -> {save_dir}")
 
-    count = 0        # 保存した枚数
-    start_index = 1  # 検索開始位置 (1, 11, 21...)
-
-    # 2. 50枚集まるまでAPIを叩き続けるループ
-    while count < total_num:
-        url = "https://www.googleapis.com/customsearch/v1"
-        params = {
-            "key": api_key,
-            "cx": cx,
-            "q": query,
-            "searchType": "image", # 画像検索モード
-            "num": 10,             # 1回のリクエストで最大10件
-            "start": start_index   # ページ送り
-        }
-
+    for i, url in enumerate(urls):
         try:
-            # APIリクエスト
-            response = requests.get(url, params=params)
-            response.raise_for_status()
-            data = response.json()
+            res = requests.get(url, timeout=10)
+            res.raise_for_status()
             
-            # 検索結果がもうない場合
-            if "items" not in data:
-                print("⚠️ これ以上画像が見つかりませんでした")
-                break
-
-            items = data["items"]
-
-            # 3. 画像のダウンロード処理
-            for item in items:
-                if count >= total_num:
-                    break
-                
-                image_url = item["link"]
-                
-                try:
-                    # 画像データの取得（3秒タイムアウト設定）
-                    img_data = requests.get(image_url, timeout=3).content
-                    
-                    # ファイル名: 001.jpg のように連番にする
-                    file_extension = os.path.splitext(image_url)[-1]
-                    if not file_extension: file_extension = ".jpg"
-                    
-                    filename = f"{count + 1:03}{file_extension}"
-                    file_path = save_path / filename
-
-                    with open(file_path, "wb") as f:
-                        f.write(img_data)
-                    
-                    print(f"✅ 保存完了 ({count+1}/{total_num}): {filename}")
-                    count += 1
-                    
-                except Exception as e:
-                    print(f"⚠️ ダウンロード失敗: {e}")
-                    continue
-
-            # 次の10件へ進む
-            start_index += 10
+            ext = "jpg"
+            if ".png" in url.lower(): ext = "png"
+            elif ".jpeg" in url.lower(): ext = "jpeg"
             
-            # API制限を避けるため少し待機
-            time.sleep(1)
+            timestamp = int(time.time())
+            # ファイル名重複防止の工夫
+            filename = f"{prefix}_{success_count + 1 + existing:03d}_{timestamp}.{ext}"
+            save_path = save_dir / filename
 
-        except Exception as e:
-            print(f"❌ APIエラー: {e}")
-            break
+            with open(save_path, "wb") as f:
+                f.write(res.content)
+            
+            success_count += 1
+            # ダウンロード間隔も少しランダムにする
+            time.sleep(random.uniform(0.5, 1.5))
 
-    print(f"🎉 完了！ 合計 {count} 枚の画像を保存しました。")
+        except Exception:
+            pass 
+
+    print(f"🎉 完了: 今回 {success_count} 枚保存 (合計 {existing + success_count} 枚)")
+
+# --- 3. Google検索 (確実な10枚) ---
+def fetch_google_urls(query: str, count: int = 10) -> List[str]:
+    if not API_KEY: return []
+    
+    print(f"🤖 [Google] '{query}' を検索中...")
+    search_url = "https://www.googleapis.com/customsearch/v1"
+    params = {
+        "q": query, "key": API_KEY, "cx": SEARCH_ENGINE_ID,
+        "searchType": "image", "num": 10, "start": 1, "safe": "off"
+    }
+
+    try:
+        res = requests.get(search_url, params=params, timeout=10)
+        res.raise_for_status()
+        items = res.json().get("items", [])
+        return [item["link"] for item in items][:count]
+    except Exception as e:
+        print(f"❌ [Google] エラー: {e}")
+        return []
+
+# --- 4. DuckDuckGo検索 (ステルス仕様) ---
+def fetch_ddg_urls(query: str, count: int) -> List[str]:
+    if count <= 0: return []
+
+    # ★ここが重要: 検索前にしっかり休憩する
+    sleep_time = random.uniform(5, 10)
+    print(f"💤 DDG警戒回避のため {sleep_time:.1f} 秒待機中...")
+    time.sleep(sleep_time)
+
+    print(f"🦆 [DuckDuckGo] '{query}' を検索中... (目標: {count}枚)")
+    urls = []
+    
+    try:
+        with DDGS() as ddgs:
+            # max_resultsを指定して取得
+            results = ddgs.images(keywords=query, max_results=count)
+            urls = [r['image'] for r in results]
+    except Exception as e:
+        print(f"❌ [DuckDuckGo] 取得失敗: {e}")
+        print("   -> 無理せずGoogleの分だけで進みます。")
+        
+    return urls
+
+# --- 5. メイン処理 (20食材対応ループ) ---
+def process_ingredients(target_list: List[str]):
+    print(f"📋 全 {len(target_list)} 食材の処理を開始します。")
+    
+    for i, target in enumerate(target_list):
+        print(f"\n[{i+1}/{len(target_list)}] Target: {target} " + "="*20)
+        
+        all_urls = []
+        
+        # 1. Google (必ず実行)
+        google_urls = fetch_google_urls(target, count=10)
+        all_urls.extend(google_urls)
+        print(f"   -> Google: {len(google_urls)} 件")
+        
+        # 2. DDG (Googleで取れた分を差し引いて実行)
+        remaining = 50 - len(all_urls)
+        if remaining > 0:
+            ddg_urls = fetch_ddg_urls(target, count=remaining)
+            all_urls.extend(ddg_urls)
+            print(f"   -> DDG: {len(ddg_urls)} 件")
+        
+        # 3. 保存
+        unique_urls = list(set(all_urls))
+        save_dir = BASE_DIR / target
+        download_images(unique_urls, save_dir, target)
+        
+        # ★食材と食材の間にも長い休憩を入れる
+        if i < len(target_list) - 1:
+            rest_time = random.uniform(10, 20)
+            print(f"☕ 次の食材まで {rest_time:.1f} 秒休憩します...")
+            time.sleep(rest_time)
 
 if __name__ == "__main__":
-    # ここに探したい食材名を入れる
-    target_food = "パクチー" 
-    fetch_images(target_food, total_num=50)
+    # --- ここに20種類以上の食材リストを書いてください ---
+    ingredients_list = [
+        "パクチー", "トマト", "きゅうり", "キャベツ", "玉ねぎ",
+        "じゃがいも", "人参", "大根", "なす", "ピーマン",
+        # ... 他の食材を追加 ...
+    ]
+    
+    # コマンドライン引数があればそれを優先、なければリストを実行
+    if len(sys.argv) > 1:
+        process_ingredients(sys.argv[1:])
+    else:
+        process_ingredients(ingredients_list)
