@@ -40,10 +40,10 @@ def _load_master_data() -> Dict[str, List[str]]:
     return data
 
 
-def _ensure_categories(session: Session, category_keys: Iterable[str]) -> Dict[str, FoodCategory]:
-    desired_names = {
-        key: CATEGORY_LABELS.get(key, key) for key in category_keys
-    }
+def _ensure_categories(
+    session: Session, category_keys: Iterable[str]
+) -> Dict[str, FoodCategory]:
+    desired_names = {key: CATEGORY_LABELS.get(key, key) for key in category_keys}
     existing = (
         session.query(FoodCategory)
         .filter(FoodCategory.category_name.in_(desired_names.values()))
@@ -75,7 +75,10 @@ def sync_food_master() -> None:
         desired_foods = [food_name for foods in data.values() for food_name in foods]
         if desired_foods:
             existing_foods = {
-                name for (name,) in session.query(Food.food_name).filter(Food.food_name.in_(desired_foods))
+                name
+                for (name,) in session.query(Food.food_name).filter(
+                    Food.food_name.in_(desired_foods)
+                )
             }
         else:
             existing_foods = set()

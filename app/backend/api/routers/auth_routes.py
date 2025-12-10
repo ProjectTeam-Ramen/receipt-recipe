@@ -176,7 +176,9 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
     if not username:
         raise HTTPException(status_code=400, detail="Username is required")
     if len(req.password) < 8:
-        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+        raise HTTPException(
+            status_code=400, detail="Password must be at least 8 characters"
+        )
     existing = db.query(User).filter(User.email == email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -204,7 +206,11 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     email = _normalize_email(req.email)
     user = db.query(User).filter(User.email == email).first()
     stored_hash = getattr(user, "password_hash", None) if user else None
-    if not user or not isinstance(stored_hash, str) or not _verify_password(req.password, stored_hash):
+    if (
+        not user
+        or not isinstance(stored_hash, str)
+        or not _verify_password(req.password, stored_hash)
+    ):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     access = _create_access_token(email)
