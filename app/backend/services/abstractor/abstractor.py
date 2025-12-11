@@ -48,12 +48,17 @@ def download_images(urls: List[str], save_dir: Path, prefix: str, target_count: 
                 content = response.read()
 
                 ext = "jpg"
-                if ".png" in url.lower(): ext = "png"
-                elif ".jpeg" in url.lower(): ext = "jpeg"
-                elif ".gif" in url.lower(): ext = "gif"
+                if ".png" in url.lower():
+                    ext = "png"
+                elif ".jpeg" in url.lower():
+                    ext = "jpeg"
+                elif ".gif" in url.lower():
+                    ext = "gif"
 
                 timestamp = int(time.time())
-                filename = f"{prefix}_{success_count + 1 + existing:03d}_{timestamp}.{ext}"
+                filename = (
+                    f"{prefix}_{success_count + 1 + existing:03d}_{timestamp}.{ext}"
+                )
                 save_path = save_dir / filename
 
                 with open(save_path, "wb") as f:
@@ -75,10 +80,10 @@ def fetch_google_image_urls(query: str, count: int) -> List[str]:
         return []
 
     print(f"🔍 [Google API] '{query}' を検索中... (目標: {count}枚)")
-    
+
     urls = []
-    start_index = 1 
-    
+    start_index = 1
+
     # 10枚以下なら1回のリクエストで済むため、ループ条件もシンプルになります
     while len(urls) < count:
         params = {
@@ -98,7 +103,7 @@ def fetch_google_image_urls(query: str, count: int) -> List[str]:
         try:
             with urllib.request.urlopen(request_url, timeout=15) as res:
                 data = json.loads(res.read().decode("utf-8"))
-                
+
                 items = data.get("items", [])
                 if not items:
                     print("⚠️ これ以上の結果がありません。")
@@ -111,13 +116,13 @@ def fetch_google_image_urls(query: str, count: int) -> List[str]:
 
                 # API制限: startパラメータの上限などを考慮しつつ次へ
                 start_index += 10
-                
+
                 # countが10以下の場合は1回でbreakして無駄なリクエストを防ぐ
                 if count <= 10:
                     break
-                
+
                 time.sleep(1)
-                
+
         except urllib.error.HTTPError as e:
             print(f"❌ APIリクエストエラー: {e.code} - {e.reason}")
             if e.code == 403:
@@ -134,8 +139,10 @@ def fetch_google_image_urls(query: str, count: int) -> List[str]:
 def process_ingredients(target_list: List[str]):
     # ★ ここを50から10に変更しました ★
     TARGET_COUNT = 10
-    
-    print(f"📋 全 {len(target_list)} 食材の処理を開始します (目標: 各{TARGET_COUNT}枚)。")
+
+    print(
+        f"📋 全 {len(target_list)} 食材の処理を開始します (目標: 各{TARGET_COUNT}枚)。"
+    )
 
     for i, target in enumerate(target_list):
         print(f"\n[{i + 1}/{len(target_list)}] Target: {target} " + "=" * 20)
@@ -157,7 +164,7 @@ def process_ingredients(target_list: List[str]):
                 print("   -> 画像が見つかりませんでした。")
 
         if i < len(target_list) - 1:
-            time.sleep(1) # 待機時間も少し短縮
+            time.sleep(1)  # 待機時間も少し短縮
 
 
 if __name__ == "__main__":
