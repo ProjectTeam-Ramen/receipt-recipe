@@ -6,18 +6,22 @@ from PIL import Image
 import os
 
 # --- 1. 設定 ---
-model_path = "my_food_model.pth"
-image_path = "牛肉.jpeg"  # ここに予測したい画像ファイル#
+model_path = "/workspace/app/backend/services/item_abstractor/image_recognition/my_food_model.pth"
+image_path = "/workspace/app/backend/services/item_abstractor/image_recognition/zakoshi.jpeg"  # ここに予測したい画像ファイル#
 data_dir = "./dataset/train"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+"""
 if os.path.exists(data_dir):
     class_names = sorted([d.name for d in os.scandir(data_dir) if d.is_dir()])
     num_classes = len(class_names)
 else:
     num_classes = 77
     class_names = [str(i) for i in range(num_classes)]
+"""
+num_classes = 77
+class_names = [str(i) for i in range(num_classes)]
+
 
 # --- 2. モデルのロード ---
 model = models.resnet18(weights=None)
@@ -63,3 +67,9 @@ except FileNotFoundError:
     print(f"エラー: 画像ファイル '{image_path}' が見つかりません。")
 except Exception as e:
     print(f"エラーが発生しました: {e}")
+    all_results_dict = {}
+
+# 結果を出力
+print("予測結果:")
+for class_name, probability in sorted(all_results_dict.items(), key=lambda x: x[1], reverse=True):
+    print(f"{class_name}: {probability:.4f}")
