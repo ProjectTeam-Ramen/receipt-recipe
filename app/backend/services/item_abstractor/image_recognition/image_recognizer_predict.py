@@ -3,7 +3,6 @@ import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
-import os
 
 # --- 1. 設定 ---
 model_path = "/workspace/app/backend/services/item_abstractor/image_recognition/my_food_model.pth"
