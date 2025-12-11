@@ -92,7 +92,7 @@ def fetch_ddg_urls(query: str, count: int) -> List[str]:
     if count <= 0:
         return []
 
-    # ★ここが重要: 検索前にしっかり休憩する
+    #検索前にしっかり休憩する
     sleep_time = random.uniform(5, 10)
     print(f"💤 DDG警戒回避のため {sleep_time:.1f} 秒待機中...")
     time.sleep(sleep_time)
@@ -117,7 +117,11 @@ def process_ingredients(target_list: List[str]):
     print(f"📋 全 {len(target_list)} 食材の処理を開始します。")
 
     for i, target in enumerate(target_list):
+<<<<<<< HEAD
         print(f"\n[{i + 1}/{len(target_list)}] Target: {target} " + "=" * 20)
+=======
+        print(f"\n[{i+1}/{len(target_list)}] Target: {target} " + "="*20)
+>>>>>>> aa6b79b4ab92a62b9dd4864700431832fb8d15f3
 
         all_urls = []
 
