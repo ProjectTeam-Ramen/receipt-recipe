@@ -122,6 +122,17 @@ def _process_receipt_async(
             }
             for line in result.lines
         ]
+        raw_lines = result.raw_lines or []
+        receipt["raw_text_lines"] = [
+            {
+                "line_id": line.line_id,
+                "text": line.text,
+                "confidence": line.confidence,
+                "bbox": line.bbox,
+                "center": line.center,
+            }
+            for line in raw_lines
+        ]
         receipt["processed_image_path"] = str(result.processed_image_path)
         receipt["ocr_confidence"] = (
             sum(line.confidence for line in result.lines) / len(result.lines)
@@ -131,6 +142,9 @@ def _process_receipt_async(
         receipt["status"] = "completed"
         receipt["error"] = None
         receipt["text_content"] = result.text_content
+        receipt["raw_text_content"] = "\n".join(
+            line.text for line in raw_lines if line.text
+        )
     except Exception as exc:  # pragma: no cover - runtime dependency on EasyOCR
         logger.exception("OCR processing failed for receipt %s", receipt_id)
         receipt["status"] = "failed"
@@ -169,7 +183,9 @@ async def upload_receipt(
         "tax_amount": None,
         "items": [],
         "text_lines": [],
+        "raw_text_lines": [],
         "text_content": "",
+        "raw_text_content": "",
         "ocr_confidence": None,
         "image_path": str(file_path),
         "processed_image_path": None,
