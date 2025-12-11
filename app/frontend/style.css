@@ -1,485 +1,1058 @@
 /* ==============================
-   共通スタイル
+    デザイン変数・共通スタイル
 ============================== */
+
+/* カラーパレット */
+:root {
+    --color-primary: #1e88e5; /* 明るいブルー (Google/Material Design風) */
+    --color-primary-dark: #1565c0;
+    --color-secondary: #00bcd4; /* シアン（アクセント、冷蔵庫関連） */
+    --color-success: #43a047; /* グリーン（レシピ、成功） */
+    --color-warning: #ffb300; /* アンバー（注意、在庫不足など） */
+    --color-danger: #e53935; /* 赤（削除、エラー） */
+    --color-background: #f4f7fa;
+    --color-surface: #ffffff;
+    --color-text: #333333;
+    --color-text-light: #607d8b;
+    --color-border: #e0e0e0;
+}
+
 body {
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f4f7fa;
-  color: #333;
-  margin: 0;
-  padding: 0;
+    font-family: "Segoe UI", 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* ヘッダー */
 header {
-  background-color: #0078d7;
-  color: white;
-  padding: 15px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    padding: 18px 30px; /* パディングを少し増やしてゆったりと */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 }
 
 header h1 {
-  margin: 0;
-  font-size: 20px;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 /* メインコンテンツ共通 */
 main {
-  max-width: 960px;
-  /* カード表示用に少し幅を広げました */
-  margin: 40px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* 幅を少し広げました */
+    margin: 40px auto;
+    padding: 30px; /* パディングを増やしてゆったりと */
+    background-color: var(--color-surface);
+    border-radius: 16px; /* 角を丸く */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* シャドウを強調 */
 }
 
 /* ログアウト/戻るボタン共通 */
 .logout-btn {
-  background-color: #ff5757;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    background-color: var(--color-danger);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 8px; /* 角を丸く */
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s;
+    font-weight: 500;
 }
 
 .logout-btn:hover {
-  background-color: #e04646;
+    background-color: #c62828; /* より深い赤 */
+    transform: translateY(-1px);
 }
 
+
 /* ==============================
-   ログイン画面専用 (index.html)
+    ログイン画面専用 (index.html)
 ============================== */
 .login-container {
-  width: 320px;
-  margin: 100px auto;
-  background-color: white;
-  padding: 2em;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  text-align: center;
+    width: 360px; /* 幅を少し広げました */
+    margin: 120px auto;
+    background-color: var(--color-surface);
+    padding: 3em;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .login-container h1 {
-  color: #0078d7;
-  margin-bottom: 1em;
+    color: var(--color-primary);
+    margin-bottom: 1.5em;
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .login-container label {
-  display: block;
-  text-align: left;
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #333;
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: var(--color-text);
+    font-weight: 500;
 }
 
 .login-container input {
-  width: 100%;
-  padding: 0.6em;
-  margin-top: 4px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 0.8em;
+    margin-top: 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.login-container input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
 }
 
 .login-container button {
-  background-color: #0078d7;
-  color: white;
-  border: none;
-  padding: 0.7em 1.2em;
-  font-size: 1em;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 1.2em;
-  transition: 0.3s;
-  width: 100%;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    padding: 0.8em 1.5em;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 1.5em;
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+    width: 100%;
+    font-weight: 600;
 }
 
 .login-container button:hover {
-  background-color: #005a9e;
+    background-color: var(--color-primary-dark);
+    box-shadow: 0 4px 8px rgba(30, 136, 229, 0.3);
 }
 
 #message {
-  color: red;
-  margin-top: 1em;
-  font-size: 0.9em;
-  text-align: center;
+    color: var(--color-danger);
+    margin-top: 1em;
+    font-size: 0.9em;
+    text-align: center;
 }
 
 /* ==============================
-   ホーム画面 (home.html)
+    ホーム画面 (home.html)
 ============================== */
 .center-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* height -> min-height に変更 */
+    gap: 30px; /* スペースを広げました */
 }
 
 .menu-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }
 
 .recipe-btn,
 .fridge-btn {
-  border: none;
-  border-radius: 10px;
-  padding: 15px 30px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 225px;
+    border: none;
+    border-radius: 12px;
+    padding: 20px 40px; /* パディングを増やして大きく */
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
+    width: 260px; /* 幅を統一 */
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .recipe-btn {
-  background-color: #28a745;
-  color: white;
+    background-color: #FFB300;
+    color: var(--color-surface);
 }
 
 .recipe-btn:hover {
-  background-color: #218838;
+    background-color: #FFA000; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .fridge-btn {
-  background-color: #17a2b8;
-  color: white;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
 }
 
 .fridge-btn:hover {
-  background-color: #138496;
+    background-color:var(--color-primary-dark); /* より深いシアン */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* ==============================
-   レシピ検索ページ (New recipe.html)
+    冷蔵庫ホーム (fridge-home.html) 専用メニューボタン
+============================== */
+/* home.htmlと共通の .center-container および .menu-buttons を利用 */
+/* fridge-home.html のボタンはより具体的なクラス名を使用 */
+.control-btn, .check-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 20px 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
+    width: 260px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 食材の追加ボタン (control-btn) - プライマリカラー系 */
+.control-btn {
+    background-color: var(--color-success);
+    color: var(--color-surface);
+}
+
+.control-btn:hover {
+    background-color: #388e3c; /* より深いグリーン */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 食材一覧ボタン (check-btn) - セカンダリカラー系 (強調) */
+.check-btn {
+    background-color: var(--color-secondary);
+    color: var(--color-surface);
+}
+
+.check-btn:hover {
+    background-color: #0097a7; /* より深いシアン */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ==============================
+    レシピ検索ページ (New recipe.html)
 ============================== */
 
 /* コントロールバー（絞り込み・ソート） */
 .controls {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 12px 0 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    gap: 16px; /* スペースを調整 */
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 16px 0 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .controls .item {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .muted {
-  color: #6b7280;
-  font-size: 0.9em;
+    color: var(--color-text-light);
+    font-size: 0.9em;
 }
 
 /* カードグリッドレイアウト */
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* カードサイズを少し大きく */
+    gap: 24px; /* スペースを広げました */
 }
 
 /* レシピカード */
 .card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
-  transition: box-shadow 0.2s;
+    border: 1px solid var(--color-border);
+    border-radius: 16px; /* 角を丸く */
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, transform 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px); /* 少し持ち上げる */
 }
 
 .card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+    display: block;
+    color: inherit;
+    text-decoration: none;
 }
 
 .card-figure {
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  margin: 0;
+    aspect-ratio: 16 / 9; /* アスペクト比を調整 */
+    overflow: hidden;
+    margin: 0;
 }
 
 .card-figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card:hover .card-figure img {
-  transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .card-body {
-  padding: 12px;
+    padding: 16px;
 }
 
 .card-title {
-  margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text);
 }
 
 /* バッジ・タグ装飾 */
 .badge {
-  display: inline-block;
-  font-size: 12px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #374151;
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
 }
 
 .badge.ok {
-  background: #def7ec;
-  color: #03543f;
+    background: #e8f5e9; /* 薄いグリーン */
+    color: var(--color-success);
 }
 
 .badge.warn {
-  background: #fde68a;
-  color: #92400e;
+    background: #fff3e0; /* 薄いオレンジ */
+    color: var(--color-warning);
 }
 
 .badgeGroup {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
 }
 
 .pill {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #eef2ff;
-  font-size: 12px;
-  font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #e3f2fd; /* 薄いブルー */
+    color: var(--color-primary-dark);
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* ==============================
-   冷蔵庫ホーム (fridge-home.html)
+    冷蔵庫内の食材一覧テーブル (foodTable)
+    ※ fridge-home.html が一覧ページも兼ねる場合
 ============================== */
 #foodTable {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: separate; /* border-radius のために */
+    border-spacing: 0;
+    margin-top: 20px;
 }
 
 #foodTable thead {
-  background-color: #f1f5f9;
+    background-color: #e3f2fd; /* テーブルヘッダーをライトブルーに */
 }
 
 #foodTable th,
 #foodTable td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e2e8f0;
-  font-size: 14px;
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 15px;
 }
 
 #foodTable th {
-  font-weight: 600;
-  color: #0f172a;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    /* テーブルの角を丸く */
+    &:first-child { border-top-left-radius: 10px; }
+    &:last-child { border-top-right-radius: 10px; }
+}
+
+#foodTable tbody tr:last-child td {
+    border-bottom: none;
 }
 
 #foodTable tbody tr:hover {
-  background-color: #f8fafc;
+    background-color: #f5f5f5;
 }
 
 .actions-cell {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .actions-cell button {
-  flex: 1 1 90px;
-  min-width: 90px;
+    flex: 1 1 90px;
+    min-width: 90px;
 }
 
 .use-btn,
 .delete-btn {
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 14px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--color-surface);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s;
+    font-weight: 500;
 }
 
 .use-btn {
-  background-color: #2563eb;
+    background-color: var(--color-primary);
 }
 
 .use-btn:hover:not(:disabled) {
-  background-color: #1d4ed8;
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
 }
 
 .delete-btn {
-  background-color: #ef4444;
+    background-color: var(--color-danger);
 }
 
 .delete-btn:hover:not(:disabled) {
-  background-color: #dc2626;
+    background-color: #c62828;
+    transform: translateY(-1px);
 }
 
 .use-btn:disabled,
 .delete-btn:disabled {
-  background-color: #cbd5f5;
-  color: #475569;
-  cursor: not-allowed;
+    background-color: #cfd8dc;
+    color: #90a4ae;
+    cursor: not-allowed;
 }
 
+
 /* ==============================
-   レシピ詳細ページ (recipe-detail.html)
+    レシピ詳細ページ (recipe-detail.html)
 ============================== */
 .recipe-detail-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--color-surface);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* スペースを広げました */
 }
 
 .detail-header h2 {
-  margin: 8px 0;
-  font-size: 1.8rem;
+    margin: 8px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
 }
 
 .detail-description {
-  font-size: 0.95rem;
-  color: #4b5563;
-  line-height: 1.6;
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.8;
 }
 
 .detail-panel {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px;
+    background: #fcfcfc;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 20px;
 }
 
 .table-wrapper {
-  overflow-x: auto;
-  margin-top: 12px;
+    overflow-x: auto;
+    margin-top: 12px;
 }
 
 .detail-table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .detail-table th,
 .detail-table td {
-  padding: 10px;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-  font-size: 0.95rem;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    font-size: 0.95rem;
 }
 
 .detail-table th {
-  background: #f3f4f6;
-  font-weight: 600;
+    background: #f5f5f5;
+    font-weight: 600;
+    color: var(--color-text);
 }
 
 .status-chip {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .status-chip.ok {
-  background: #d1fae5;
-  color: #065f46;
+    background: #e8f5e9;
+    color: var(--color-success);
 }
 
 .status-chip.warn {
-  background: #fee2e2;
-  color: #991b1b;
+    background: #ffebee;
+    color: var(--color-danger);
 }
 
 .instructions-block {
-  white-space: pre-line;
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  padding: 12px;
-  color: #374151;
-  min-height: 80px;
+    white-space: pre-line;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    color: var(--color-text);
+    min-height: 100px;
+    line-height: 1.7;
+    font-size: 0.95rem;
 }
 
 .cook-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .cook-form input[type="number"] {
-  max-width: 200px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 1rem;
+    max-width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.cook-form input[type="number"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
 }
 
 .primary-btn {
-  background-color: #2563eb;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  padding: 10px 16px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 10px;
+    color: var(--color-surface);
+    padding: 12px 20px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 250px;
 }
 
 .primary-btn:disabled {
-  background-color: #93c5fd;
-  cursor: not-allowed;
+    background-color: #90caf9;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .primary-btn:hover:not(:disabled) {
-  background-color: #1d4ed8;
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
 }
 
 .small {
-  font-size: 0.85rem;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
 }
 
 #cookMessage {
-  margin-top: 8px;
-  font-weight: 600;
+    margin-top: 8px;
+    font-weight: 600;
 }
 
 #cookMessage.ok {
-  color: #047857;
+    color: var(--color-success);
 }
 
 #cookMessage.warn {
-  color: #b91c1c;
+    color: var(--color-danger);
+}
+
+/* ==============================
+    冷蔵庫管理ページ (fridge-control.html)
+    ※ 食材追加・レシート読み取りメニュー
+============================== */
+
+/* メインコンテンツのレイアウトを調整（必要に応じて） */
+.fridge-control-main h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.control-menu {
+    display: flex;
+    flex-direction: row; /* ボタンを横に並べる */
+    justify-content: center; /* 水平中央寄せ */
+    gap: 30px; /* ボタン間のスペース */
+    margin-top: 50px;
+    padding-top: 30px;
+}
+
+/* ボタンの共通スタイルを上書きまたは調整 */
+.control-menu .control-btn {
+    /* home.htmlやfridge-home.htmlのボタンサイズをベースに調整 */
+    padding: 25px 30px; 
+    font-size: 18px;
+    width: 250px; /* 一定の幅を確保 */
+    min-height: 120px; /* 高さを揃える */
+    
+    /* 食材追加ボタンはPrimaryカラー */
+    background-color: var(--color-success); 
+    color: var(--color-surface);
+}
+
+.control-menu .control-btn:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* レシート読み取りボタンは目立つようにSecondaryカラーを適用 */
+#receiptAddBtn {
+    background-color: #FFB300; 
+}
+
+#receiptAddBtn:hover {
+    background-color: #FFA000; /* より深いシアン */
+}
+
+
+/* スマートフォンでの表示調整 */
+@media (max-width: 650px) {
+    .control-menu {
+        flex-direction: column; /* 狭い画面では縦並びに戻す */
+        gap: 20px;
+    }
+    
+    .control-menu .control-btn {
+        width: 80%; /* 幅いっぱいに近づける */
+        max-width: 350px;
+        margin: 0 auto; /* 中央寄せ */
+    }
+}
+
+/* ==============================
+    レシート読み取りページ (receipt-add.html)
+============================== */
+
+/* レシート読み取りセクション (OCR UI) */
+.receipt-section {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 30px;
+}
+
+.receipt-section h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+#receiptInput {
+    display: block;
+    margin: 10px auto 15px;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+}
+
+#scanBtn {
+    background-color: var(--color-success);
+    color: var(--color-surface);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+#scanBtn:hover {
+    background-color: #388e3c;
+    transform: translateY(-1px);
+}
+
+#scanMessage {
+    margin-top: 15px;
+    color: var(--color-text-light);
+    font-size: 0.9em;
+}
+
+/* 読み取った食材フォームのコンテナ */
+#formsContainer {
+    display: flex;
+    flex-wrap: wrap; /* 食材カードを折り返す */
+    gap: 20px;
+    justify-content: center; /* 中央寄せ */
+    padding: 20px 0;
+}
+
+/* 個々の食材フォームをカード形式で表示 */
+.food-form-card {
+    background: #fff;
+    border: 1px solid #e1f5fe; /* ライトブルーのボーダー */
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 300px; /* カードの標準幅 */
+    flex-grow: 1;
+    min-width: 250px;
+    max-width: 320px;
+}
+
+.food-form-card h3 {
+    font-size: 1.1rem;
+    color: var(--color-primary-dark);
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e1f5fe;
+    padding-bottom: 5px;
+}
+
+.food-form-card label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--color-text-light);
+    margin-top: 10px;
+}
+
+.food-form-card input,
+.food-form-card select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.food-form-card input:focus,
+.food-form-card select:focus {
+    border-color: var(--color-secondary);
+    outline: none;
+}
+
+/* フォーム内のアクションボタン（削除など） */
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.card-actions .delete-item-btn {
+    background-color: var(--color-danger);
+    color: var(--color-surface);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.card-actions .delete-item-btn:hover {
+    background-color: #c62828;
+}
+
+/* 登録ボタンのラッパーとスタイル */
+.register-wrapper {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+    transition: background-color 0.3s ease, transform 0.1s, box-shadow 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 136, 229, 0.4);
+}
+
+/* ==============================
+    食材追加ページ (food-add.html)
+============================== */
+
+.food-add-main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.food-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* フォーム要素間のスペース */
+    max-width: 500px; /* フォームの最大幅を制限して中央に寄せる */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background-color: #fcfcfc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.food-form label {
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: 5px;
+}
+
+.food-form input:not([type="submit"]),
+.food-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.food-form input:focus,
+.food-form select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+}
+
+/* 検索/絞り込みフィールド */
+#foodFilter {
+    margin-bottom: 5px;
+}
+
+/* 数量フィールドの調整 (幅は100%のまま) */
+#foodAmount {
+    /* 特に調整は不要だが、他のinputと揃える */
+}
+
+/* 追加ボタンのスタイル */
+.add-confirm-btn {
+    background-color: var(--color-success);
+    color: var(--color-surface);
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-confirm-btn:hover {
+    background-color: #388e3c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* メッセージ表示エリア */
+.message-area {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    min-height: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+
+/* ==============================
+    ホーム画面 (home.html) - ローディングアニメーション
+============================== */
+
+/* ウェルカムテキストの基本スタイル */
+.welcome-text {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary); /* プライマリカラーで目立たせる */
+    margin-top: 30px;
+    opacity: 0.8;
+}
+
+/* 読み込み中... のアニメーション (点滅と色の変化) */
+#welcomeMsg {
+    /* * animation: [アニメーション名] [再生時間] [イージング] [無限ループ];
+     */
+    animation: 
+        loading-pulse 1.5s ease-in-out infinite alternate,
+        color-shift 3s linear infinite;
+}
+
+/* 点滅・スケール変化のアニメーション定義 */
+@keyframes loading-pulse {
+    0% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1.02);
+    }
+}
+
+
+
+/* ステータスメッセージのスタイル */
+.status-message {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+/* 読み込み完了後などにメッセージを表示するためのスタイル（JavaScriptでクラスを切り替える想定） */
+.status-message.error {
+    color: var(--color-danger);
+    font-weight: 600;
+}
+
+.status-message.success {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+
+/* ==============================
+    レシピ詳細ページ (recipe-detail.html)
+============================== */
+.recipe-detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--color-surface);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.detail-header h2 {
+    margin: 8px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.detail-panel {
+    background: #fcfcfc;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+/* 材料テーブルのスタイル */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detail-table th,
+.detail-table td {
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.detail-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* 作り方ブロックのスタイル */
+.instructions-block {
+    white-space: pre-line;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    color: var(--color-text);
+    min-height: 100px;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* 作るフォームのスタイル */
+.cook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cook-form input[type="number"] {
+    max-width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.primary-btn {
+    /* ... 共通のボタンデザイン ... */
+}
+
+/* 読み込み中/汎用的な「muted」テキストのスタイル */
+.muted {
+    color: var(--color-text-light);
+    font-size: 0.9em;
 }
