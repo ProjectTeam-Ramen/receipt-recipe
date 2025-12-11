@@ -117,11 +117,7 @@ def process_ingredients(target_list: List[str]):
     print(f"📋 全 {len(target_list)} 食材の処理を開始します。")
 
     for i, target in enumerate(target_list):
-<<<<<<< HEAD
-        print(f"\n[{i + 1}/{len(target_list)}] Target: {target} " + "=" * 20)
-=======
         print(f"\n[{i+1}/{len(target_list)}] Target: {target} " + "="*20)
->>>>>>> aa6b79b4ab92a62b9dd4864700431832fb8d15f3
 
         all_urls = []
 
