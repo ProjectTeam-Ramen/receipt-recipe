@@ -6,7 +6,7 @@ from PIL import Image
 
 # --- 1. 設定 ---
 model_path = "/workspace/app/backend/services/item_abstractor/image_recognition/my_food_model.pth"
-image_path = "/workspace/app/backend/services/item_abstractor/image_recognition/zakoshi.jpeg"  # ここに予測したい画像ファイル#
+image_path = "/workspace/app/backend/services/item_abstractor/image_recognition/tomato.jpeg"  # ここに予測したい画像ファイル#
 data_dir = "./dataset/train"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
