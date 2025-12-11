@@ -71,5 +71,7 @@ except Exception as e:
 
 # 結果を出力
 print("予測結果:")
-for class_name, probability in sorted(all_results_dict.items(), key=lambda x: x[1], reverse=True):
+for class_name, probability in sorted(
+    all_results_dict.items(), key=lambda x: x[1], reverse=True
+):
     print(f"{class_name}: {probability:.4f}")
