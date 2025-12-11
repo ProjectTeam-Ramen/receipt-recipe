@@ -17,6 +17,7 @@ API_KEY = os.getenv("GOOGLE_API_KEY")
 SEARCH_ENGINE_ID = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
 BASE_DIR = Path("./data/ingredients")
 
+
 # --- 2. 共通: 画像ダウンロード関数 ---
 def download_images(urls: List[str], save_dir: Path, prefix: str):
     save_dir.mkdir(parents=True, exist_ok=True)
@@ -58,6 +59,7 @@ def download_images(urls: List[str], save_dir: Path, prefix: str):
 
     print(f"🎉 完了: 今回 {success_count} 枚保存 (合計 {existing + success_count} 枚)")
 
+
 # --- 3. Google検索 (確実な10枚) ---
 def fetch_google_urls(query: str, count: int = 10) -> List[str]:
     if not API_KEY:
@@ -66,8 +68,13 @@ def fetch_google_urls(query: str, count: int = 10) -> List[str]:
     print(f"🤖 [Google] '{query}' を検索中...")
     search_url = "https://www.googleapis.com/customsearch/v1"
     params = {
-        "q": query, "key": API_KEY, "cx": SEARCH_ENGINE_ID,
-        "searchType": "image", "num": 10, "start": 1, "safe": "off"
+        "q": query,
+        "key": API_KEY,
+        "cx": SEARCH_ENGINE_ID,
+        "searchType": "image",
+        "num": 10,
+        "start": 1,
+        "safe": "off",
     }
 
     try:
@@ -79,12 +86,13 @@ def fetch_google_urls(query: str, count: int = 10) -> List[str]:
         print(f"❌ [Google] エラー: {e}")
         return []
 
+
 # --- 4. DuckDuckGo検索 (ステルス仕様) ---
 def fetch_ddg_urls(query: str, count: int) -> List[str]:
     if count <= 0:
         return []
 
-    #検索前にしっかり休憩する
+    # 検索前にしっかり休憩する
     sleep_time = random.uniform(5, 10)
     print(f"💤 DDG警戒回避のため {sleep_time:.1f} 秒待機中...")
     time.sleep(sleep_time)
@@ -96,19 +104,20 @@ def fetch_ddg_urls(query: str, count: int) -> List[str]:
         with DDGS() as ddgs:
             # max_resultsを指定して取得
             results = ddgs.images(keywords=query, max_results=count)
-            urls = [r['image'] for r in results]
+            urls = [r["image"] for r in results]
     except Exception as e:
         print(f"❌ [DuckDuckGo] 取得失敗: {e}")
         print("   -> 無理せずGoogleの分だけで進みます。")
 
     return urls
 
+
 # --- 5. メイン処理 (20食材対応ループ) ---
 def process_ingredients(target_list: List[str]):
     print(f"📋 全 {len(target_list)} 食材の処理を開始します。")
 
     for i, target in enumerate(target_list):
-        print(f"\n[{i+1}/{len(target_list)}] Target: {target} " + "="*20)
+        print(f"\n[{i + 1}/{len(target_list)}] Target: {target} " + "=" * 20)
 
         all_urls = []
 
@@ -135,11 +144,20 @@ def process_ingredients(target_list: List[str]):
             print(f"☕ 次の食材まで {rest_time:.1f} 秒休憩します...")
             time.sleep(rest_time)
 
+
 if __name__ == "__main__":
     # --- ここに20種類以上の食材リストを書いてください ---
     ingredients_list = [
-        "パクチー", "トマト", "きゅうり", "キャベツ", "玉ねぎ",
-        "じゃがいも", "人参", "大根", "なす", "ピーマン",
+        "パクチー",
+        "トマト",
+        "きゅうり",
+        "キャベツ",
+        "玉ねぎ",
+        "じゃがいも",
+        "人参",
+        "大根",
+        "なす",
+        "ピーマン",
         # ... 他の食材を追加 ...
     ]
 
