@@ -167,7 +167,6 @@ beautifulsoup4>=4.12.0    # HTMLパーサー
 lxml>=4.9.0               # XMLパーサー
 selenium>=4.10.0          # ブラウザ自動化
 webdriver-manager>=3.8.0  # WebDriver管理
-requests>=2.31.0          # HTTPライブラリ
 ```
 
 ### API・Web

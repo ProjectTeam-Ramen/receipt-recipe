@@ -1,14 +1,15 @@
-import sys
-import time
-import random
-import urllib.request
-import urllib.parse
-import urllib.error
+import argparse
 import json
-from pathlib import Path
-from typing import List
-from dotenv import load_dotenv, find_dotenv
 import os
+import random
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+from typing import List, Optional
+
+from dotenv import find_dotenv, load_dotenv
 
 # --- 1. 環境設定 ---
 env_path = find_dotenv()
@@ -73,6 +74,33 @@ def download_images(urls: List[str], save_dir: Path, prefix: str, target_count: 
     print(f"🎉 完了: 今回 {success_count} 枚保存 (合計 {existing + success_count} 枚)")
 
 
+def download_single_image(url: str, save_dir: Path, prefix: str) -> Optional[Path]:
+    save_dir.mkdir(parents=True, exist_ok=True)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as response:
+            content = response.read()
+    except Exception as exc:  # pragma: no cover - depends on network
+        print(f"❌ 画像の取得に失敗しました: {exc}")
+        return None
+
+    parsed_path = Path(urllib.parse.urlparse(url).path)
+    ext = parsed_path.suffix.lower() or ".jpg"
+    if ext not in {".jpg", ".jpeg", ".png", ".gif"}:
+        ext = ".jpg"
+
+    filename = f"{prefix}_{int(time.time() * 1000)}{ext}"
+    save_path = save_dir / filename
+    with open(save_path, "wb") as handle:
+        handle.write(content)
+
+    print(f"📸 画像を保存しました: {save_path}")
+    return save_path
+
+
 # --- 3. Google Custom Search API 検索ロジック ---
 def fetch_google_image_urls(query: str, count: int) -> List[str]:
     if not GOOGLE_API_KEY or not SEARCH_ENGINE_ID:
@@ -135,6 +163,38 @@ def fetch_google_image_urls(query: str, count: int) -> List[str]:
     return urls[:count]
 
 
+def recognize_targets(target_list: List[str], *, top_k: int = 5) -> None:
+    if not target_list:
+        print("⚠️ 判定対象が指定されていません。")
+        return
+
+    from app.backend.services.item_abstractor.image_recognition.image_recognizer_predict import (  # noqa: PLC0415
+        get_top_predictions,
+        predict_image,
+    )
+
+    for target in target_list:
+        print(f"\n🔎 '{target}' の画像を検索し、判定します。")
+        urls = fetch_google_image_urls(target, count=1)
+        if not urls:
+            print("   -> 画像URLが取得できませんでした。")
+            continue
+
+        save_dir = BASE_DIR / "recognized" / target.replace(" ", "_")
+        image_path = download_single_image(urls[0], save_dir, target)
+        if not image_path:
+            continue
+
+        try:
+            probabilities = predict_image(image_path)
+            top_results = get_top_predictions(probabilities, top_k)
+            print("   -> 判定結果:")
+            for label, score in top_results:
+                print(f"      {label}: {score:.3f}")
+        except Exception as exc:  # pragma: no cover - mainly runtime errors
+            print(f"   -> 判定に失敗しました: {exc}")
+
+
 # --- 4. メイン処理 ---
 def process_ingredients(target_list: List[str]):
     # ★ ここを50から10に変更しました ★
@@ -167,16 +227,38 @@ def process_ingredients(target_list: List[str]):
             time.sleep(1)  # 待機時間も少し短縮
 
 
-if __name__ == "__main__":
-    ingredients_list = [
+def main(argv: Optional[List[str]] = None) -> None:
+    parser = argparse.ArgumentParser(
+        description="食材画像の取得および分類ユーティリティ"
+    )
+    parser.add_argument("targets", nargs="*", help="処理したい食材名")
+    parser.add_argument(
+        "--bulk",
+        action="store_true",
+        help="従来どおり、対象食材ごとに画像を10枚収集するモード",
+    )
+    parser.add_argument(
+        "--top",
+        type=int,
+        default=5,
+        help="判定時に表示する上位件数 (デフォルト: 5)",
+    )
+    args = parser.parse_args(argv)
+
+    default_targets = [
         "tomato",
         "cucumber",
         "onion",
         "carrot",
-        # ...
     ]
 
-    if len(sys.argv) > 1:
-        process_ingredients(sys.argv[1:])
+    targets = args.targets or default_targets
+
+    if args.bulk:
+        process_ingredients(targets)
     else:
-        process_ingredients(ingredients_list)
+        recognize_targets(targets, top_k=args.top)
+
+
+if __name__ == "__main__":
+    main()
