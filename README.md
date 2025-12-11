@@ -55,6 +55,16 @@ python -m http.server 5500
 - `app/frontend` — バニラ HTML/CSS/JS。`config.js` で API ベース URL を一元管理
 - `docs` — API 設計書、DB 設計書など
 - `init.sql` — MySQL 用のテーブル/トリガー定義
+- `data/receipt_image` — アップロードしたレシート原本の保存先（`RECEIPT_DATA_DIR`）
+- `data/processed_receipt_image` — `EasyOCRPreprocessor` で前処理した画像の保存先（`PROCESSED_RECEIPT_DATA_DIR`）
+
+## 🧾 レシート OCR フロー（画像 → テキスト修正 → 出力）
+
+1. `POST /api/v1/receipts/upload` にレシート画像をアップロードすると、`app/backend/services/ocr/image_preprocessing/image_preprocessor.py` で前処理したうえで `text_detection/text_detector.py`（EasyOCR）にかけます。
+2. 解析結果はアプリメモリ上の `RECEIPTS` ストアに保存され、`items`（行単位）および `text_lines` として保持されます。
+3. `GET /api/v1/receipts/{receipt_id}` で JSON を確認し、`PATCH /api/v1/receipts/{receipt_id}/items/{item_id}` で `raw_text` を修正できます。更新すると `text_content` も自動で再構築されます。
+4. 仕上がったテキストは `GET /api/v1/receipts/{receipt_id}/text?format=plain` でプレーンテキストとしてダウンロードできます。JSON 形式が欲しい場合は `format=json`（デフォルト）のままで OK です。
+5. `.env` で `OCR_LANGUAGES`（例: `ja,en`）や `OCR_USE_GPU=1` を設定すると EasyOCR の挙動を切り替えられます。保存先を変えたい場合は `RECEIPT_DATA_DIR` / `PROCESSED_RECEIPT_DATA_DIR` を上書きしてください。
 
 ## 🍲 レシピデータの追加・更新
 
