@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>食材追加</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>Food Add</h1>
@@ -16,11 +18,22 @@
     <h2>新しい食材を追加</h2>
 
     <form id="foodForm" class="food-form">
-      <label for="foodName">食材名：</label>
-      <input type="text" id="foodName" placeholder="例：卵" required>
+      <label for="foodFilter">食材を検索：</label>
+      <input type="search" id="foodFilter" placeholder="キーワードで絞り込み">
+
+      <label for="foodSelect">食材名：</label>
+      <select id="foodSelect" required>
+        <option value="" disabled selected>食材を選択してください</option>
+      </select>
 
       <label for="foodAmount">数量(g)：</label>
-      <input type="number" id="foodAmount" min="1" placeholder="例：2" required>
+      <input type="number" id="foodAmount" min="1" placeholder="例：200" required>
+
+      <label for="purchaseDate">購入日 (任意)：</label>
+      <input type="date" id="purchaseDate">
+
+      <label for="expirationDate">消費期限 (任意)：</label>
+      <input type="date" id="expirationDate">
 
       <button type="submit" class="add-confirm-btn">追加</button>
     </form>
@@ -28,6 +41,8 @@
     <div id="messageArea" class="message-area"></div>
   </main>
 
-  <script src="food-add.js"></script>
+  <script src="config.js" defer></script>
+  <script src="food-add.js" defer></script>
 </body>
+
 </html>

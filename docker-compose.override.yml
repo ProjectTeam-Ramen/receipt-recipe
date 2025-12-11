@@ -10,6 +10,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/workspace
+      - DATABASE_URL=mysql+pymysql://user:password@db:3306/receipt_recipe_db
       - DATABASE_URL_USERS=mysql+pymysql://user:password@db:3306/users_db
       - DATABASE_URL_FOOD_CATEGORIES=mysql+pymysql://user:password@db:3306/food_categories_db
       - DATABASE_URL_FOODS=mysql+pymysql://user:password@db:3306/foods_db
@@ -18,7 +19,6 @@ services:
       - DATABASE_URL_RECIPE_FOODS=mysql+pymysql://user:password@db:3306/recipe_foods_db
       - DATABASE_URL_RECEIPTS=mysql+pymysql://user:password@db:3306/receipts_db
       - DATABASE_URL_RAW_FOOD_MAPPINGS=mysql+pymysql://user:password@db:3306/raw_food_mappings_db
-      - DATABASE_URL_RECEIPT_DETAILS=mysql+pymysql://user:password@db:3306/receipt_details_db
     command: tail -f /dev/null
     depends_on:
       - db
@@ -31,6 +31,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      MYSQL_DATABASE: receipt_recipe_db
     ports:
       - "3306:3306"
     volumes:

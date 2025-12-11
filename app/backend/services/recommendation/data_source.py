@@ -1,209 +1,298 @@
-from .data_models import Ingredient, Recipe
-import numpy as np
-from typing import List
-from datetime import date, timedelta  # 追加: 日付操作のためにインポート
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-# 最終的なレシピ特徴ベクトルの次元定義 (18次元)
+import numpy as np
+from sqlalchemy.orm import Session, joinedload
+
+from app.backend.database import SessionLocal
+from app.backend.models import Food, IngredientStatus, UserFood, UserRecipeHistory
+from app.backend.models import (
+    Recipe as RecipeModel,  # type: ignore[attr-defined]
+)
+from app.backend.models import (
+    RecipeFood as RecipeFoodModel,  # type: ignore[attr-defined]
+)
+
+from .data_models import Ingredient, Recipe
+
+# レシピ特徴ベクトルの次元定義 (18次元)
 FEATURE_DIMENSIONS = [
-    "和食",
-    "洋食",
-    "中華",
-    "主菜",
-    "副菜",
-    "汁物",
-    "デザート",
-    "肉類",
-    "魚介類",
-    "ベジタリアン",
-    "複合",
-    "その他",
-    "辛味",
-    "甘味",
-    "酸味",
-    "煮込み",
-    "揚げ物",
-    "炒め物",
+    "is_japanese",
+    "is_western",
+    "is_chinese",
+    "is_main_dish",
+    "is_side_dish",
+    "is_soup",
+    "is_dessert",
+    "type_meat",
+    "type_seafood",
+    "type_vegetarian",
+    "type_composite",
+    "type_other",
+    "flavor_sweet",
+    "flavor_spicy",
+    "flavor_salty",
+    "texture_stewed",
+    "texture_fried",
+    "texture_stir_fried",
 ]
 
 
 class RecipeDataSource:
-    """レシピデータセットからレシピを読み込み、ベクトル化するクラス"""
+    """レシピマスター、特徴ベクトル、ユーザー行動履歴を取得・加工する"""
+
+    def __init__(self, db_session: Optional[Session] = None):
+        self.session = db_session
+        self._recipe_vector_map: Dict[int, np.ndarray] = {}
+
+    def _ensure_recipe_vectors(self) -> None:
+        if not self._recipe_vector_map:
+            self.load_and_vectorize_recipes()
 
     def load_and_vectorize_recipes(self) -> List[Recipe]:
-        # --- 実際はCSV/DBから読み込み、One-Hot Encodingでベクトルを生成 ---
-
-        raw_recipes_data = [
-            # 1. 豚の生姜焼き (和食, 主菜, 肉類, 炒め物)
-            {
-                "id": 1,
-                "name": "豚の生姜焼き",
-                "req": {"豚肉": 250.0, "玉ねぎ": 100.0, "醤油": 50.0},
-                "time": 20,
-                "cal": 450,
-                "feats": {"和食": 1, "主菜": 1, "肉類": 1, "炒め物": 1},
-            },
-            # 2. シーフードパスタ (洋食, 主菜, 魚介類, 煮込み)
-            {
-                "id": 2,
-                "name": "シーフードパスタ",
-                "req": {"エビ": 100.0, "パスタ": 200.0, "トマト": 150.0},
-                "time": 40,
-                "cal": 650,
-                "feats": {"洋食": 1, "主菜": 1, "魚介類": 1, "煮込み": 1},
-            },
-            # 3. 麻婆豆腐 (中華, 主菜, 肉類, 辛味, 煮込み)
-            {
-                "id": 3,
-                "name": "麻婆豆腐",
-                "req": {"豆腐": 300.0, "豚ひき肉": 50.0, "豆板醤": 5.0},
-                "time": 35,
-                "cal": 400,
-                "feats": {"中華": 1, "主菜": 1, "肉類": 1, "辛味": 1, "煮込み": 1},
-            },
-            # 4. かぼちゃの煮物 (和食, 副菜, ベジタリアン, 甘味, 煮込み)
-            {
-                "id": 4,
-                "name": "かぼちゃの煮物",
-                "req": {"かぼちゃ": 400.0, "砂糖": 30.0},
-                "time": 30,
-                "cal": 250,
-                "feats": {
-                    "和食": 1,
-                    "副菜": 1,
-                    "ベジタリアン": 1,
-                    "甘味": 1,
-                    "煮込み": 1,
-                },
-            },
-            # 5. エビマヨ (中華, 副菜, 魚介類, 甘味, 揚げ物)
-            {
-                "id": 5,
-                "name": "エビマヨ",
-                "req": {"エビ": 150.0, "マヨネーズ": 50.0, "片栗粉": 20.0},
-                "time": 20,
-                "cal": 400,
-                "feats": {"中華": 1, "副菜": 1, "魚介類": 1, "甘味": 1, "揚げ物": 1},
-            },
-            # 6. グリーンサラダ (洋食, 副菜, ベジタリアン, 酸味, 生食は無し)
-            {
-                "id": 6,
-                "name": "グリーンサラダ",
-                "req": {"レタス": 200.0, "トマト": 100.0, "酢": 10.0},
-                "time": 10,
-                "cal": 150,
-                "feats": {"洋食": 1, "副菜": 1, "ベジタリアン": 1, "酸味": 1},
-            },
-            # 7. タコライス (複合, 主菜, 炒め物)
-            {
-                "id": 7,
-                "name": "タコライス",
-                "req": {"合いびき肉": 200.0, "ご飯": 300.0, "チーズ": 50.0},
-                "time": 30,
-                "cal": 600,
-                "feats": {"複合": 1, "主菜": 1, "肉類": 1, "炒め物": 1},
-            },  # 合いびき肉は肉類、チーズは複合ではないが、肉と野菜の複合として扱う
-            # 8. キャベツのスープ (洋食, 汁物, ベジタリアン, 煮込み)
-            {
-                "id": 8,
-                "name": "キャベツのスープ",
-                "req": {"キャベツ": 300.0, "ブイヨン": 10.0, "水": 500.0},
-                "time": 45,
-                "cal": 100,
-                "feats": {"洋食": 1, "汁物": 1, "ベジタリアン": 1, "煮込み": 1},
-            },
-        ]
-
-        recipes = []
-        for d in raw_recipes_data:
-            # One-Hot Encodingの実行: 定義した全次元に合わせてベクトルを生成
-            vector = np.array(
-                [d["feats"].get(dim, 0) for dim in FEATURE_DIMENSIONS], dtype=np.float64
+        session = self.session or SessionLocal()
+        should_close = self.session is None
+        try:
+            recipes_query = (
+                session.query(RecipeModel)
+                .options(
+                    joinedload(RecipeModel.recipe_foods).joinedload(
+                        RecipeFoodModel.food
+                    )
+                )
+                .all()
             )
-            recipes.append(
-                Recipe(d["id"], d["name"], d["req"], d["time"], d["cal"], vector)
+        finally:
+            if should_close:
+                session.close()
+
+        recipes: List[Recipe] = []
+        for record in recipes_query:
+            req_qty: Dict[str, float] = {}
+            for rf in getattr(record, "recipe_foods", []) or []:
+                food = getattr(rf, "food", None)
+                name = getattr(food, "food_name", None)
+                if not isinstance(name, str):
+                    continue
+                quantity = getattr(rf, "quantity_g", 0) or 0
+                req_qty[name] = float(quantity)
+
+            vector = np.zeros(len(FEATURE_DIMENSIONS), dtype=np.float64)
+            for idx, field in enumerate(FEATURE_DIMENSIONS):
+                if bool(getattr(record, field, False)):
+                    vector[idx] = 1.0
+            recipe_obj = Recipe(
+                id=getattr(record, "recipe_id"),
+                name=getattr(record, "recipe_name", ""),
+                prep_time=getattr(record, "cooking_time", None) or 30,
+                calories=getattr(record, "calories", None) or 0,
+                req_qty=req_qty,
+                feature_vector=vector,
+                image_url=getattr(record, "image_url", None),
             )
+            recipes.append(recipe_obj)
+            if isinstance(recipe_obj.id, int):
+                self._recipe_vector_map[recipe_obj.id] = vector
+
         return recipes
 
-    def create_user_profile_vector(self) -> np.ndarray:
-        """ユーザーの過去の行動履歴から平均ベクトル（好み）を生成"""
+    def _build_vector_from_history_items(
+        self,
+        history_items: Sequence[Tuple[int, Optional[datetime], Optional[float]]],
+        vector_lookup: Dict[int, np.ndarray],
+    ) -> np.ndarray:
+        dimension = len(FEATURE_DIMENSIONS)
+        profile = np.zeros(dimension, dtype=np.float64)
+        if not history_items:
+            return profile
 
-        # FEATURE_DIMENSIONSの順序と一致する18次元のベクトル
-        # (デモ用) 和食・煮込み・甘味を好むユーザーのベクトルを仮定
-        # [和食,洋食,中華,主菜,副菜,汁物,デザート,肉類,魚介類,ベジタリアン,複合,その他,辛味,甘味,酸味,煮込み,揚げ物,炒め物]
-        preference_vector = np.array(
-            [
-                0.9,
-                0.2,
-                0.5,  # ジャンル
-                0.8,
-                0.5,
-                0.3,
-                0.1,  # 役割
-                0.7,
-                0.1,
-                0.4,
-                0.0,
-                0.0,  # 種類
-                0.2,
-                0.8,
-                0.1,  # 味覚 (甘味高)
-                0.8,
-                0.1,
-                0.3,  # テクスチャ (煮込み高)
-            ],
-            dtype=np.float64,
+        now = datetime.now(timezone.utc)
+        total_weight = 0.0
+        for recipe_id, completed_at, servings in history_items:
+            vector = vector_lookup.get(recipe_id)
+            if vector is None:
+                continue
+
+            timestamp = completed_at or now
+            if timestamp.tzinfo is None:
+                timestamp = timestamp.replace(tzinfo=timezone.utc)
+            else:
+                timestamp = timestamp.astimezone(timezone.utc)
+
+            days = max((now - timestamp).total_seconds() / (60 * 60 * 24), 0.0)
+            weight = float(np.exp(-0.05 * days))
+            if servings is not None:
+                try:
+                    weight *= max(float(servings), 0.1)
+                except (TypeError, ValueError):
+                    pass
+            profile += vector * weight
+            total_weight += weight
+
+        if total_weight <= 0:
+            return np.zeros(dimension, dtype=np.float64)
+        return profile / total_weight
+
+    def create_user_profile_vector(
+        self, user_id: int, history_limit: int = 200
+    ) -> np.ndarray:
+        self._ensure_recipe_vectors()
+        session = self.session or SessionLocal()
+        should_close = self.session is None
+        try:
+            history_rows = (
+                session.query(UserRecipeHistory)
+                .filter(UserRecipeHistory.user_id == user_id)
+                .order_by(UserRecipeHistory.cooked_at.desc())
+                .limit(history_limit)
+                .all()
+            )
+        finally:
+            if should_close:
+                session.close()
+
+        history_items: List[Tuple[int, Optional[datetime], Optional[float]]] = []
+        for row in history_rows:
+            rid = getattr(row, "recipe_id", None)
+            if not isinstance(rid, int):
+                continue
+            cooked_at = getattr(row, "cooked_at", None)
+            servings_value = getattr(row, "servings", None)
+            servings_float: Optional[float] = None
+            if servings_value is not None:
+                try:
+                    servings_float = float(servings_value)
+                except (TypeError, ValueError):
+                    servings_float = None
+            history_items.append((rid, cooked_at, servings_float))
+
+        return self._build_vector_from_history_items(
+            history_items, self._recipe_vector_map
         )
-        return preference_vector
+
+    def _vectorize_single_payload(
+        self, record: Dict[str, Any], dimension: int
+    ) -> Optional[Tuple[int, np.ndarray]]:
+        recipe_id_raw = record.get("id")
+        if not isinstance(recipe_id_raw, (int, str)):
+            return None
+        try:
+            recipe_id_int = int(recipe_id_raw)
+        except (TypeError, ValueError):
+            return None
+
+        features: Dict[str, Any] = {}
+        raw_features = record.get("features")
+        if isinstance(raw_features, dict):
+            features = raw_features
+
+        vector = np.zeros(dimension, dtype=np.float64)
+        for idx, field in enumerate(FEATURE_DIMENSIONS):
+            value = features.get(field)
+            normalized = 0.0
+            if isinstance(value, (int, float)):
+                normalized = 1.0 if float(value) else 0.0
+            elif isinstance(value, str):
+                try:
+                    normalized = 1.0 if float(value) else 0.0
+                except ValueError:
+                    normalized = 1.0 if value else 0.0
+            elif value:
+                normalized = 1.0
+            vector[idx] = normalized
+        return recipe_id_int, vector
+
+    def _vectorize_recipe_payload(
+        self, recipes_payload: List[Dict[str, Any]]
+    ) -> Dict[int, np.ndarray]:
+        dimension = len(FEATURE_DIMENSIONS)
+        vector_lookup: Dict[int, np.ndarray] = {}
+        for record in recipes_payload:
+            if not isinstance(record, dict):
+                continue
+            parsed = self._vectorize_single_payload(record, dimension)
+            if not parsed:
+                continue
+            recipe_id_int, vector = parsed
+            vector_lookup[recipe_id_int] = vector
+        return vector_lookup
+
+    def _parse_history_payload(
+        self, history: List[Dict[str, Any]]
+    ) -> List[Tuple[int, Optional[datetime], Optional[float]]]:
+        parsed: List[Tuple[int, Optional[datetime], Optional[float]]] = []
+        for entry in history:
+            if not isinstance(entry, dict):
+                continue
+            recipe_id_raw = entry.get("recipe_id")
+            if not isinstance(recipe_id_raw, (int, str)):
+                continue
+            try:
+                recipe_id_int = int(recipe_id_raw)
+            except (TypeError, ValueError):
+                continue
+
+            timestamp = entry.get("completed_at") or entry.get("cooked_at")
+            completed_at: Optional[datetime] = None
+            if isinstance(timestamp, str) and timestamp:
+                try:
+                    completed_at = datetime.fromisoformat(
+                        timestamp.replace("Z", "+00:00")
+                    )
+                except ValueError:
+                    completed_at = None
+
+            servings_raw = entry.get("servings")
+            servings_value: Optional[float] = None
+            if isinstance(servings_raw, (int, float, str)):
+                try:
+                    servings_value = float(servings_raw)
+                except (TypeError, ValueError):
+                    servings_value = None
+
+            parsed.append((recipe_id_int, completed_at, servings_value))
+        return parsed
+
+    def build_profile_vector_from_payload(
+        self, history: List[Dict[str, Any]], recipes_payload: List[Dict[str, Any]]
+    ) -> np.ndarray:
+        vector_lookup = self._vectorize_recipe_payload(recipes_payload)
+        history_items = self._parse_history_payload(history)
+        return self._build_vector_from_history_items(history_items, vector_lookup)
 
 
 class InventoryManager:
-    """データベースから在庫データを取得するクラス"""
+    """データベースの在庫を直接参照して Ingredient リストを構築する"""
+
+    def __init__(self, db_session: Optional[Session] = None):
+        self.session = db_session
 
     def get_current_inventory(self, user_id: int = 1) -> List[Ingredient]:
-        # --- 実際はDBのinventory_summary_viewを参照するAPIコールなど ---
+        session = self.session or SessionLocal()
+        should_close = self.session is None
+        try:
+            inventory = (
+                session.query(UserFood)
+                .join(Food)
+                .filter(
+                    UserFood.user_id == user_id,
+                    UserFood.status != IngredientStatus.DELETED,
+                )
+                .all()
+            )
+        finally:
+            if should_close:
+                session.close()
 
-        TODAY = date.today()
-
-        # サンプル在庫データ
-        return [
-            Ingredient(
-                name="豚肉", quantity=400.0, expiration_date=TODAY + timedelta(days=2)
-            ),
-            Ingredient(
-                name="玉ねぎ",
-                quantity=150.0,
-                expiration_date=TODAY + timedelta(days=15),
-            ),
-            Ingredient(
-                name="じゃがいも",
-                quantity=1000.0,
-                expiration_date=TODAY + timedelta(days=30),
-            ),
-            Ingredient(
-                name="かぼちゃ",
-                quantity=2000.0,
-                expiration_date=TODAY + timedelta(days=1),
-            ),
-            Ingredient(
-                name="エビ", quantity=50.0, expiration_date=TODAY + timedelta(days=10)
-            ),
-            Ingredient(name="豆腐", quantity=300.0, expiration_date=None),
-            Ingredient(
-                name="豚ひき肉",
-                quantity=400.0,
-                expiration_date=TODAY + timedelta(days=4),
-            ),
-            Ingredient(
-                name="レタス", quantity=500.0, expiration_date=TODAY + timedelta(days=2)
-            ),
-            Ingredient(
-                name="合いびき肉",
-                quantity=500.0,
-                expiration_date=TODAY + timedelta(days=7),
-            ),
-            Ingredient(
-                name="キャベツ",
-                quantity=500.0,
-                expiration_date=TODAY + timedelta(days=5),
-            ),
-        ]
+        items: List[Ingredient] = []
+        for record in inventory:
+            food = getattr(record, "food", None)
+            name = getattr(food, "food_name", None)
+            if not isinstance(name, str):
+                continue
+            quantity = getattr(record, "quantity_g", 0) or 0
+            expiry = getattr(record, "expiration_date", None)
+            items.append(
+                Ingredient(name=name, quantity=float(quantity), expiration_date=expiry)
+            )
+        return items

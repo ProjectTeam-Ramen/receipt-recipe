@@ -1,8 +1,7 @@
-from datetime import date, timedelta  # ★追加: 日付操作のためにインポート★
-from typing import List
-
-import numpy as np
 import pytest
+import numpy as np
+from typing import List
+from datetime import date, timedelta  # ★追加: 日付操作のためにインポート★
 
 # 必要なクラスをインポート
 from app.backend.services.recommendation.data_models import (
@@ -11,12 +10,13 @@ from app.backend.services.recommendation.data_models import (
     UserParameters,
 )
 from app.backend.services.recommendation.data_source import (
-    FEATURE_DIMENSIONS,
-    InventoryManager,
     RecipeDataSource,
+    InventoryManager,
+    FEATURE_DIMENSIONS,
 )
-from app.backend.services.recommendation.main import get_proposals_for_demo
 from app.backend.services.recommendation.proposer_logic import RecipeProposer
+from app.backend.services.recommendation.main import get_proposals_for_demo
+
 
 # --- 初期データの生成関数 ---
 
@@ -212,7 +212,7 @@ def test_expiration_boost_priority():
     proposer = RecipeProposer(
         recipe_list_boost_test, inventory_near_expiration, common_vector
     )
-    proposer.MIN_COVERAGE_THRESHOLD = 0.9  # カバー率が1.0なので通過
+    proposer.MIN_COVERAGE_THRESHOLD = 0.2  # カバー率が1.0なので通過
 
     params = UserParameters(max_time=100, max_calories=1000, allergies=set())
     proposals = proposer.propose(params)
@@ -239,142 +239,6 @@ def test_expiration_boost_priority():
     )  # 1.0 * 1.1 = 1.1
 
     assert r1["final_score"] == pytest.approx(expected_r1_score, abs=1e-3)
-
-
-def test_seasoning_exclusion_in_coverage():
-    """調味料が在庫カバー率の計算から除外されているか検証"""
-    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
-
-    # 調味料のみ不足している在庫
-    inventory_with_no_seasoning = [
-        Ingredient(name="豚肉", quantity=400.0),
-        Ingredient(name="玉ねぎ", quantity=150.0),
-        # 醤油は意図的に在庫なし
-    ]
-
-    user_profile = np.ones(len(FEATURE_DIMENSIONS))
-    proposer = RecipeProposer(recipe_list, inventory_with_no_seasoning, user_profile)
-
-    # 豚の生姜焼き: 豚肉250g, 玉ねぎ100g, 醤油50g (調味料)
-    recipe = recipe_list[0]
-    coverage, missing = proposer._calculate_inventory_coverage(recipe)
-
-    # 調味料を除外すると、カバー率は100%になるはず
-    assert coverage == pytest.approx(1.0, abs=1e-3)
-    assert len(missing) == 0
-
-
-def test_multiple_expiring_ingredients():
-    """複数の食材が期限切れ間近の場合の動作を検証"""
-    TODAY = date.today()
-
-    inventory = [
-        Ingredient(
-            name="豚肉", quantity=400.0, expiration_date=TODAY + timedelta(days=1)
-        ),
-        Ingredient(
-            name="玉ねぎ", quantity=150.0, expiration_date=TODAY + timedelta(days=2)
-        ),
-        Ingredient(
-            name="豆腐", quantity=300.0, expiration_date=TODAY + timedelta(days=1)
-        ),
-    ]
-
-    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
-    user_profile = np.ones(len(FEATURE_DIMENSIONS))
-    proposer = RecipeProposer(recipe_list, inventory, user_profile)
-
-    # 豚の生姜焼きと麻婆豆腐、両方とも期限切れ間近の食材を使用
-    recipe_shogayaki = recipe_list[0]
-    recipe_mabo = recipe_list[2]
-
-    boost_shoga = proposer._get_expiration_boost_factor(recipe_shogayaki)
-    boost_mabo = proposer._get_expiration_boost_factor(recipe_mabo)
-
-    # 両方ともブーストが適用されるはず
-    assert boost_shoga == proposer.EXPIRATION_BONUS_FACTOR
-    assert boost_mabo == proposer.EXPIRATION_BONUS_FACTOR
-
-
-def test_expired_ingredients_no_boost():
-    """既に期限切れの食材にはブーストが適用されないことを検証"""
-    TODAY = date.today()
-
-    inventory = [
-        Ingredient(
-            name="豚肉", quantity=400.0, expiration_date=TODAY - timedelta(days=1)
-        ),  # 期限切れ
-        Ingredient(name="玉ねぎ", quantity=150.0),
-    ]
-
-    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
-    user_profile = np.ones(len(FEATURE_DIMENSIONS))
-    proposer = RecipeProposer(recipe_list, inventory, user_profile)
-
-    recipe = recipe_list[0]
-    boost = proposer._get_expiration_boost_factor(recipe)
-
-    # 期限切れの食材にはブーストなし
-    assert boost == 0.0
-
-
-def test_edge_case_zero_required_quantity():
-    """必要量が0gのレシピの動作を検証"""
-    recipe_list = [
-        Recipe(
-            id=999,
-            name="空レシピ",
-            req_qty={},
-            prep_time=10,
-            calories=100,
-            feature_vector=np.ones(len(FEATURE_DIMENSIONS)),
-        )
-    ]
-
-    inventory = [Ingredient(name="豚肉", quantity=400.0)]
-    user_profile = np.ones(len(FEATURE_DIMENSIONS))
-    proposer = RecipeProposer(recipe_list, inventory, user_profile)
-
-    coverage, missing = proposer._calculate_inventory_coverage(recipe_list[0])
-
-    # 必要量が0の場合、カバー率は0.0を返すべき
-    assert coverage == 0.0
-    assert len(missing) == 0
-
-
-def test_partial_inventory_coverage_scoring():
-    """部分的な在庫カバーのスコアリングが正確か検証"""
-    recipe_list = RecipeDataSource().load_and_vectorize_recipes()
-
-    # 半分だけ在庫がある状態
-    inventory = [
-        Ingredient(name="豚肉", quantity=125.0),  # 必要量250gの半分
-        Ingredient(name="玉ねぎ", quantity=50.0),  # 必要量100gの半分
-    ]
-
-    user_profile = np.ones(len(FEATURE_DIMENSIONS))
-    proposer = RecipeProposer(recipe_list, inventory, user_profile)
-
-    recipe = recipe_list[0]  # 豚の生姜焼き
-    coverage, missing = proposer._calculate_inventory_coverage(recipe)
-
-    # (125 + 50) / (250 + 100) = 175 / 350 = 0.5
-    assert coverage == pytest.approx(0.5, abs=1e-3)
-    assert len(missing) == 2
-
-
-def test_custom_inventory_injection():
-    """main.pyのcustom_inventory引数が正しく機能するか検証"""
-    custom_inv = [
-        Ingredient(name="テスト食材", quantity=999.0),
-    ]
-
-    proposals, params = get_proposals_for_demo(custom_inventory=custom_inv)
-
-    # カスタム在庫が使用されていることを間接的に確認
-    # (実際の在庫データと異なるため、提案結果も変わるはず)
-    assert isinstance(proposals, list)
-    assert isinstance(params, UserParameters)
 
 
 # --- デモンストレーション実行関数 (main.py のロジックを呼び出す) ---

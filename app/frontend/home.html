@@ -14,8 +14,9 @@
 
   <main>
     <h2>Menu</h2>
+    <p id="welcomeMsg" class="welcome-text">読み込み中...</p>
+    <p id="statusMessage" class="status-message" role="status"></p>
 
-    <!-- ▼ ボタンを縦に並べる -->
     <div class="center-container">
       <div class="menu-buttons">
         <button class="recipe-btn" id="recipeBtn">レシピ検索</button>
@@ -24,21 +25,7 @@
     </div>
   </main>
 
-  <script>
-    // ログアウトボタン押下時の処理
-    document.getElementById("logoutBtn").addEventListener("click", function() {
-      window.location.href = "index.html";
-    });
-
-    // レシピ検索ページへ移動
-    document.getElementById("recipeBtn").addEventListener("click", function() {
-      window.location.href = "recipe.html";
-    });
-
-    // 冷蔵庫管理ページへ移動
-    document.getElementById("fridgeBtn").addEventListener("click", function() {
-      window.location.href = "fridge-home.html";
-    });
-  </script>
+  <script src="config.js" defer></script>
+  <script src="home.js" defer></script>
 </body>
 </html>

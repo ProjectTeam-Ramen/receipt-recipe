@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>レシピ詳細</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>レシピ詳細</h1>
+        <button id="backToList" class="logout-btn" type="button">一覧に戻る</button>
+    </header>
+
+    <main class="recipe-detail-container">
+        <section class="detail-header">
+            <p class="muted" id="recipeMeta">読み込み中...</p>
+            <h2 id="recipeTitle">レシピを読み込み中...</h2>
+            <p id="recipeDescription" class="detail-description"></p>
+        </section>
+
+        <section class="detail-panel">
+            <h3>材料と在庫状況</h3>
+            <div class="muted small">※ログイン済みの場合は現在の在庫量が表示されます。</div>
+            <div class="table-wrapper">
+                <table class="detail-table" aria-describedby="recipeTitle">
+                    <thead>
+                        <tr>
+                            <th scope="col">食材</th>
+                            <th scope="col">必要量 (g)</th>
+                            <th scope="col">在庫 (g)</th>
+                            <th scope="col">不足</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ingredientBody">
+                        <tr>
+                            <td colspan="4" class="muted">読み込み中...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="detail-panel">
+            <h3>作り方</h3>
+            <p id="recipeInstructions" class="instructions-block muted">読み込み中...</p>
+        </section>
+
+        <section class="detail-panel">
+            <h3>作る数量を指定</h3>
+            <form id="cookForm" class="cook-form">
+                <label for="servingsInput">作る量 (標準=1.0)</label>
+                <input id="servingsInput" type="number" min="0.1" step="0.1" value="1" required>
+                <button id="cookBtn" type="submit" class="primary-btn">このレシピを作る</button>
+                <p class="muted small">※ボタンを押すと在庫から材料が差し引かれます。</p>
+            </form>
+            <div id="cookMessage" role="status"></div>
+        </section>
+    </main>
+
+    <script src="config.js" defer></script>
+    <script src="recipe-detail.js" defer></script>
+</body>
+
+</html>
