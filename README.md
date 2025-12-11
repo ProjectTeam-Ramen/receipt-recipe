@@ -66,6 +66,16 @@ python -m http.server 5500
 4. 仕上がったテキストは `GET /api/v1/receipts/{receipt_id}/text?format=plain` でプレーンテキストとしてダウンロードできます。JSON 形式が欲しい場合は `format=json`（デフォルト）のままで OK です。
 5. `.env` で `OCR_LANGUAGES`（例: `ja,en`）や `OCR_USE_GPU=1` を設定すると EasyOCR の挙動を切り替えられます。保存先を変えたい場合は `RECEIPT_DATA_DIR` / `PROCESSED_RECEIPT_DATA_DIR` を上書きしてください。
 
+## 🖥️ フロントエンドから OCR を試す
+
+1. `python -m http.server` などで `app/frontend` を配信し、`index.html` から通常どおりログインします。
+2. `fridge-control.html` → 「レシートから食材を追加」ボタンで `receipt-add.html` に遷移します。
+3. ページ上部の「レシート読み取り」で画像ファイルを選択して「読み取り開始」を押すと、`/api/v1/receipts/upload` に送信され、ステータスカードがリアルタイムに更新されます。
+4. 処理が完了すると「整形済みテキスト」セクションに EasyOCR が整えたテキストが表示され、ワンクリックでコピー or `/receipts/{id}/text?format=plain` へのダウンロードができます。
+5. その下の「認識された行」には行ごとの信頼度・座標がカード表示されるので、必要に応じてテキスト編集 API へ送る前に内容を見比べられます。
+
+> 401 エラーになった場合はアクセストークンが失効しています。ログアウト後に再ログインすると `ensureValidAccessToken()` が自動でトークンを再発行します。
+
 ## 🍲 レシピデータの追加・更新
 
 - `data/recipes.json` の各オブジェクトは `flags` ブロックを必ず持ち、以下 18 個の特徴フラグ（和/洋/中、主菜/副菜/スープ/デザート、食材タイプ、味・食感）を明示的に `true` / `false` で設定してください。
