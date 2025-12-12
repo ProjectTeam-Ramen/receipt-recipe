@@ -53,6 +53,15 @@
       <pre id="receiptTextOutput" class="text-output"></pre>
     </section>
 
+    <section id="itemsSection" class="receipt-items hidden">
+      <div class="section-header">
+        <h2>抽象化された食材候補</h2>
+        <p class="muted">OCR行から推定された食材名・Food ID を一覧表示し、各カードの「手動で修正」から内容を上書きできます。</p>
+      </div>
+      <div id="itemsContainer" class="item-list"></div>
+      <p id="itemsEmptyMessage" class="muted">抽象化結果がまだありません。</p>
+    </section>
+
     <section id="linesSection" class="receipt-lines">
       <div class="section-header">
         <h2>認識された行</h2>

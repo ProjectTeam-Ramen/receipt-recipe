@@ -6,6 +6,7 @@ from .food import (
     UserFood,
     UserFoodTransaction,
 )
+from .ingredient_abstraction import IngredientAbstraction
 from .recipe import Recipe, RecipeFood, UserRecipeHistory
 from .refresh_token import RefreshToken
 from .user import User
@@ -22,4 +23,5 @@ __all__ = [
     "Recipe",
     "RecipeFood",
     "UserRecipeHistory",
+    "IngredientAbstraction",
 ]

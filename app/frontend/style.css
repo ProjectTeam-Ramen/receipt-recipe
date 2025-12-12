@@ -4,12 +4,17 @@
 
 /* カラーパレット */
 :root {
-    --color-primary: #1e88e5; /* 明るいブルー (Google/Material Design風) */
+    --color-primary: #1e88e5;
+    /* 明るいブルー (Google/Material Design風) */
     --color-primary-dark: #1565c0;
-    --color-secondary: #00bcd4; /* シアン（アクセント、冷蔵庫関連） */
-    --color-success: #43a047; /* グリーン（レシピ、成功） */
-    --color-warning: #ffb300; /* アンバー（注意、在庫不足など） */
-    --color-danger: #e53935; /* 赤（削除、エラー） */
+    --color-secondary: #00bcd4;
+    /* シアン（アクセント、冷蔵庫関連） */
+    --color-success: #43a047;
+    /* グリーン（レシピ、成功） */
+    --color-warning: #ffb300;
+    /* アンバー（注意、在庫不足など） */
+    --color-danger: #e53935;
+    /* 赤（削除、エラー） */
     --color-background: #f4f7fa;
     --color-surface: #ffffff;
     --color-text: #333333;
@@ -26,15 +31,21 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* ヘッダー */
 header {
     background-color: var(--color-primary);
     color: var(--color-surface);
-    padding: 18px 30px; /* パディングを少し増やしてゆったりと */
+    padding: 18px 30px;
+    /* パディングを少し増やしてゆったりと */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 軽いシャドウを追加 */
 }
 
 header h1 {
@@ -45,12 +56,16 @@ header h1 {
 
 /* メインコンテンツ共通 */
 main {
-    max-width: 1000px; /* 幅を少し広げました */
+    max-width: 1000px;
+    /* 幅を少し広げました */
     margin: 40px auto;
-    padding: 30px; /* パディングを増やしてゆったりと */
+    padding: 30px;
+    /* パディングを増やしてゆったりと */
     background-color: var(--color-surface);
-    border-radius: 16px; /* 角を丸く */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* シャドウを強調 */
+    border-radius: 16px;
+    /* 角を丸く */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    /* シャドウを強調 */
 }
 
 /* ログアウト/戻るボタン共通 */
@@ -58,7 +73,8 @@ main {
     background-color: var(--color-danger);
     color: var(--color-surface);
     border: none;
-    border-radius: 8px; /* 角を丸く */
+    border-radius: 8px;
+    /* 角を丸く */
     padding: 10px 20px;
     font-size: 14px;
     cursor: pointer;
@@ -67,8 +83,33 @@ main {
 }
 
 .logout-btn:hover {
-    background-color: #c62828; /* より深い赤 */
+    background-color: #c62828;
+    /* より深い赤 */
     transform: translateY(-1px);
+}
+
+.ghost-btn,
+a.ghost-btn {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-primary-dark);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 600;
+}
+
+.ghost-btn:hover,
+a.ghost-btn:hover {
+    background-color: rgba(30, 136, 229, 0.08);
+    color: var(--color-primary);
 }
 
 
@@ -76,7 +117,8 @@ main {
     ログイン画面専用 (index.html)
 ============================== */
 .login-container {
-    width: 360px; /* 幅を少し広げました */
+    width: 360px;
+    /* 幅を少し広げました */
     margin: 120px auto;
     background-color: var(--color-surface);
     padding: 3em;
@@ -151,8 +193,10 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh; /* height -> min-height に変更 */
-    gap: 30px; /* スペースを広げました */
+    min-height: 50vh;
+    /* height -> min-height に変更 */
+    gap: 30px;
+    /* スペースを広げました */
 }
 
 .menu-buttons {
@@ -163,14 +207,17 @@ main {
 }
 
 .recipe-btn,
-.fridge-btn {
+.fridge-btn,
+.resolver-btn {
     border: none;
     border-radius: 12px;
-    padding: 20px 40px; /* パディングを増やして大きく */
+    padding: 20px 40px;
+    /* パディングを増やして大きく */
     font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
-    width: 260px; /* 幅を統一 */
+    width: 260px;
+    /* 幅を統一 */
     font-weight: 600;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -182,7 +229,7 @@ main {
 }
 
 .recipe-btn:hover {
-    background-color: #FFA000; 
+    background-color: #FFA000;
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
@@ -193,9 +240,204 @@ main {
 }
 
 .fridge-btn:hover {
-    background-color:var(--color-primary-dark); /* より深いシアン */
+    background-color: var(--color-primary-dark);
+    /* より深いシアン */
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.resolver-btn {
+    background-color: #8e24aa;
+    color: var(--color-surface);
+}
+
+.resolver-btn:hover {
+    background-color: #6a1b9a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ==============================
+    食材名抽象化テスター (ingredient-resolver.html)
+============================== */
+.resolver-layout {
+    display: grid;
+    gap: 24px;
+}
+
+@media (min-width: 980px) {
+    .resolver-layout {
+        grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+.resolver-panel,
+.resolver-result {
+    background-color: var(--color-surface);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.resolver-panel h2,
+.resolver-result h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.resolver-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.resolver-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.resolver-field input[type="text"],
+.resolver-field textarea,
+.resolver-field input[type="number"] {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.resolver-field textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.resolver-field.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resolver-field.checkbox label {
+    margin: 0;
+    font-weight: 500;
+}
+
+.resolver-hint {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-top: 4px;
+}
+
+.resolver-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.resolver-actions button {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.resolver-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.resolver-status {
+    min-height: 1.4em;
+    font-weight: 500;
+}
+
+.resolver-status.info {
+    color: var(--color-text-light);
+}
+
+.resolver-status.success {
+    color: var(--color-success);
+}
+
+.resolver-status.error {
+    color: var(--color-danger);
+}
+
+.result-grid {
+    display: grid;
+    gap: 18px;
+}
+
+@media (min-width: 768px) {
+    .result-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+
+.result-card {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 14px;
+    background: #f9fafb;
+}
+
+.result-card dt {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.result-card dd {
+    margin: 4px 0 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.metadata-panel {
+    margin-top: 20px;
+}
+
+.metadata-panel pre {
+    background: #111827;
+    color: #e0f2fe;
+    padding: 16px;
+    border-radius: 12px;
+    overflow: auto;
+    max-height: 360px;
+}
+
+.history-list {
+    margin-top: 20px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 16px;
+}
+
+.history-list h3 {
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+.history-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-list li {
+    border: 1px dashed var(--color-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    background: #fff;
 }
 
 /* ==============================
@@ -203,7 +445,8 @@ main {
 ============================== */
 /* home.htmlと共通の .center-container および .menu-buttons を利用 */
 /* fridge-home.html のボタンはより具体的なクラス名を使用 */
-.control-btn, .check-btn {
+.control-btn,
+.check-btn {
     border: none;
     border-radius: 12px;
     padding: 20px 40px;
@@ -223,7 +466,8 @@ main {
 }
 
 .control-btn:hover {
-    background-color: #388e3c; /* より深いグリーン */
+    background-color: #388e3c;
+    /* より深いグリーン */
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
@@ -235,7 +479,8 @@ main {
 }
 
 .check-btn:hover {
-    background-color: #0097a7; /* より深いシアン */
+    background-color: #0097a7;
+    /* より深いシアン */
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
@@ -248,7 +493,8 @@ main {
 /* コントロールバー（絞り込み・ソート） */
 .controls {
     display: flex;
-    gap: 16px; /* スペースを調整 */
+    gap: 16px;
+    /* スペースを調整 */
     flex-wrap: wrap;
     align-items: center;
     margin: 16px 0 20px;
@@ -270,14 +516,17 @@ main {
 /* カードグリッドレイアウト */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* カードサイズを少し大きく */
-    gap: 24px; /* スペースを広げました */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    /* カードサイズを少し大きく */
+    gap: 24px;
+    /* スペースを広げました */
 }
 
 /* レシピカード */
 .card {
     border: 1px solid var(--color-border);
-    border-radius: 16px; /* 角を丸く */
+    border-radius: 16px;
+    /* 角を丸く */
     overflow: hidden;
     background: var(--color-surface);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -286,7 +535,8 @@ main {
 
 .card:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-4px); /* 少し持ち上げる */
+    transform: translateY(-4px);
+    /* 少し持ち上げる */
 }
 
 .card-link {
@@ -296,7 +546,8 @@ main {
 }
 
 .card-figure {
-    aspect-ratio: 16 / 9; /* アスペクト比を調整 */
+    aspect-ratio: 16 / 9;
+    /* アスペクト比を調整 */
     overflow: hidden;
     margin: 0;
 }
@@ -334,12 +585,14 @@ main {
 }
 
 .badge.ok {
-    background: #e8f5e9; /* 薄いグリーン */
+    background: #e8f5e9;
+    /* 薄いグリーン */
     color: var(--color-success);
 }
 
 .badge.warn {
-    background: #fff3e0; /* 薄いオレンジ */
+    background: #fff3e0;
+    /* 薄いオレンジ */
     color: var(--color-warning);
 }
 
@@ -353,7 +606,8 @@ main {
 .pill {
     padding: 3px 10px;
     border-radius: 20px;
-    background: #e3f2fd; /* 薄いブルー */
+    background: #e3f2fd;
+    /* 薄いブルー */
     color: var(--color-primary-dark);
     font-size: 12px;
     font-weight: 500;
@@ -365,13 +619,15 @@ main {
 ============================== */
 #foodTable {
     width: 100%;
-    border-collapse: separate; /* border-radius のために */
+    border-collapse: separate;
+    /* border-radius のために */
     border-spacing: 0;
     margin-top: 20px;
 }
 
 #foodTable thead {
-    background-color: #e3f2fd; /* テーブルヘッダーをライトブルーに */
+    background-color: #e3f2fd;
+    /* テーブルヘッダーをライトブルーに */
 }
 
 #foodTable th,
@@ -385,9 +641,15 @@ main {
 #foodTable th {
     font-weight: 600;
     color: var(--color-primary-dark);
+
     /* テーブルの角を丸く */
-    &:first-child { border-top-left-radius: 10px; }
-    &:last-child { border-top-right-radius: 10px; }
+    &:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    &:last-child {
+        border-top-right-radius: 10px;
+    }
 }
 
 #foodTable tbody tr:last-child td {
@@ -459,7 +721,8 @@ main {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 30px; /* スペースを広げました */
+    gap: 30px;
+    /* スペースを広げました */
 }
 
 .detail-header h2 {
@@ -614,9 +877,12 @@ main {
 
 .control-menu {
     display: flex;
-    flex-direction: row; /* ボタンを横に並べる */
-    justify-content: center; /* 水平中央寄せ */
-    gap: 30px; /* ボタン間のスペース */
+    flex-direction: row;
+    /* ボタンを横に並べる */
+    justify-content: center;
+    /* 水平中央寄せ */
+    gap: 30px;
+    /* ボタン間のスペース */
     margin-top: 50px;
     padding-top: 30px;
 }
@@ -624,13 +890,15 @@ main {
 /* ボタンの共通スタイルを上書きまたは調整 */
 .control-menu .control-btn {
     /* home.htmlやfridge-home.htmlのボタンサイズをベースに調整 */
-    padding: 25px 30px; 
+    padding: 25px 30px;
     font-size: 18px;
-    width: 250px; /* 一定の幅を確保 */
-    min-height: 120px; /* 高さを揃える */
-    
+    width: 250px;
+    /* 一定の幅を確保 */
+    min-height: 120px;
+    /* 高さを揃える */
+
     /* 食材追加ボタンはPrimaryカラー */
-    background-color: var(--color-success); 
+    background-color: var(--color-success);
     color: var(--color-surface);
 }
 
@@ -642,25 +910,29 @@ main {
 
 /* レシート読み取りボタンは目立つようにSecondaryカラーを適用 */
 #receiptAddBtn {
-    background-color: #FFB300; 
+    background-color: #FFB300;
 }
 
 #receiptAddBtn:hover {
-    background-color: #FFA000; /* より深いシアン */
+    background-color: #FFA000;
+    /* より深いシアン */
 }
 
 
 /* スマートフォンでの表示調整 */
 @media (max-width: 650px) {
     .control-menu {
-        flex-direction: column; /* 狭い画面では縦並びに戻す */
+        flex-direction: column;
+        /* 狭い画面では縦並びに戻す */
         gap: 20px;
     }
-    
+
     .control-menu .control-btn {
-        width: 80%; /* 幅いっぱいに近づける */
+        width: 80%;
+        /* 幅いっぱいに近づける */
         max-width: 350px;
-        margin: 0 auto; /* 中央寄せ */
+        margin: 0 auto;
+        /* 中央寄せ */
     }
 }
 
@@ -715,23 +987,209 @@ main {
     font-size: 0.9em;
 }
 
+.receipt-items {
+    margin-top: 30px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.item-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+}
+
+.item-card {
+    background: #fdfefe;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+.item-raw-text {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-resolved {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.item-resolved strong {
+    font-size: 1.05rem;
+}
+
+.item-resolved.unresolved strong {
+    color: var(--color-text-light);
+}
+
+.item-resolved.resolved strong {
+    color: var(--color-primary-dark);
+}
+
+.item-foodid {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.item-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 0;
+}
+
+.item-meta div {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.item-meta dt {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+}
+
+.item-meta dd {
+    margin: 2px 0 0;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-predictions {
+    list-style: none;
+    padding: 10px 0 0;
+    margin: 0;
+    border-top: 1px dashed var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-predictions li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.item-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.item-edit-btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+}
+
+.item-correction-form {
+    border-top: 1px dashed var(--color-border);
+    margin-top: 10px;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-correction-form label {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-correction-form input,
+.item-correction-form textarea {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.item-correction-form textarea {
+    resize: vertical;
+    min-height: 56px;
+}
+
+.item-correction-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+.item-correction-form button[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.item-correction-status {
+    font-size: 0.85rem;
+    min-height: 1.2em;
+    margin: 0;
+}
+
+.item-correction-status.info {
+    color: var(--color-text-light);
+}
+
+.item-correction-status.success {
+    color: var(--color-success);
+}
+
+.item-correction-status.error {
+    color: var(--color-danger);
+}
+
 /* 読み取った食材フォームのコンテナ */
 #formsContainer {
     display: flex;
-    flex-wrap: wrap; /* 食材カードを折り返す */
+    flex-wrap: wrap;
+    /* 食材カードを折り返す */
     gap: 20px;
-    justify-content: center; /* 中央寄せ */
+    justify-content: center;
+    /* 中央寄せ */
     padding: 20px 0;
 }
 
 /* 個々の食材フォームをカード形式で表示 */
 .food-form-card {
     background: #fff;
-    border: 1px solid #e1f5fe; /* ライトブルーのボーダー */
+    border: 1px solid #e1f5fe;
+    /* ライトブルーのボーダー */
     border-radius: 12px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    width: 300px; /* カードの標準幅 */
+    width: 300px;
+    /* カードの標準幅 */
     flex-grow: 1;
     min-width: 250px;
     max-width: 320px;
@@ -832,8 +1290,10 @@ main {
 .food-form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* フォーム要素間のスペース */
-    max-width: 500px; /* フォームの最大幅を制限して中央に寄せる */
+    gap: 15px;
+    /* フォーム要素間のスペース */
+    max-width: 500px;
+    /* フォームの最大幅を制限して中央に寄せる */
     margin: 0 auto;
     padding: 20px;
     border: 1px solid var(--color-border);
@@ -873,7 +1333,7 @@ main {
 
 /* 数量フィールドの調整 (幅は100%のまま) */
 #foodAmount {
-    /* 特に調整は不要だが、他のinputと揃える */
+    width: 100%;
 }
 
 /* 追加ボタンのスタイル */
@@ -918,7 +1378,8 @@ main {
     text-align: center;
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--color-primary); /* プライマリカラーで目立たせる */
+    color: var(--color-primary);
+    /* プライマリカラーで目立たせる */
     margin-top: 30px;
     opacity: 0.8;
 }
@@ -927,7 +1388,7 @@ main {
 #welcomeMsg {
     /* * animation: [アニメーション名] [再生時間] [イージング] [無限ループ];
      */
-    animation: 
+    animation:
         loading-pulse 1.5s ease-in-out infinite alternate,
         color-shift 3s linear infinite;
 }
@@ -937,6 +1398,7 @@ main {
     0% {
         transform: scale(0.98);
     }
+
     100% {
         transform: scale(1.02);
     }
@@ -1045,10 +1507,6 @@ main {
     border: 1px solid #d1d5db;
     font-size: 1rem;
     transition: border-color 0.3s;
-}
-
-.primary-btn {
-    /* ... 共通のボタンデザイン ... */
 }
 
 /* 読み込み中/汎用的な「muted」テキストのスタイル */

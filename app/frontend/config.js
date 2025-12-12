@@ -60,4 +60,15 @@
     defaultStorageKeys,
     window.APP_CONFIG.storageKeys || {}
   );
+
+  if (typeof document !== "undefined" && document.head) {
+    const existingIcon = document.querySelector("link[rel='icon']");
+    if (!existingIcon) {
+      const iconLink = document.createElement("link");
+      iconLink.rel = "icon";
+      iconLink.type = "image/svg+xml";
+      iconLink.href = "favicon.svg";
+      document.head.appendChild(iconLink);
+    }
+  }
 })();
