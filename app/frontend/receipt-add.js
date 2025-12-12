@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   initializeState();
+  setupSectionToggleButtons();
 
   async function handleUpload() {
     if (!receiptInput?.files?.length) {
@@ -330,6 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach((item) => {
       const card = document.createElement("article");
       card.className = "item-card";
+      const hideCard = () => hideItemCard(card);
 
       const resolution = item?.ingredient_resolution ?? null;
       const resolvedName = item?.food_name || "未解決";
@@ -352,7 +354,6 @@ document.addEventListener("DOMContentLoaded", () => {
       resolved.innerHTML = `
         <span class="item-label">抽象化</span>
         <strong>${resolvedName}</strong>
-        ${item?.food_id ? `<span class="item-foodid">ID: ${item.food_id}</span>` : ""}
       `;
 
       const metaList = document.createElement("dl");
@@ -377,7 +378,9 @@ document.addEventListener("DOMContentLoaded", () => {
       card.appendChild(resolved);
       card.appendChild(metaList);
 
-      const quickFridgeSection = buildQuickFridgeControls(item, resolvedName);
+      const quickFridgeSection = buildQuickFridgeControls(item, resolvedName, {
+        onFridgeSuccess: hideCard,
+      });
       if (quickFridgeSection) {
         card.appendChild(quickFridgeSection);
       }
@@ -407,9 +410,19 @@ document.addEventListener("DOMContentLoaded", () => {
       editButton.className = "ghost-btn item-edit-btn";
       editButton.textContent = "手動で修正";
       actions.appendChild(editButton);
+
+      const hideButton = document.createElement("button");
+      hideButton.type = "button";
+      hideButton.className = "ghost-btn item-hide-btn";
+      hideButton.textContent = "非表示";
+      hideButton.addEventListener("click", hideCard);
+      actions.appendChild(hideButton);
+
       card.appendChild(actions);
 
-      const correctionForm = buildManualCorrectionForm(item, resolvedName);
+      const correctionForm = buildManualCorrectionForm(item, resolvedName, {
+        onFridgeSuccess: hideCard,
+      });
       card.appendChild(correctionForm);
 
       editButton.addEventListener("click", () => {
@@ -424,7 +437,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function buildManualCorrectionForm(item, resolvedName) {
+  function buildManualCorrectionForm(item, resolvedName, options = {}) {
+    const { onFridgeSuccess } = options;
     const form = document.createElement("form");
     form.className = "item-correction-form hidden";
 
@@ -446,19 +460,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.appendChild(resolvedLabel);
     populateFoodSelectOptions(resolvedSelect, item?.food_id, resolvedName);
     resolvedSelect.disabled = !foodOptions.length;
-
-    const idLabel = document.createElement("label");
-    idLabel.textContent = "Food ID";
-    const foodIdDisplay = document.createElement("input");
-    foodIdDisplay.type = "text";
-    foodIdDisplay.name = "food_id_display";
-    foodIdDisplay.readOnly = true;
-    idLabel.appendChild(foodIdDisplay);
-    form.appendChild(idLabel);
-    syncFoodSelection(resolvedSelect, foodIdDisplay);
-    resolvedSelect.addEventListener("change", () =>
-      syncFoodSelection(resolvedSelect, foodIdDisplay),
-    );
 
     if (!foodOptions.length) {
       const warningWrapper = document.createElement("div");
@@ -514,6 +515,14 @@ document.addEventListener("DOMContentLoaded", () => {
     fridgeLabel.appendChild(fridgeInput);
     fridgeSection.appendChild(fridgeLabel);
 
+    const expirationLabel = document.createElement("label");
+    expirationLabel.textContent = "賞味期限";
+    const expirationInput = document.createElement("input");
+    expirationInput.type = "date";
+    expirationInput.name = "fridge_expiration_date";
+    expirationLabel.appendChild(expirationInput);
+    fridgeSection.appendChild(expirationLabel);
+
     const fridgeActions = document.createElement("div");
     fridgeActions.className = "item-fridge-actions";
     const fridgeButton = document.createElement("button");
@@ -532,8 +541,10 @@ document.addEventListener("DOMContentLoaded", () => {
       handleAddIngredientToFridge({
         selectEl: resolvedSelect,
         quantityInput: fridgeInput,
+        expirationInput,
         statusTarget: fridgeStatus,
         triggerButton: fridgeButton,
+        onSuccess: onFridgeSuccess,
       }),
     );
 
@@ -572,7 +583,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return form;
   }
 
-  function buildQuickFridgeControls(item, resolvedName) {
+  function buildQuickFridgeControls(item, resolvedName, options = {}) {
+    const { onFridgeSuccess } = options;
     const section = document.createElement("section");
     section.className = "item-quick-fridge";
 
@@ -590,18 +602,6 @@ document.addEventListener("DOMContentLoaded", () => {
     populateFoodSelectOptions(quickSelect, item?.food_id, resolvedName);
     quickSelect.disabled = !foodOptions.length;
 
-    const idLabel = document.createElement("label");
-    idLabel.textContent = "Food ID";
-    const idDisplay = document.createElement("input");
-    idDisplay.type = "text";
-    idDisplay.readOnly = true;
-    idDisplay.value = quickSelect.value || "";
-    idLabel.appendChild(idDisplay);
-    section.appendChild(idLabel);
-    quickSelect.addEventListener("change", () => {
-      idDisplay.value = quickSelect.value || "";
-    });
-
     const quantityLabel = document.createElement("label");
     quantityLabel.textContent = "重量 (g)";
     const quantityInput = document.createElement("input");
@@ -611,6 +611,13 @@ document.addEventListener("DOMContentLoaded", () => {
     quantityInput.placeholder = "例: 150";
     quantityLabel.appendChild(quantityInput);
     section.appendChild(quantityLabel);
+
+    const expirationLabel = document.createElement("label");
+    expirationLabel.textContent = "賞味期限";
+    const expirationInput = document.createElement("input");
+    expirationInput.type = "date";
+    expirationLabel.appendChild(expirationInput);
+    section.appendChild(expirationLabel);
 
     const actions = document.createElement("div");
     actions.className = "item-fridge-actions";
@@ -630,8 +637,10 @@ document.addEventListener("DOMContentLoaded", () => {
       handleAddIngredientToFridge({
         selectEl: quickSelect,
         quantityInput,
+        expirationInput,
         statusTarget: status,
         triggerButton: registerButton,
+        onSuccess: onFridgeSuccess,
       }),
     );
 
@@ -755,8 +764,10 @@ document.addEventListener("DOMContentLoaded", () => {
   async function handleAddIngredientToFridge({
     selectEl,
     quantityInput,
+    expirationInput,
     statusTarget,
     triggerButton,
+    onSuccess,
   }) {
     if (!selectEl || selectEl.disabled) {
       setFridgeStatus(
@@ -791,6 +802,17 @@ document.addEventListener("DOMContentLoaded", () => {
       quantity_g: quantity,
     };
 
+    if (expirationInput?.value) {
+      const expirationValue = expirationInput.value;
+      const expirationDate = new Date(expirationValue);
+      if (Number.isNaN(expirationDate.getTime())) {
+        setFridgeStatus(statusTarget, "賞味期限の日付が正しくありません。", "error");
+        expirationInput.focus();
+        return;
+      }
+      payload.expiration_date = expirationValue;
+    }
+
     setFridgeStatus(statusTarget, "冷蔵庫に登録しています...", "info");
     triggerButton?.setAttribute("disabled", "true");
 
@@ -813,6 +835,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setFridgeStatus(statusTarget, "冷蔵庫へ登録しました。", "success");
       quantityInput.value = "";
+      if (expirationInput) {
+        expirationInput.value = "";
+      }
+      if (typeof onSuccess === "function") {
+        onSuccess();
+      }
     } catch (error) {
       console.error(error);
       setFridgeStatus(
@@ -823,6 +851,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       triggerButton?.removeAttribute("disabled");
     }
+  }
+
+  function hideItemCard(card) {
+    if (!card || card.classList.contains("item-card-hidden")) return;
+    card.classList.add("item-card-hidden");
+    setTimeout(() => {
+      card.remove();
+      if (itemsContainer && itemsContainer.children.length === 0) {
+        itemsEmptyMessage?.classList.remove("hidden");
+      }
+    }, 220);
   }
 
   function populateFoodSelectOptions(selectEl, selectedId, fallbackName) {
@@ -899,12 +938,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function syncFoodSelection(selectEl, displayInput) {
-    if (!selectEl || !displayInput) return;
-    const selectedOption = selectEl.selectedOptions?.[0];
-    displayInput.value = selectedOption?.value ?? "";
-  }
-
   function setInlineCorrectionStatus(target, text, type = "info") {
     if (!target) return;
     target.textContent = text;
@@ -944,6 +977,28 @@ document.addEventListener("DOMContentLoaded", () => {
   function toggleRefreshButton() {
     if (!refreshStatusBtn) return;
     refreshStatusBtn.disabled = !currentReceiptId;
+  }
+
+  function setupSectionToggleButtons() {
+    const buttons = document.querySelectorAll(".section-toggle-btn");
+    buttons.forEach((button) => {
+      const section = button.closest(".section-collapsible");
+      if (!section) return;
+      const targetId = button.getAttribute("aria-controls");
+      const target = targetId ? document.getElementById(targetId) : null;
+      const updateState = (isCollapsed) => {
+        button.textContent = isCollapsed ? "表示" : "非表示";
+        button.setAttribute("aria-expanded", String(!isCollapsed));
+        if (target) {
+          target.setAttribute("aria-hidden", String(isCollapsed));
+        }
+      };
+      button.addEventListener("click", () => {
+        const isCollapsed = section.classList.toggle("section-collapsed");
+        updateState(isCollapsed);
+      });
+      updateState(section.classList.contains("section-collapsed"));
+    });
   }
 
   function updateReceiptMeta(meta = {}) {

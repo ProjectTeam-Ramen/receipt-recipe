@@ -23,52 +23,78 @@
       <p id="scanMessage" class="status-hint" role="alert"></p>
     </section>
 
-    <section class="receipt-progress" aria-live="polite">
+    <section class="receipt-progress section-collapsible" aria-live="polite">
       <div class="section-header">
-        <h2>処理状況</h2>
-        <button id="refreshStatusBtn" class="ghost-btn" type="button" aria-label="最新の状態を取得">
-          最新の状態を取得
-        </button>
+        <div class="section-title">
+          <h2>処理状況</h2>
+        </div>
+        <div class="section-actions">
+          <button id="refreshStatusBtn" class="ghost-btn" type="button" aria-label="最新の状態を取得">
+            最新の状態を取得
+          </button>
+          <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+            aria-controls="receiptProgressBody">非表示</button>
+        </div>
       </div>
-      <div class="status-row">
-        <span id="statusBadge" class="status-pill status-idle">待機中</span>
-      </div>
-      <p id="statusMessage" class="status-message status-info">まだ処理は開始されていません。</p>
-      <div id="receiptMeta" class="receipt-meta hidden">
-        <p>受付ID: <strong id="receiptIdLabel">-</strong></p>
-        <p>最終更新: <span id="receiptUpdatedAt">-</span></p>
+      <div id="receiptProgressBody" class="section-body">
+        <div class="status-row">
+          <span id="statusBadge" class="status-pill status-idle">待機中</span>
+        </div>
+        <p id="statusMessage" class="status-message status-info">まだ処理は開始されていません。</p>
+        <div id="receiptMeta" class="receipt-meta hidden">
+          <p>受付ID: <strong id="receiptIdLabel">-</strong></p>
+          <p>最終更新: <span id="receiptUpdatedAt">-</span></p>
+        </div>
       </div>
     </section>
 
-    <section id="textResultSection" class="receipt-text hidden">
+    <section id="textResultSection" class="receipt-text hidden section-collapsible">
       <div class="section-header">
-        <h2>整形済みテキスト</h2>
-        <p class="muted">改行と半角スペースを整えたテキストをここに表示します。</p>
+        <div class="section-title">
+          <h2>整形済みテキスト</h2>
+          <p class="muted section-description">改行と半角スペースを整えたテキストをここに表示します。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="textResultBody">非表示</button>
       </div>
-      <div class="text-toolbar">
-        <button id="copyTextBtn" class="ghost-btn" type="button">テキストをコピー</button>
-        <a id="downloadTextLink" class="ghost-btn" href="#" target="_blank" rel="noopener"
-          aria-disabled="true">テキストをダウンロード</a>
+      <div id="textResultBody" class="section-body">
+        <div class="text-toolbar">
+          <button id="copyTextBtn" class="ghost-btn" type="button">テキストをコピー</button>
+          <a id="downloadTextLink" class="ghost-btn" href="#" target="_blank" rel="noopener"
+            aria-disabled="true">テキストをダウンロード</a>
+        </div>
+        <pre id="receiptTextOutput" class="text-output"></pre>
       </div>
-      <pre id="receiptTextOutput" class="text-output"></pre>
     </section>
 
-    <section id="itemsSection" class="receipt-items hidden">
+    <section id="itemsSection" class="receipt-items hidden section-collapsible">
       <div class="section-header">
-        <h2>抽象化された食材候補</h2>
-        <p class="muted">OCR行から推定された食材名・Food ID を一覧表示し、各カードの「手動で修正」から内容を上書きできます。</p>
+        <div class="section-title">
+          <h2>抽象化された食材候補</h2>
+          <p class="muted section-description">OCR行から推定された食材名を一覧表示し、各カードの「手動で修正」から内容や賞味期限を上書きできます。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="itemsSectionBody">非表示</button>
       </div>
-      <div id="itemsContainer" class="item-list"></div>
-      <p id="itemsEmptyMessage" class="muted">抽象化結果がまだありません。</p>
+      <div id="itemsSectionBody" class="section-body">
+        <div id="itemsContainer" class="item-list"></div>
+        <p id="itemsEmptyMessage" class="muted">抽象化結果がまだありません。</p>
+      </div>
     </section>
 
-    <section id="linesSection" class="receipt-lines">
+    <section id="linesSection" class="receipt-lines section-collapsible">
       <div class="section-header">
-        <h2>認識された行</h2>
-        <p class="muted">個別の行情報（信頼度・座標付き）を確認できます。</p>
+        <div class="section-title">
+          <h2>認識された行</h2>
+          <p class="muted section-description">個別の行情報（信頼度・座標付き）を確認できます。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="linesSectionBody">非表示</button>
       </div>
-      <div id="linesContainer" class="line-list"></div>
-      <p id="linesEmptyMessage" class="muted">読み取り結果がまだありません。</p>
+      <div id="linesSectionBody" class="section-body">
+        <div id="linesContainer" class="line-list"></div>
+        <p id="linesEmptyMessage" class="muted">読み取り結果がまだありません。</p>
+      </div>
     </section>
   </main>
 
