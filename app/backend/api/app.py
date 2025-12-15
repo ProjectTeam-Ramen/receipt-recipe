@@ -69,14 +69,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+"""
 if STATIC_RECIPE_HTML_DIR.exists():
     app.mount(
         RECIPE_PAGES_ROUTE,
         StaticFiles(directory=str(STATIC_RECIPE_HTML_DIR)),
         name="recipe-pages",
     )
-
+"""
 
 @app.get("/api/v1/health")
 def health():
