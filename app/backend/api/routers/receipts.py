@@ -1,7 +1,7 @@
 import logging
 import os
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -135,6 +135,10 @@ def _update_text_snapshot(receipt: Dict) -> None:
     )
 
 
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
 def _process_receipt_async(
     receipt_id: int,
     filename: str,
@@ -203,7 +207,7 @@ def _process_receipt_async(
         receipt["status"] = "failed"
         receipt["error"] = str(exc)
     finally:
-        receipt["updated_at"] = datetime.utcnow().isoformat()
+        receipt["updated_at"] = _utc_now_iso()
         if db_session is not None:
             try:
                 db_session.close()
@@ -284,7 +288,7 @@ async def upload_receipt(
     with file_path.open("wb") as out_file:
         shutil.copyfileobj(file.file, out_file)
 
-    now = datetime.utcnow().isoformat()
+    now = _utc_now_iso()
 
     RECEIPTS[receipt_id] = {
         "receipt_id": receipt_id,
@@ -356,6 +360,7 @@ def receipt_status(receipt_id: int):
         "status": r.get("status"),
         "progress": 100 if r.get("status") == "completed" else 0,
         "error": r.get("error"),
+        "updated_at": r.get("updated_at"),
     }
 
 
