@@ -73,6 +73,7 @@ if STATIC_RECIPE_HTML_DIR.exists():
     )
 """
 
+
 @app.get("/api/v1/health")
 def health():
     return {"status": "ok"}
