@@ -255,7 +255,7 @@ def get_recipe_proposals(user_id: int, db: Session = Depends(get_db)):
             # 必要な材料がすべて調味料だった場合
             cover_rate = 1.0
 
-        # プレゼン資料p.18の「実行性フィルタ: カバー率が20%未満のレシピを除外」
+        # 実行性フィルタ: カバー率が20%未満のレシピを除外
         if cover_rate < 0.2:
             continue
 
@@ -277,7 +277,7 @@ def get_recipe_proposals(user_id: int, db: Session = Depends(get_db)):
     return sorted_proposals
 
 
-# (おまけ) 冷蔵庫の中身をJSONで確認するAPI
+# 冷蔵庫の中身をJSONで確認するAPI
 @app.get("/users/{user_id}/fridge", response_model=List[UserFoodSchema])
 def get_user_fridge(user_id: int, db: Session = Depends(get_db)):
     fridge_items = db.query(UserFood).filter(UserFood.user_id == user_id).all()

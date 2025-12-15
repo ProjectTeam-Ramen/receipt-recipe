@@ -33,7 +33,7 @@ from app.backend.services.recipe_loader import (
 # アプリケーションインスタンス
 app = FastAPI(title="Receipt-Recipe API v1")
 
-# CORS(開発用) - 必要に応じて制限してください
+# CORS(開発用)
 _default_allowed_origins = [
     "http://localhost",
     "http://127.0.0.1",
