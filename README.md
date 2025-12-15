@@ -55,6 +55,32 @@ python -m http.server 5500
 - `app/frontend` — バニラ HTML/CSS/JS。`config.js` で API ベース URL を一元管理
 - `docs` — API 設計書、DB 設計書など
 - `init.sql` — MySQL 用のテーブル/トリガー定義
+- `data/receipt_image` — アップロードしたレシート原本の保存先（`RECEIPT_DATA_DIR`）
+- `data/processed_receipt_image` — `EasyOCRPreprocessor` で前処理した画像の保存先（`PROCESSED_RECEIPT_DATA_DIR`）
+
+## 🧾 レシート OCR フロー（画像 → テキスト修正 → 出力）
+
+1. `POST /api/v1/receipts/upload` にレシート画像をアップロードすると、`app/backend/services/ocr/image_preprocessing/image_preprocessor.py` で前処理したうえで `text_detection/text_detector.py`（EasyOCR）にかけます。
+2. 解析結果はアプリメモリ上の `RECEIPTS` ストアに保存され、`items`（行単位）および `text_lines` として保持されます。
+3. `GET /api/v1/receipts/{receipt_id}` で JSON を確認し、`PATCH /api/v1/receipts/{receipt_id}/items/{item_id}` で `raw_text` を修正できます。更新すると `text_content` も自動で再構築されます。
+4. 仕上がったテキストは `GET /api/v1/receipts/{receipt_id}/text?format=plain` でプレーンテキストとしてダウンロードできます。JSON 形式が欲しい場合は `format=json`（デフォルト）のままで OK です。
+5. `.env` で `OCR_LANGUAGES`（例: `ja,en`）や `OCR_USE_GPU=1` を設定すると EasyOCR の挙動を切り替えられます。保存先を変えたい場合は `RECEIPT_DATA_DIR` / `PROCESSED_RECEIPT_DATA_DIR` を上書きしてください。
+
+### OCR ノイズフィルタリング
+
+- `ReceiptOCRService` は EasyOCR の行結果に対してヒューリスティックなフィルタ（`OCRLineFilter`）を適用し、登録番号や合計/小計、税区分などレシートのヘッダー・フッターに該当する行、桁のみ/記号のみの行、信頼度の低いゴミ行を除外します。
+- 食材のように数字を含まない行でも、十分な日本語文字数と信頼度があれば残るようになっています。フィルタで除外された行は `result.raw_lines` → API レスポンスの `raw_text_lines` / `raw_text_content` に保持されるため、必要に応じて差分を比較できます。
+- フィルタ条件を変えたい場合は `ReceiptOCRService(line_filter=...)` に独自の `OCRLineFilter` を渡して調整してください（`min_confidence` やキーワード一覧を差し替え可能）。
+
+## 🖥️ フロントエンドから OCR を試す
+
+1. `python -m http.server` などで `app/frontend` を配信し、`index.html` から通常どおりログインします。
+2. `fridge-control.html` → 「レシートから食材を追加」ボタンで `receipt-add.html` に遷移します。
+3. ページ上部の「レシート読み取り」で画像ファイルを選択して「読み取り開始」を押すと、`/api/v1/receipts/upload` に送信され、ステータスカードがリアルタイムに更新されます。
+4. 処理が完了すると「整形済みテキスト」セクションに EasyOCR が整えたテキストが表示され、ワンクリックでコピー or `/receipts/{id}/text?format=plain` へのダウンロードができます。
+5. その下の「認識された行」には行ごとの信頼度・座標がカード表示されるので、必要に応じてテキスト編集 API へ送る前に内容を見比べられます。
+
+> 401 エラーになった場合はアクセストークンが失効しています。ログアウト後に再ログインすると `ensureValidAccessToken()` が自動でトークンを再発行します。
 
 ## 🍲 レシピデータの追加・更新
 

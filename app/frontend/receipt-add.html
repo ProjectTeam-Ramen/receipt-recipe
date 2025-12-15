@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>レシート読み取り - 食材追加</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header>
     <h1>レシートから食材を追加</h1>
@@ -13,26 +15,91 @@
   </header>
 
   <main>
-    <!-- OCR読み取りUI（既存部分はそのまま） -->
     <section class="receipt-section">
       <h2>レシート読み取り</h2>
+      <p class="section-lead">スマートフォンで撮影した画像でもそのままアップロードできます。</p>
       <input type="file" id="receiptInput" accept="image/*" />
-      <button id="scanBtn">読み取り開始</button>
-      <p id="scanMessage"></p>
+      <button id="scanBtn" type="button">読み取り開始</button>
+      <p id="scanMessage" class="status-hint" role="alert"></p>
     </section>
 
-    <!-- 🔽 読み取った食材のフォームを横並びで表示 -->
-    <section id="formsContainer"></section>
+    <section class="receipt-progress section-collapsible" aria-live="polite">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>処理状況</h2>
+        </div>
+        <div class="section-actions">
+          <button id="refreshStatusBtn" class="ghost-btn" type="button" aria-label="最新の状態を取得">
+            最新の状態を取得
+          </button>
+          <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+            aria-controls="receiptProgressBody">非表示</button>
+        </div>
+      </div>
+      <div id="receiptProgressBody" class="section-body">
+        <div class="status-row">
+          <span id="statusBadge" class="status-pill status-idle">待機中</span>
+        </div>
+        <p id="statusMessage" class="status-message status-info">まだ処理は開始されていません。</p>
+        <div id="receiptMeta" class="receipt-meta hidden">
+          <p>受付ID: <strong id="receiptIdLabel">-</strong></p>
+          <p>最終更新: <span id="receiptUpdatedAt">-</span></p>
+        </div>
+      </div>
+    </section>
 
-    <!-- 登録ボタン（最初は非表示） -->
-    <div class="register-wrapper">
-      <button id="registerBtn" class="submit-btn" style="display:none;">
-        すべて登録する
-      </button>
-    </div>
-    
+    <section id="textResultSection" class="receipt-text hidden section-collapsible">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>整形済みテキスト</h2>
+          <p class="muted section-description">改行と半角スペースを整えたテキストをここに表示します。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="textResultBody">非表示</button>
+      </div>
+      <div id="textResultBody" class="section-body">
+        <div class="text-toolbar">
+          <button id="copyTextBtn" class="ghost-btn" type="button">テキストをコピー</button>
+          <a id="downloadTextLink" class="ghost-btn" href="#" target="_blank" rel="noopener"
+            aria-disabled="true">テキストをダウンロード</a>
+        </div>
+        <pre id="receiptTextOutput" class="text-output"></pre>
+      </div>
+    </section>
+
+    <section id="itemsSection" class="receipt-items hidden section-collapsible">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>抽象化された食材候補</h2>
+          <p class="muted section-description">OCR行から推定された食材名を一覧表示し、各カードの「手動で修正」から内容や賞味期限を上書きできます。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="itemsSectionBody">非表示</button>
+      </div>
+      <div id="itemsSectionBody" class="section-body">
+        <div id="itemsContainer" class="item-list"></div>
+        <p id="itemsEmptyMessage" class="muted">抽象化結果がまだありません。</p>
+      </div>
+    </section>
+
+    <section id="linesSection" class="receipt-lines section-collapsible">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>認識された行</h2>
+          <p class="muted section-description">個別の行情報（信頼度・座標付き）を確認できます。</p>
+        </div>
+        <button type="button" class="ghost-btn section-toggle-btn" aria-expanded="true"
+          aria-controls="linesSectionBody">非表示</button>
+      </div>
+      <div id="linesSectionBody" class="section-body">
+        <div id="linesContainer" class="line-list"></div>
+        <p id="linesEmptyMessage" class="muted">読み取り結果がまだありません。</p>
+      </div>
+    </section>
   </main>
 
-  <script src="receipt-add.js"></script>
+  <script src="config.js" defer></script>
+  <script src="receipt-add.js" defer></script>
 </body>
+
 </html>

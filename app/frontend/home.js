@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   const recipeBtn = document.getElementById("recipeBtn");
   const fridgeBtn = document.getElementById("fridgeBtn");
+  const resolverBtn = document.getElementById("resolverBtn");
   const welcomeMsg = document.getElementById("welcomeMsg");
   const statusMsg = document.getElementById("statusMessage");
 
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   recipeBtn?.addEventListener("click", () => (window.location.href = "recipe.html"));
   fridgeBtn?.addEventListener("click", () => (window.location.href = "fridge-home.html"));
+  resolverBtn?.addEventListener("click", () => (window.location.href = "ingredient-resolver.html"));
   logoutBtn?.addEventListener("click", () => handleLogout());
 
   loadProfile().catch((error) => {

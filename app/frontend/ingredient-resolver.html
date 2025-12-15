@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食材名抽象化テスター</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>食材名抽象化テスター</h1>
+        <button class="logout-btn" id="backBtn">ホームへ戻る</button>
+    </header>
+
+    <main class="resolver-layout">
+        <section class="resolver-panel">
+            <h2>入力</h2>
+            <p class="muted">OCRなどで得られた生テキストを入力し、バックエンドの抽象化APIが正しく動作するかを確認できます。</p>
+
+            <form id="resolveForm" class="resolver-form" novalidate>
+                <div class="resolver-field">
+                    <label for="rawText">解析したい文字列</label>
+                    <textarea id="rawText" name="rawText" placeholder="例: トマトl" required></textarea>
+                    <p class="resolver-hint">NFKC + カタカナ→ひらがな正規化後のキーでキャッシュされます。</p>
+                </div>
+
+                <div class="resolver-field">
+                    <label for="topK">上位候補数 (top_k)</label>
+                    <input type="number" id="topK" name="topK" min="1" max="10" value="5">
+                </div>
+
+                <div class="resolver-field checkbox">
+                    <input type="checkbox" id="forceRefresh" name="forceRefresh">
+                    <label for="forceRefresh">force_refresh を有効化（キャッシュを無視して再解決）</label>
+                </div>
+
+                <div class="resolver-actions">
+                    <button type="submit" id="submitBtn">抽象化を実行</button>
+                    <span id="statusMessage" class="resolver-status info" role="status"></span>
+                </div>
+            </form>
+        </section>
+
+        <section class="resolver-result hidden" id="resultSection">
+            <h2>結果</h2>
+            <div class="result-grid">
+                <dl class="result-card">
+                    <dt>正規化テキスト</dt>
+                    <dd id="normalizedText">-</dd>
+                </dl>
+                <dl class="result-card">
+                    <dt>解決済み食材名</dt>
+                    <dd id="resolvedFood">-</dd>
+                </dl>
+                <dl class="result-card">
+                    <dt>food_id</dt>
+                    <dd id="resolvedFoodId">-</dd>
+                </dl>
+                <dl class="result-card">
+                    <dt>信頼度</dt>
+                    <dd id="resolvedConfidence">-</dd>
+                </dl>
+                <dl class="result-card">
+                    <dt>ソース / キャッシュ</dt>
+                    <dd id="resolvedSource">-</dd>
+                </dl>
+            </div>
+
+            <div class="metadata-panel">
+                <h3>メタデータ</h3>
+                <pre id="metadataOutput">{}</pre>
+            </div>
+
+            <div class="history-list">
+                <h3>直近のリクエスト</h3>
+                <ul id="historyList">
+                    <li class="muted">まだ履歴がありません。</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js" defer></script>
+    <script src="ingredient-resolver.js" defer></script>
+</body>
+
+</html>
