@@ -1,6 +1,7 @@
 # docker-compose.prod.yml
 services:
   api:
+    build: .
     restart: unless-stopped
     environment:
       PYTHONPATH: /workspace
