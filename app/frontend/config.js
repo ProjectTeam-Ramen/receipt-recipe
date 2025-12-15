@@ -10,35 +10,23 @@
     }
   }
 
-  function deriveGithubDevHost(hostname, targetPort) {
-    if (!hostname.endsWith(".github.dev")) return null;
-    const replaced = hostname.replace(/-(\d+)(\.(?:preview\.)?app\.github\.dev)$/i, `-${targetPort}$2`);
-    return replaced !== hostname ? replaced : null;
-  }
-
   function deriveDefaultBaseUrl() {
     const override = readOverride();
     if (override) return override;
 
-    const { protocol, hostname, host } = window.location;
+    const { protocol, hostname } = window.location;
     const localHosts = new Set(["localhost", "127.0.0.1"]);
     const targetPort = "8000";
 
+    // 1. 開発環境 (localhost または 127.0.0.1) の場合
+    // フロントエンドとは別にバックエンドがポート8000で動いていると想定して直接指定します
     if (localHosts.has(hostname)) {
       return `${protocol}//${hostname}:${targetPort}${API_PATH}`;
     }
 
-    if (host && host.includes(":")) {
-      const hostWithoutPort = host.split(":")[0];
-      return `${protocol}//${hostWithoutPort}:${targetPort}${API_PATH}`;
-    }
-
-    const githubHost = deriveGithubDevHost(hostname, targetPort);
-    if (githubHost) {
-      return `${protocol}//${githubHost}${API_PATH}`;
-    }
-
-    // Fallback to relative path when the backend host cannot be derived
+    // 2. 本番環境 (VPSのIPアドレス、またはドメイン) の場合
+    // Nginxが "/api/v1" へのリクエストを内部で8000番に転送するため、
+    // ブラウザからはポート番号を指定せず、相対パスでアクセスさせます。
     return API_PATH;
   }
 
