@@ -197,7 +197,6 @@ def recognize_targets(target_list: List[str], *, top_k: int = 5) -> None:
 
 # --- 4. メイン処理 ---
 def process_ingredients(target_list: List[str]):
-    # ★ ここを50から10に変更しました ★
     TARGET_COUNT = 10
 
     print(

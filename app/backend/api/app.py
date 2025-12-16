@@ -2,7 +2,6 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 # routers
 from app.backend.api.routers.auth_routes import (
@@ -17,10 +16,6 @@ from app.backend.api.routers.ingredients import (
 )
 from app.backend.api.routers.receipts import (
     router as receipts_router,  # type: ignore[import]
-)
-from app.backend.api.routers.recipes import (
-    RECIPE_PAGES_ROUTE,
-    STATIC_RECIPE_HTML_DIR,
 )
 from app.backend.api.routers.recipes import (
     router as recipes_router,  # type: ignore[import]
@@ -38,7 +33,7 @@ from app.backend.services.recipe_loader import (
 # アプリケーションインスタンス
 app = FastAPI(title="Receipt-Recipe API v1")
 
-# CORS(開発用) - 必要に応じて制限してください
+# CORS(開発用)
 _default_allowed_origins = [
     "http://localhost",
     "http://127.0.0.1",
@@ -77,6 +72,7 @@ if STATIC_RECIPE_HTML_DIR.exists():
         name="recipe-pages",
     )
 """
+
 
 @app.get("/api/v1/health")
 def health():
