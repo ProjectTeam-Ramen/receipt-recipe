@@ -214,7 +214,19 @@ function setStatusMessage(message, isError) {
         messageEl.className = "";
         return;
     }
-    messageEl.textContent = message;
+    let out = message;
+    if (typeof message === "object" && message !== null) {
+        if (typeof message.message === "string" && message.message.trim()) {
+            out = message.message;
+        } else {
+            try {
+                out = JSON.stringify(message);
+            } catch (e) {
+                out = String(message);
+            }
+        }
+    }
+    messageEl.textContent = String(out);
     messageEl.className = isError ? "warn" : "ok";
 }
 

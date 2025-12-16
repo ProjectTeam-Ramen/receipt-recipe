@@ -467,9 +467,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const warning = document.createElement("p");
       warning.className = "item-correction-status warn";
-      warning.textContent = foodOptionsError
-        ? "食材候補の取得に失敗しました。候補を再取得してから再度お試しください。"
-        : "利用可能な食材候補がありません。食材マスタに食材を登録してください。";
+      let warningText = "利用可能な食材候補がありません。食材マスタに食材を登録してください。";
+      if (foodOptionsError) {
+        if (typeof foodOptionsError === "string") {
+          warningText = foodOptionsError;
+        } else {
+          try {
+            warningText = JSON.stringify(foodOptionsError);
+          } catch (e) {
+            warningText = String(foodOptionsError);
+          }
+        }
+      }
+      warning.textContent = warningText;
       warningWrapper.appendChild(warning);
 
       const retryButton = document.createElement("button");
@@ -649,9 +659,19 @@ document.addEventListener("DOMContentLoaded", () => {
       warningWrapper.className = "food-options-warning";
       const warning = document.createElement("p");
       warning.className = "item-correction-status warn";
-      warning.textContent = foodOptionsError
-        ? "食材候補の取得に失敗しました。候補を再取得してください。"
-        : "利用可能な食材候補がありません。食材マスタを確認してください。";
+      let warnMsg = "利用可能な食材候補がありません。食材マスタを確認してください。";
+      if (foodOptionsError) {
+        if (typeof foodOptionsError === "string") {
+          warnMsg = foodOptionsError;
+        } else {
+          try {
+            warnMsg = JSON.stringify(foodOptionsError);
+          } catch (e) {
+            warnMsg = String(foodOptionsError);
+          }
+        }
+      }
+      warning.textContent = warnMsg;
       warningWrapper.appendChild(warning);
 
       const retryButton = document.createElement("button");
@@ -1030,7 +1050,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setStatusMessage(text, type = "info") {
     if (!statusMessage) return;
-    statusMessage.textContent = text;
+    // Coerce objects to readable text
+    let out = text;
+    if (typeof text === "object" && text !== null) {
+      if (typeof text.message === "string" && text.message.trim()) {
+        out = text.message;
+      } else {
+        try {
+          out = JSON.stringify(text);
+        } catch (e) {
+          out = String(text);
+        }
+      }
+    }
+    statusMessage.textContent = String(out);
     statusMessage.className = `status-message status-${type}`;
   }
 

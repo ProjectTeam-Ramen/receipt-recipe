@@ -229,7 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (backendRows.length) {
       rows = backendRows.slice();
       if (pantryInfo) {
-        pantryInfo.textContent = backendPantryLabel || `サーバー提案 ${rows.length}件`;
+        const label = backendPantryLabel && typeof backendPantryLabel !== "object"
+          ? backendPantryLabel
+          : (backendPantryLabel ? JSON.stringify(backendPantryLabel) : null) || `サーバー提案 ${rows.length}件`;
+        pantryInfo.textContent = String(label);
       }
     } else {
       const pantry = getFridgeItems();
