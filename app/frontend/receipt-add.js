@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentReceiptId = null;
   let pollingHandle = null;
+  let hiddenItemIds = new Set();
   let foodOptions = [];
   let foodOptionsLoaded = false;
   let foodOptionsError = null;
@@ -224,6 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleElement(receiptMeta, true);
     const lines = Array.isArray(data.text_lines) ? data.text_lines : [];
     const items = Array.isArray(data.items) ? data.items : [];
+    // load per-receipt hidden item ids from localStorage
+    hiddenItemIds = loadHiddenItemsForReceipt(receiptId);
     try {
       await ensureFoodOptions();
     } catch (error) {
@@ -329,9 +332,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     itemsEmptyMessage?.classList.add("hidden");
     items.forEach((item) => {
+      // skip items explicitly hidden by user for this receipt
+      const id = item?.item_id;
+      if (id && hiddenItemIds && hiddenItemIds.has(id)) return;
       const card = document.createElement("article");
       card.className = "item-card";
-      const hideCard = () => hideItemCard(card);
+      const hideCard = () => {
+        // persist hidden state and remove card
+        try {
+          markItemHidden(currentReceiptId, item?.item_id);
+        } catch (e) {
+          console.warn('mark hidden failed', e);
+        }
+        hideItemCard(card);
+      };
 
       const resolution = item?.ingredient_resolution ?? null;
       const resolvedName = item?.food_name || "未解決";
@@ -882,6 +896,34 @@ document.addEventListener("DOMContentLoaded", () => {
         itemsEmptyMessage?.classList.remove("hidden");
       }
     }, 220);
+  }
+
+  function markItemHidden(receiptId, itemId) {
+    if (!receiptId || !itemId) return;
+    const key = `rr.hidden_items.${receiptId}`;
+    try {
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(arr)) return;
+      if (!arr.includes(itemId)) {
+        arr.push(itemId);
+        localStorage.setItem(key, JSON.stringify(arr));
+      }
+      hiddenItemIds.add(itemId);
+    } catch (e) {
+      console.warn('failed to persist hidden items', e);
+    }
+  }
+
+  function loadHiddenItemsForReceipt(receiptId) {
+    const key = `rr.hidden_items.${receiptId}`;
+    try {
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      return new Set(Array.isArray(arr) ? arr : []);
+    } catch (e) {
+      return new Set();
+    }
   }
 
   function populateFoodSelectOptions(selectEl, selectedId, fallbackName) {
