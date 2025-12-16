@@ -117,10 +117,13 @@ function renderInstructions(rawInstructions, instructionsEl) {
     }
 
     instructionsEl.classList.remove("muted");
-    const steps = normalized
+    let steps = normalized
         .split(/\n+/)
         .map((step) => step.trim())
         .filter(Boolean);
+
+    // Remove accidental leading literal labels like "作り方" that may be embedded
+    steps = steps.filter((s) => !/^作り方\s*[:：-]?$/i.test(s));
 
     if (steps.length <= 1) {
         instructionsEl.textContent = steps[0] ?? normalized;
