@@ -565,6 +565,83 @@ a.ghost-btn:hover {
     align-items: center;
 }
 
+/* controls 内の各要素をカードのように見せて操作しやすくする */
+.controls .item {
+    background: var(--color-surface);
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 4px rgba(16, 24, 40, 0.03);
+    min-width: 160px;
+}
+
+.controls .item:hover {
+    border-color: var(--color-border);
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+.controls .item label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.controls input[type="text"],
+.controls input[type="number"],
+.controls select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    font-size: 14px;
+    outline: none;
+    min-width: 120px;
+}
+
+.controls input[type="text"]:focus,
+.controls input[type="number"]:focus,
+.controls select:focus {
+    box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.08);
+    border-color: var(--color-primary);
+}
+
+.controls input[type="range"] {
+    width: 160px;
+}
+
+.controls .pill {
+    margin-left: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.controls .item .recipe-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+@media (max-width: 780px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls .item {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .controls input[type="range"] {
+        width: 100%;
+    }
+}
+
 .muted {
     color: var(--color-text-light);
     font-size: 0.9em;
