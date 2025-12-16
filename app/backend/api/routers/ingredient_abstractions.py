@@ -1,19 +1,17 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi import Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.backend.api.routers.auth_routes import get_current_user
 from app.backend.database import get_db
-from app.backend.models import User
+from app.backend.models import IngredientAbstraction, User
 from app.backend.services.abstractor.ingredient_name_resolver import (
     IngredientNameResolver,
 )
-from app.backend.models import IngredientAbstraction
 
 router = APIRouter()
 
@@ -107,8 +105,12 @@ def list_abstractions(
                 confidence=float(r.confidence) if r.confidence is not None else None,
                 source=r.source,
                 metadata=r.metadata_payload,
-                created_at=r.created_at.isoformat() if r.created_at is not None else None,
-                updated_at=r.updated_at.isoformat() if r.updated_at is not None else None,
+                created_at=r.created_at.isoformat()
+                if r.created_at is not None
+                else None,
+                updated_at=r.updated_at.isoformat()
+                if r.updated_at is not None
+                else None,
             )
         )
     return out

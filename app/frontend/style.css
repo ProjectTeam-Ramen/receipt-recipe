@@ -399,6 +399,63 @@ a.ghost-btn:hover {
     font-weight: 600;
 }
 
+/* ------------------------------
+   抽象化一覧テーブル用の小さなスタイル
+   追加: ingredient-resolver の "記録された抽象化一覧"
+   ------------------------------ */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.abstraction-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 900px;
+    /* 横スクロールを許容してテーブル幅を確保 */
+}
+
+.abstraction-table th,
+.abstraction-table td {
+    border: 1px solid var(--color-border);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.abstraction-table thead th {
+    background-color: #f3f6f8;
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.abstraction-table tbody tr:nth-child(even) {
+    background-color: #fbfcfd;
+}
+
+.small-pre {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Noto Mono", monospace;
+    font-size: 12px;
+    max-height: 120px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+}
+
+@media (max-width: 780px) {
+    .abstraction-table {
+        min-width: 640px;
+        font-size: 13px;
+    }
+}
+
 .metadata-panel {
     margin-top: 20px;
 }
