@@ -494,13 +494,10 @@ def _consume_ingredients(
             continue
         current_quantity = Decimal(str(stock.quantity_g or 0))
         remaining = current_quantity - required_quantity
-        setattr(stock, "quantity_g", remaining)
         if remaining <= Decimal("0"):
-            setattr(stock, "status", IngredientStatus.USED)
-            setattr(stock, "quantity_g", Decimal("0"))
             remaining = Decimal("0")
-        elif str(stock.status) == IngredientStatus.USED.value:
-            setattr(stock, "status", IngredientStatus.UNUSED)
+        setattr(stock, "quantity_g", remaining)
+        setattr(stock, "status", IngredientStatus.USED)
 
         stock_food_id = _require_int(stock.food_id, "food_id")
         stock_user_food_id = _require_int(stock.user_food_id, "user_food_id")
