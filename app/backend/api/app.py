@@ -1,21 +1,21 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 # routers
 from app.backend.api.routers.auth_routes import (
     router as auth_router,  # type: ignore[import]
 )
 from app.backend.api.routers.foods import router as foods_router  # type: ignore[import]
+from app.backend.api.routers.ingredient_abstractions import (
+    router as ingredient_abstractions_router,  # type: ignore[import]
+)
 from app.backend.api.routers.ingredients import (
     router as ingredients_router,  # type: ignore[import]
 )
 from app.backend.api.routers.receipts import (
     router as receipts_router,  # type: ignore[import]
-)
-from app.backend.api.routers.recipes import (
-    RECIPE_PAGES_ROUTE,
-    STATIC_RECIPE_HTML_DIR,
 )
 from app.backend.api.routers.recipes import (
     router as recipes_router,  # type: ignore[import]
@@ -33,21 +33,45 @@ from app.backend.services.recipe_loader import (
 # アプリケーションインスタンス
 app = FastAPI(title="Receipt-Recipe API v1")
 
-# CORS(開発用) - 必要に応じて制限してください
+# CORS(開発用)
+_default_allowed_origins = [
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+_env_origins = os.getenv("ALLOWED_ORIGINS")
+if _env_origins:
+    allowed_origins = [
+        origin.strip() for origin in _env_origins.split(",") if origin.strip()
+    ]
+else:
+    allowed_origins = _default_allowed_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+"""
 if STATIC_RECIPE_HTML_DIR.exists():
     app.mount(
         RECIPE_PAGES_ROUTE,
         StaticFiles(directory=str(STATIC_RECIPE_HTML_DIR)),
         name="recipe-pages",
     )
+"""
 
 
 @app.get("/api/v1/health")
@@ -60,6 +84,11 @@ app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(foods_router, prefix="/api/v1/foods", tags=["foods"])
 app.include_router(
     ingredients_router, prefix="/api/v1/ingredients", tags=["ingredients"]
+)
+app.include_router(
+    ingredient_abstractions_router,
+    prefix="/api/v1/ingredient-abstractions",
+    tags=["ingredient-abstractions"],
 )
 app.include_router(
     recommendation_router,

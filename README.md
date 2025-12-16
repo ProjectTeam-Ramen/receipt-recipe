@@ -66,6 +66,12 @@ python -m http.server 5500
 4. 仕上がったテキストは `GET /api/v1/receipts/{receipt_id}/text?format=plain` でプレーンテキストとしてダウンロードできます。JSON 形式が欲しい場合は `format=json`（デフォルト）のままで OK です。
 5. `.env` で `OCR_LANGUAGES`（例: `ja,en`）や `OCR_USE_GPU=1` を設定すると EasyOCR の挙動を切り替えられます。保存先を変えたい場合は `RECEIPT_DATA_DIR` / `PROCESSED_RECEIPT_DATA_DIR` を上書きしてください。
 
+### OCR ノイズフィルタリング
+
+- `ReceiptOCRService` は EasyOCR の行結果に対してヒューリスティックなフィルタ（`OCRLineFilter`）を適用し、登録番号や合計/小計、税区分などレシートのヘッダー・フッターに該当する行、桁のみ/記号のみの行、信頼度の低いゴミ行を除外します。
+- 食材のように数字を含まない行でも、十分な日本語文字数と信頼度があれば残るようになっています。フィルタで除外された行は `result.raw_lines` → API レスポンスの `raw_text_lines` / `raw_text_content` に保持されるため、必要に応じて差分を比較できます。
+- フィルタ条件を変えたい場合は `ReceiptOCRService(line_filter=...)` に独自の `OCRLineFilter` を渡して調整してください（`min_confidence` やキーワード一覧を差し替え可能）。
+
 ## 🖥️ フロントエンドから OCR を試す
 
 1. `python -m http.server` などで `app/frontend` を配信し、`index.html` から通常どおりログインします。

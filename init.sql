@@ -118,6 +118,21 @@ CREATE TABLE raw_food_mappings (
     FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE ingredient_abstractions (
+    abstraction_id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    normalized_text VARCHAR(255) NOT NULL,
+    original_text VARCHAR(255) NULL,
+    resolved_food_name VARCHAR(255) NOT NULL,
+    food_id INT NULL,
+    confidence DECIMAL(5,4) NULL,
+    source VARCHAR(50) NOT NULL DEFAULT 'ocr_predict',
+    metadata JSON NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    CONSTRAINT uq_ingredient_abstractions_normalized UNIQUE (normalized_text),
+    FOREIGN KEY (food_id) REFERENCES foods(food_id) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE refresh_tokens (
     id INT PRIMARY KEY AUTO_INCREMENT,
     token VARCHAR(512) NOT NULL UNIQUE,
@@ -140,6 +155,8 @@ CREATE INDEX idx_user_recipe_history_user ON user_recipe_history(user_id, cooked
 CREATE INDEX idx_user_recipe_history_recipe ON user_recipe_history(recipe_id);
 CREATE INDEX idx_receipts_user_id ON receipts(user_id);
 CREATE INDEX idx_raw_food_mappings_food_id ON raw_food_mappings(food_id);
+CREATE INDEX idx_ingredient_abstractions_food_id ON ingredient_abstractions(food_id);
+CREATE INDEX idx_ingredient_abstractions_resolved_food_name ON ingredient_abstractions(resolved_food_name);
 
 DELIMITER //
 
