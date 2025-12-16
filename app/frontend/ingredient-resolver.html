@@ -74,10 +74,20 @@
             </div>
 
             <div class="history-list">
-                <h3>直近のリクエスト</h3>
+                <div class="history-header">
+                    <h3>直近のリクエスト</h3>
+                    <div class="history-actions">
+                        <button id="fetchAllBtn">すべて表示</button>
+                    </div>
+                </div>
                 <ul id="historyList">
                     <li class="muted">まだ履歴がありません。</li>
                 </ul>
+
+                <div id="allAbstractions" class="all-abstractions hidden">
+                    <h3>記録された抽象化一覧</h3>
+                    <div id="allAbstractionsList">読み込みされていません。</div>
+                </div>
             </div>
         </section>
     </main>

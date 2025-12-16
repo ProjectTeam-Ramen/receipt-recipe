@@ -66,33 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // レシピ（ダミー）
-  const DEFAULT_SAMPLE_RECIPES = [
-    {
-      id: "caprese", title: "トマトとモッツァレラのカプレーゼ", image: "https://picsum.photos/seed/caprese/600/400", url: "#",
-      ingredients: ["トマト", "モッツァレラ", "バジル", "オリーブオイル", "塩", "こしょう"]
-    },
-    {
-      id: "omelette", title: "ふわとろオムレツ", image: "https://picsum.photos/seed/omelette/600/400", url: "#",
-      ingredients: ["卵", "バター", "牛乳", "塩", "こしょう"]
-    },
-    {
-      id: "miso", title: "具だくさん味噌汁", image: "https://picsum.photos/seed/miso/600/400", url: "#",
-      ingredients: ["味噌", "だし", "豆腐", "わかめ", "長ねぎ"]
-    },
-    {
-      id: "yakitori", title: "ねぎま焼き鳥", image: "https://picsum.photos/seed/yakitori/600/400", url: "#",
-      ingredients: ["鶏もも肉", "長ねぎ", "塩"]
-    },
-    {
-      id: "pasta", title: "ツナとトマトの簡単パスタ", image: "https://picsum.photos/seed/pasta/600/400", url: "#",
-      ingredients: ["スパゲッティ", "ツナ缶", "トマト", "にんにく", "オリーブオイル", "塩"]
-    },
-    {
-      id: "salad", title: "チキンシーザーサラダ", image: "https://picsum.photos/seed/salad/600/400", url: "#",
-      ingredients: ["鶏むね肉", "レタス", "クルトン", "粉チーズ", "マヨネーズ"]
-    }
-  ];
+  // 初期表示用のダミーレシピは廃止（空配列）
+  const DEFAULT_SAMPLE_RECIPES = [];
 
   // 表記ゆれ（最低限）
   const aliasMap = { "ねぎ": "長ねぎ", "ネギ": "長ねぎ", "オリーブ油": "オリーブオイル", "胡椒": "こしょう", "醤油": "しょうゆ" };
@@ -229,7 +204,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (backendRows.length) {
       rows = backendRows.slice();
       if (pantryInfo) {
-        pantryInfo.textContent = backendPantryLabel || `サーバー提案 ${rows.length}件`;
+        const label = backendPantryLabel && typeof backendPantryLabel !== "object"
+          ? backendPantryLabel
+          : (backendPantryLabel ? JSON.stringify(backendPantryLabel) : null) || `サーバー提案 ${rows.length}件`;
+        pantryInfo.textContent = String(label);
       }
     } else {
       const pantry = getFridgeItems();

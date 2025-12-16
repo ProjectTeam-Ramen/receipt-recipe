@@ -58,7 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function setMessage(text, type) {
-    message.textContent = text;
+    let out = text;
+    if (typeof text === "object" && text !== null) {
+      if (typeof text.message === "string" && text.message.trim()) {
+        out = text.message;
+      } else {
+        try {
+          out = JSON.stringify(text);
+        } catch (e) {
+          out = String(text);
+        }
+      }
+    }
+    message.textContent = String(out);
     message.style.color = type === "success" ? "#15803d" : "#dc2626";
   }
 });

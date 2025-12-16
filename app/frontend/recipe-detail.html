@@ -11,7 +11,10 @@
 <body>
     <header>
         <h1>レシピ詳細</h1>
-        <button id="backToList" class="logout-btn" type="button">一覧に戻る</button>
+        <div class="header-actions">
+            <button id="backToList" class="logout-btn" type="button">一覧に戻る</button>
+            <button class="ghost-btn" onclick="window.location.href='home.html'">ホーム</button>
+        </div>
     </header>
 
     <main class="recipe-detail-container">
@@ -45,7 +48,9 @@
 
         <section class="detail-panel">
             <h3>作り方</h3>
-            <p id="recipeInstructions" class="instructions-block muted">読み込み中...</p>
+            <div id="recipeInstructions" class="instructions-block muted" role="region" aria-label="作り方">
+                読み込み中...
+            </div>
         </section>
 
         <section class="detail-panel">

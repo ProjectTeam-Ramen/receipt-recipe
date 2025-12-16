@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const resolvedSource = document.getElementById("resolvedSource");
     const metadataOutput = document.getElementById("metadataOutput");
     const historyList = document.getElementById("historyList");
+    const fetchAllBtn = document.getElementById("fetchAllBtn");
+    const allAbstractions = document.getElementById("allAbstractions");
+    const allAbstractionsList = document.getElementById("allAbstractionsList");
     const backBtn = document.getElementById("backBtn");
 
     if (!localStorage.getItem(STORAGE_KEYS.refreshToken)) {
@@ -135,7 +138,92 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderHistory();
+
+    fetchAllBtn?.addEventListener("click", async () => {
+        // toggle: if visible hide, otherwise fetch and show
+        if (!allAbstractions) return;
+        const isHidden = allAbstractions.classList.contains("hidden");
+        if (!isHidden) {
+            allAbstractions.classList.add("hidden");
+            fetchAllBtn.textContent = "すべて表示";
+            return;
+        }
+        fetchAllBtn.disabled = true;
+        fetchAllBtn.textContent = "読み込み中...";
+        try {
+            const token = await ensureValidAccessToken();
+            const res = await fetch(`${API_BASE_URL}/ingredient-abstractions?limit=200`, {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!res.ok) {
+                const d = await res.json().catch(() => ({}));
+                throw new Error(d?.detail || `読み込みに失敗しました（${res.status}）`);
+            }
+            const list = await res.json().catch(() => []);
+            renderAllAbstractions(list);
+            allAbstractions.classList.remove("hidden");
+            fetchAllBtn.textContent = "閉じる";
+        } catch (err) {
+            console.error(err);
+            setStatus(normalizeErrorMessage(err), "error");
+        } finally {
+            fetchAllBtn.disabled = false;
+        }
+    });
 });
+
+function renderAllAbstractions(list) {
+    const container = document.getElementById("allAbstractionsList");
+    if (!container) return;
+    if (!Array.isArray(list) || list.length === 0) {
+        container.innerHTML = '<div class="muted">記録がありません。</div>';
+        return;
+    }
+
+    // build a simple table
+    const rows = list
+        .map((item) => {
+            const created = item.created_at ? new Date(item.created_at).toLocaleString() : "-";
+            const confidence = typeof item.confidence === "number" ? `${Math.round(item.confidence * 100)}%` : "-";
+            const meta = escapeHtml(JSON.stringify(item.metadata ?? {}, null, 2));
+            return `
+                <tr>
+                    <td>${escapeHtml(String(created))}</td>
+                    <td>${escapeHtml(String(item.normalized_text || "-"))}</td>
+                    <td>${escapeHtml(String(item.original_text || "-"))}</td>
+                    <td>${escapeHtml(String(item.resolved_food_name || "-"))}</td>
+                    <td>${escapeHtml(String(item.food_id ?? "-"))}</td>
+                    <td>${escapeHtml(String(confidence))}</td>
+                    <td>${escapeHtml(String(item.source || "-"))}</td>
+                    <td><pre class="small-pre">${meta}</pre></td>
+                </tr>
+            `;
+        })
+        .join("");
+
+    container.innerHTML = `
+        <div class="table-wrapper">
+            <table class="abstraction-table">
+                <thead>
+                    <tr>
+                        <th>日時</th>
+                        <th>正規化</th>
+                        <th>原文</th>
+                        <th>解決名</th>
+                        <th>food_id</th>
+                        <th>信頼度</th>
+                        <th>ソース</th>
+                        <th>metadata</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rows}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
 
 function escapeHtml(value = "") {
     const span = document.createElement("span");

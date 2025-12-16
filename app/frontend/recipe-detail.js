@@ -76,11 +76,7 @@ function renderRecipeDetail(detail) {
     if (metaEl) metaEl.textContent = metaParts.length ? metaParts.join(" / ") : "";
     if (descEl) descEl.textContent = detail.description || "";
     if (instructionsEl) {
-        const instructionsText = typeof detail.instructions === "string" && detail.instructions.trim()
-            ? detail.instructions.trim()
-            : "作り方の情報がありません。";
-        instructionsEl.textContent = instructionsText;
-        instructionsEl.classList.toggle("muted", instructionsText === "作り方の情報がありません。");
+        renderInstructions(detail.instructions, instructionsEl);
     }
 
     if (!Array.isArray(detail.ingredients) || !detail.ingredients.length) {
@@ -107,6 +103,55 @@ function renderRecipeDetail(detail) {
       `;
         })
         .join("");
+}
+
+function renderInstructions(rawInstructions, instructionsEl) {
+    const fallback = "作り方の情報がありません。";
+    instructionsEl.innerHTML = "";
+
+    const normalized = normalizeInstructionText(rawInstructions);
+    if (!normalized) {
+        instructionsEl.textContent = fallback;
+        instructionsEl.classList.add("muted");
+        return;
+    }
+
+    instructionsEl.classList.remove("muted");
+    let steps = normalized
+        .split(/\n+/)
+        .map((step) => step.trim())
+        .filter(Boolean);
+
+    // Remove accidental leading literal labels like "作り方" that may be embedded
+    steps = steps.filter((s) => !/^作り方\s*[:：-]?$/i.test(s));
+
+    if (steps.length <= 1) {
+        instructionsEl.textContent = steps[0] ?? normalized;
+        return;
+    }
+
+    const listEl = document.createElement("ol");
+    listEl.className = "instructions-list";
+    steps.forEach((step) => {
+        const cleaned = step.replace(/^[\s\t]*\d+\s*(?:[.)、．:：-]|\)|\])\s*/, "").trim();
+        const li = document.createElement("li");
+        li.textContent = cleaned || step;
+        listEl.appendChild(li);
+    });
+    instructionsEl.appendChild(listEl);
+}
+
+function normalizeInstructionText(raw) {
+    if (typeof raw !== "string") {
+        return "";
+    }
+    return raw
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .replace(/\\r\\n/g, "\n")
+        .replace(/\\r/g, "\n")
+        .replace(/\\n/g, "\n")
+        .trim();
 }
 
 async function handleCookAction() {
@@ -169,7 +214,19 @@ function setStatusMessage(message, isError) {
         messageEl.className = "";
         return;
     }
-    messageEl.textContent = message;
+    let out = message;
+    if (typeof message === "object" && message !== null) {
+        if (typeof message.message === "string" && message.message.trim()) {
+            out = message.message;
+        } else {
+            try {
+                out = JSON.stringify(message);
+            } catch (e) {
+                out = String(message);
+            }
+        }
+    }
+    messageEl.textContent = String(out);
     messageEl.className = isError ? "warn" : "ok";
 }
 
