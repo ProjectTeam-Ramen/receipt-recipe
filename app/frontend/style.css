@@ -48,6 +48,22 @@ header {
     /* 軽いシャドウを追加 */
 }
 
+.header-actions {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+.header-actions .ghost-btn {
+    background: transparent;
+    color: var(--color-surface);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+.header-actions .ghost-btn:hover {
+    background: rgba(255,255,255,0.06);
+}
+
 header h1 {
     margin: 0;
     font-size: 22px;
