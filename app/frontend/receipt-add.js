@@ -372,20 +372,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const metaList = document.createElement("dl");
       metaList.className = "item-meta";
-      metaList.innerHTML = `
-        <div>
-          <dt>正規化テキスト</dt>
-          <dd>${resolution?.normalized_text || "-"}</dd>
-        </div>
-        <div>
-          <dt>解決ソース</dt>
-          <dd>${resolution?.source || "-"}</dd>
-        </div>
-        <div>
-          <dt>キャッシュ</dt>
-          <dd>${formatYesNo(resolution?.cached)}</dd>
-        </div>
-      `;
+      // 非表示にするため、正規化テキスト・解決ソース・キャッシュ情報はここでは出力しない
+      metaList.innerHTML = ``;
 
       card.appendChild(header);
       card.appendChild(raw);
