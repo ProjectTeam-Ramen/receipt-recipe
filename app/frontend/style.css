@@ -787,18 +787,6 @@ a.ghost-btn:hover {
     color: var(--color-danger);
 }
 
-.instructions-block {
-    white-space: pre-line;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
-    padding: 16px;
-    color: var(--color-text);
-    min-height: 100px;
-    line-height: 1.7;
-    font-size: 0.95rem;
-}
-
 .cook-form {
     display: flex;
     flex-direction: column;
@@ -1816,7 +1804,7 @@ a.ghost-btn:hover {
 
 /* 作り方ブロックのスタイル */
 .instructions-block {
-    white-space: pre-line;
+    white-space: normal;
     background: #fff;
     border-radius: 12px;
     border: 1px solid var(--color-border);
@@ -1825,6 +1813,19 @@ a.ghost-btn:hover {
     min-height: 100px;
     line-height: 1.7;
     font-size: 0.95rem;
+}
+
+.instructions-block .instructions-list {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    counter-reset: instruction-step;
+}
+
+.instructions-block .instructions-list li {
+    line-height: 1.6;
 }
 
 /* 作るフォームのスタイル */

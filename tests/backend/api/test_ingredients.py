@@ -104,7 +104,14 @@ def test_create_and_list_ingredients():
             assert consume_resp.status_code == 200
             consume_data = consume_resp.json()
             assert consume_data["quantity_g"] == 150
-            assert consume_data["status"] == "unused"
+            assert consume_data["status"] == "used"
+
+            post_consume_list = client.get("/api/v1/ingredients/")
+            assert post_consume_list.status_code == 200
+            assert post_consume_list.json()["total"] == 0
+            used_list = client.get("/api/v1/ingredients/?status=used")
+            assert used_list.status_code == 200
+            assert used_list.json()["total"] == 1
 
             over_resp = client.post(
                 f"/api/v1/ingredients/{ingredient_id}/consume",

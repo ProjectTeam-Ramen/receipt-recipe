@@ -262,12 +262,12 @@ def consume_ingredient(
         )
 
     remaining = current_quantity - consume_quantity
-    setattr(user_food, "quantity_g", remaining)
     if remaining <= Decimal("0"):
-        setattr(user_food, "status", IngredientStatus.USED)
         setattr(user_food, "quantity_g", Decimal("0"))
-    elif status_value == IngredientStatus.USED:
-        setattr(user_food, "status", IngredientStatus.UNUSED)
+        setattr(user_food, "status", IngredientStatus.USED)
+    else:
+        setattr(user_food, "quantity_g", remaining)
+        setattr(user_food, "status", IngredientStatus.USED)
 
     _record_inventory_transaction(
         db,
