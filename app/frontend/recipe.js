@@ -42,6 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "texture_stir_fried", label: "炒め物", description: "炒める・ソテー" },
   ];
 
+  // グルーピング — レーダーチャート用
+  const PREFERENCE_GROUPS = [
+    { key: 'cuisine', label: '料理系', keys: ['is_japanese', 'is_western', 'is_chinese'] },
+    { key: 'course', label: '用途', keys: ['is_main_dish', 'is_side_dish', 'is_soup', 'is_dessert'] },
+    { key: 'protein', label: '材料タイプ', keys: ['type_meat', 'type_seafood', 'type_vegetarian', 'type_composite', 'type_other'] },
+    { key: 'flavor', label: '味付け', keys: ['flavor_sweet', 'flavor_spicy', 'flavor_salty'] },
+    { key: 'texture', label: '調理法', keys: ['texture_stewed', 'texture_fried', 'texture_stir_fried'] },
+  ];
+
   if (backBtn) backBtn.addEventListener("click", () => (location.href = "home.html"));
   if (maxMissing) {
     if (maxMissingVal) maxMissingVal.textContent = maxMissing.value;
@@ -202,29 +211,61 @@ document.addEventListener("DOMContentLoaded", () => {
     preferenceSummary.textContent = "値が大きいほど該当カテゴリを好む傾向 (0〜1目安)";
 
     if (!preferenceList) return;
-    const labels = backendPreferenceLabels.length
-      ? backendPreferenceLabels
-      : PREFERENCE_DIMENSIONS.map((dim) => dim.key);
+    // Build a map of key -> meta
     const labelMeta = new Map(PREFERENCE_DIMENSIONS.map((dim) => [dim.key, dim]));
-    const items = labels
-      .map((key, idx) => {
-        const value = Number(values[idx]);
-        if (!Number.isFinite(value)) {
-          return null;
+    // Render grouped stacked bars
+    // Very high-contrast palette (broad hue span) for clearer visual distinction
+    const COLORS = [
+      '#d00000', // strong red
+      '#ff5d00', // vivid orange
+      '#ffd500', // bright yellow
+      '#7bd389', // vivid light green
+      '#00b4d8', // cyan
+      '#0077b6', // deep blue
+      '#6a4cff', // vivid indigo/purple
+      '#d61cff'  // magenta
+    ];
+    const groupsHtml = PREFERENCE_GROUPS.map((group) => {
+      const items = group.keys.map((k) => {
+        const idx = (backendPreferenceLabels.length ? backendPreferenceLabels.indexOf(k) : -1);
+        let value = 0;
+        if (idx >= 0) value = Number(values[idx]) || 0;
+        else {
+          const fallbackIdx = PREFERENCE_DIMENSIONS.findIndex((d) => d.key === k);
+          if (fallbackIdx >= 0) value = Number(values[fallbackIdx]) || 0;
         }
-        const meta = labelMeta.get(key) || { label: key, description: "" };
-        const description = meta.description ? `（${meta.description}）` : "";
-        return `<li class="preference-item" role="listitem">
-          <span>${meta.label}${description}</span>
-          <strong>${value.toFixed(2)}</strong>
-        </li>`;
-      })
-      .filter(Boolean);
+        const meta = labelMeta.get(k) || { label: k, description: '' };
+        return { key: k, label: meta.label, value: Number.isFinite(value) ? value : 0 };
+      });
 
-    preferenceList.innerHTML = items.join("") || `<li class="preference-item" role="listitem">
-        <span>嗜好ベクトル</span>
-        <strong>${values.length && Number.isFinite(values[0]) ? values[0].toFixed(2) : "0.00"}</strong>
-      </li>`;
+      const sum = items.reduce((s, it) => s + Math.max(0, it.value), 0);
+      const segmentsHtml = items
+        .map((it, i) => {
+          const pct = sum > 0 ? (it.value / sum) * 100 : (100 / Math.max(1, items.length));
+          const color = COLORS[i % COLORS.length];
+          const title = `${it.label}: ${it.value.toFixed(2)}`;
+          return `<div class="pref-segment" title="${title}" style="width:${pct.toFixed(2)}%; background:${color}"></div>`;
+        })
+        .join('');
+
+      const legendHtml = items
+        .map((it, i) => {
+          const color = COLORS[i % COLORS.length];
+          return `<div class="pref-legend-item"><span class="pref-legend-swatch" style="background:${color}"></span><span class="pref-legend-label">${it.label}</span><span class="pref-legend-val">${it.value.toFixed(2)}</span></div>`;
+        })
+        .join('');
+
+      return `
+        <div class="pref-chart pref-chart-stacked" data-group="${group.key}">
+          <div class="pref-chart-title">${group.label}</div>
+          <div class="pref-stacked" role="img" aria-label="${group.label}嗜好の積み上げ棒">
+            ${segmentsHtml}
+          </div>
+          <div class="pref-legend">${legendHtml}</div>
+        </div>`;
+    }).join('');
+
+    preferenceList.innerHTML = `<div class="preference-charts">${groupsHtml}</div>`;
   }
 
   function render() {
@@ -550,6 +591,8 @@ async function ensureValidAccessToken() {
   if (!refreshToken) throw new Error("no refresh token");
   return refreshAccessToken(refreshToken);
 }
+
+// (previous radar chart utilities removed — now using stacked-bar rendering)
 
 async function refreshAccessToken(refreshToken) {
   const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
