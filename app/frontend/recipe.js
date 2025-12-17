@@ -520,11 +520,10 @@ async function loadBackendRecommendations(options = {}) {
 
   const responseMeta = proposals[0] || {};
   const responseInventoryCount = Number(responseMeta.inventory_count ?? 0);
-  const fallbackCount = authToken ? responseInventoryCount : clientInventory.length;
-  const fallbackLabel = authToken
-    ? `所持食品数 ${fallbackCount}件`
-    : `ローカル在庫 ${fallbackCount || clientInventory.length}件`;
-  const inventoryLabelText = responseMeta.inventory_label || fallbackLabel;
+  // Build a stable, localized inventory label to avoid backend-provided odd formatting.
+  const inventoryLabelText = authToken
+    ? `所持食品数 ${Number.isFinite(responseInventoryCount) ? responseInventoryCount : 0}件`
+    : `ローカル在庫 ${clientInventory.length}件`;
 
   const preferenceSource = proposals.find((p) => Array.isArray(p.user_preference_vector));
   const preferenceVector = Array.isArray(preferenceSource?.user_preference_vector)
