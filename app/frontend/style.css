@@ -48,6 +48,24 @@ header {
     /* 軽いシャドウを追加 */
 }
 
+.header-actions {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-actions .ghost-btn {
+    background: transparent;
+    color: var(--color-surface);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.header-actions .ghost-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
 header h1 {
     margin: 0;
     font-size: 22px;
@@ -399,6 +417,63 @@ a.ghost-btn:hover {
     font-weight: 600;
 }
 
+/* ------------------------------
+   抽象化一覧テーブル用の小さなスタイル
+   追加: ingredient-resolver の "記録された抽象化一覧"
+   ------------------------------ */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.abstraction-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 900px;
+    /* 横スクロールを許容してテーブル幅を確保 */
+}
+
+.abstraction-table th,
+.abstraction-table td {
+    border: 1px solid var(--color-border);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.abstraction-table thead th {
+    background-color: #f3f6f8;
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.abstraction-table tbody tr:nth-child(even) {
+    background-color: #fbfcfd;
+}
+
+.small-pre {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Noto Mono", monospace;
+    font-size: 12px;
+    max-height: 120px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+}
+
+@media (max-width: 780px) {
+    .abstraction-table {
+        min-width: 640px;
+        font-size: 13px;
+    }
+}
+
 .metadata-panel {
     margin-top: 20px;
 }
@@ -506,6 +581,83 @@ a.ghost-btn:hover {
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+/* controls 内の各要素をカードのように見せて操作しやすくする */
+.controls .item {
+    background: var(--color-surface);
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 4px rgba(16, 24, 40, 0.03);
+    min-width: 160px;
+}
+
+.controls .item:hover {
+    border-color: var(--color-border);
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+.controls .item label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.controls input[type="text"],
+.controls input[type="number"],
+.controls select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    font-size: 14px;
+    outline: none;
+    min-width: 120px;
+}
+
+.controls input[type="text"]:focus,
+.controls input[type="number"]:focus,
+.controls select:focus {
+    box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.08);
+    border-color: var(--color-primary);
+}
+
+.controls input[type="range"] {
+    width: 160px;
+}
+
+.controls .pill {
+    margin-left: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.controls .item .recipe-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+@media (max-width: 780px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls .item {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .controls input[type="range"] {
+        width: 100%;
+    }
 }
 
 .muted {

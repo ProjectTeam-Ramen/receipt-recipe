@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>冷蔵庫ホーム</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>冷蔵庫ホーム</h1>
-    <button class="logout-btn" id="backBtn">戻る</button>
+    <div class="header-actions">
+      <button class="logout-btn" id="backBtn">戻る</button>
+      <button class="ghost-btn" onclick="window.location.href='home.html'">ホーム</button>
+    </div>
   </header>
 
   <main>
@@ -26,4 +31,5 @@
 
   <script src="fridge-home.js"></script>
 </body>
+
 </html>

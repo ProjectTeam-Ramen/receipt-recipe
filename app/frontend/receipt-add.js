@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentReceiptId = null;
   let pollingHandle = null;
+  let hiddenItemIds = new Set();
   let foodOptions = [];
   let foodOptionsLoaded = false;
   let foodOptionsError = null;
@@ -224,6 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleElement(receiptMeta, true);
     const lines = Array.isArray(data.text_lines) ? data.text_lines : [];
     const items = Array.isArray(data.items) ? data.items : [];
+    // load per-receipt hidden item ids from localStorage
+    hiddenItemIds = loadHiddenItemsForReceipt(receiptId);
     try {
       await ensureFoodOptions();
     } catch (error) {
@@ -329,9 +332,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     itemsEmptyMessage?.classList.add("hidden");
     items.forEach((item) => {
+      // skip items explicitly hidden by user for this receipt
+      const id = item?.item_id;
+      if (id && hiddenItemIds && hiddenItemIds.has(id)) return;
       const card = document.createElement("article");
       card.className = "item-card";
-      const hideCard = () => hideItemCard(card);
+      const hideCard = () => {
+        // persist hidden state and remove card
+        try {
+          markItemHidden(currentReceiptId, item?.item_id);
+        } catch (e) {
+          console.warn('mark hidden failed', e);
+        }
+        hideItemCard(card);
+      };
 
       const resolution = item?.ingredient_resolution ?? null;
       const resolvedName = item?.food_name || "未解決";
@@ -467,9 +481,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const warning = document.createElement("p");
       warning.className = "item-correction-status warn";
-      warning.textContent = foodOptionsError
-        ? "食材候補の取得に失敗しました。候補を再取得してから再度お試しください。"
-        : "利用可能な食材候補がありません。食材マスタに食材を登録してください。";
+      let warningText = "利用可能な食材候補がありません。食材マスタに食材を登録してください。";
+      if (foodOptionsError) {
+        if (typeof foodOptionsError === "string") {
+          warningText = foodOptionsError;
+        } else {
+          try {
+            warningText = JSON.stringify(foodOptionsError);
+          } catch (e) {
+            warningText = String(foodOptionsError);
+          }
+        }
+      }
+      warning.textContent = warningText;
       warningWrapper.appendChild(warning);
 
       const retryButton = document.createElement("button");
@@ -649,9 +673,19 @@ document.addEventListener("DOMContentLoaded", () => {
       warningWrapper.className = "food-options-warning";
       const warning = document.createElement("p");
       warning.className = "item-correction-status warn";
-      warning.textContent = foodOptionsError
-        ? "食材候補の取得に失敗しました。候補を再取得してください。"
-        : "利用可能な食材候補がありません。食材マスタを確認してください。";
+      let warnMsg = "利用可能な食材候補がありません。食材マスタを確認してください。";
+      if (foodOptionsError) {
+        if (typeof foodOptionsError === "string") {
+          warnMsg = foodOptionsError;
+        } else {
+          try {
+            warnMsg = JSON.stringify(foodOptionsError);
+          } catch (e) {
+            warnMsg = String(foodOptionsError);
+          }
+        }
+      }
+      warning.textContent = warnMsg;
       warningWrapper.appendChild(warning);
 
       const retryButton = document.createElement("button");
@@ -864,6 +898,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 220);
   }
 
+  function markItemHidden(receiptId, itemId) {
+    if (!receiptId || !itemId) return;
+    const key = `rr.hidden_items.${receiptId}`;
+    try {
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(arr)) return;
+      if (!arr.includes(itemId)) {
+        arr.push(itemId);
+        localStorage.setItem(key, JSON.stringify(arr));
+      }
+      hiddenItemIds.add(itemId);
+    } catch (e) {
+      console.warn('failed to persist hidden items', e);
+    }
+  }
+
+  function loadHiddenItemsForReceipt(receiptId) {
+    const key = `rr.hidden_items.${receiptId}`;
+    try {
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      return new Set(Array.isArray(arr) ? arr : []);
+    } catch (e) {
+      return new Set();
+    }
+  }
+
   function populateFoodSelectOptions(selectEl, selectedId, fallbackName) {
     if (!selectEl) return;
     selectEl.innerHTML = "";
@@ -1030,7 +1092,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setStatusMessage(text, type = "info") {
     if (!statusMessage) return;
-    statusMessage.textContent = text;
+    // Coerce objects to readable text
+    let out = text;
+    if (typeof text === "object" && text !== null) {
+      if (typeof text.message === "string" && text.message.trim()) {
+        out = text.message;
+      } else {
+        try {
+          out = JSON.stringify(text);
+        } catch (e) {
+          out = String(text);
+        }
+      }
+    }
+    statusMessage.textContent = String(out);
     statusMessage.className = `status-message status-${type}`;
   }
 
