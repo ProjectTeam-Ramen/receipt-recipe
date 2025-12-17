@@ -124,6 +124,32 @@ document.addEventListener("DOMContentLoaded", () => {
               .filter(Boolean)
               .join(" / ")}</p>`
             : "";
+        // 数値内訳（日本語ラベル）を付け加える
+        let scoreDetails = "";
+        if (r.fromBackend) {
+          const cov = Number.isFinite(r.coverage) ? r.coverage : null;
+          const pref = Number.isFinite(r.preference_score) ? r.preference_score : null;
+          const final = Number.isFinite(r.score) ? r.score : null;
+          let boost = null;
+          if ((cov !== null || pref !== null) && final !== null) {
+            const base = (cov !== null ? cov * 0.7 : 0) + (pref !== null ? pref * 0.3 : 0);
+            if (base > 0) {
+              boost = final / base - 1;
+            }
+          }
+          const parts = [];
+          if (cov !== null) parts.push(`カバー率: ${(cov * 100).toFixed(1)}`);
+          if (pref !== null) parts.push(`好み: ${pref.toFixed(2)}`);
+          if (boost !== null) {
+            const sign = boost >= 0 ? "+" : "";
+            parts.push(`ブースト: ${sign}${(boost * 100).toFixed(1)}`);
+          }
+          if (final !== null) parts.push(`最終: ${final.toFixed(3)}`);
+          if (parts.length) {
+            // Use inline element so it stays on the same line as other metadata
+            scoreDetails = `<span class="muted score-details">${parts.join(' / ')}</span>`;
+          }
+        }
         const prepMeta =
           typeof r.prepTime === "number"
             ? `<p class="muted">調理時間: ${r.prepTime}分${typeof r.calories === "number" ? ` / 約${r.calories}kcal` : ""
@@ -132,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const detailBadge = hasBackendDetail
           ? '<p class="muted"><span class="badge">詳細ページあり</span></p>'
           : "";
+        const boostBadge = r.isBoosted ? '<p class="muted"><span class="badge boost">賞味期限が近い食品を利用</span></p>' : '';
         const badgeBlock = r.canMake
           ? `<span class="badge ok">作れる</span>`
           : `<div class="badgeGroup">
@@ -146,7 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="card-body">
             <h3 class="card-title">${r.title}</h3>
             ${badgeBlock}
-            ${backendMeta}
+            ${boostBadge}
+              ${scoreDetails || backendMeta}
             ${prepMeta}
             ${detailBadge}
           </div>
@@ -480,6 +508,7 @@ async function loadBackendRecommendations(options = {}) {
       haveCount,
       needCount,
       canMake: normalizedMissing.length === 0,
+      isBoosted: Boolean(p.is_boosted || p.isBoosted),
       score: typeof p.final_score === "number" ? p.final_score : Number(p.score || 0),
       coverage: typeof p.coverage_score === "number" ? p.coverage_score : haveCount / (needCount || 1),
       preference_score: typeof p.preference_score === "number" ? p.preference_score : 0,
@@ -493,7 +522,7 @@ async function loadBackendRecommendations(options = {}) {
   const responseInventoryCount = Number(responseMeta.inventory_count ?? 0);
   const fallbackCount = authToken ? responseInventoryCount : clientInventory.length;
   const fallbackLabel = authToken
-    ? `サーバー在庫 ${fallbackCount}件`
+    ? `所持食品数 ${fallbackCount}件`
     : `ローカル在庫 ${fallbackCount || clientInventory.length}件`;
   const inventoryLabelText = responseMeta.inventory_label || fallbackLabel;
 

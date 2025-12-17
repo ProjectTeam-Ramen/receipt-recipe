@@ -742,6 +742,17 @@ a.ghost-btn:hover {
     color: var(--color-success);
 }
 
+.badge.boost {
+    background: #fff8e1; /* very light yellow */
+    color: #ff8f00; /* amber/dark orange */
+}
+
+.score-details {
+    font-size: 12px;
+    color: var(--color-muted, #666);
+    margin: 4px 0 0;
+}
+
 .badge.warn {
     background: #fff3e0;
     /* 薄いオレンジ */
