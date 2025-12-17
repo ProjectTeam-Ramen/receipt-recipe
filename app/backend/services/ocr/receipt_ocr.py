@@ -55,6 +55,8 @@ class OCRLineFilter:
         "現金",
         "電子マネー",
         "クレジット",
+        "カード",
+        "登録",
         "pay",
         "買上",
         "お釣",
@@ -71,6 +73,10 @@ class OCRLineFilter:
         "番号",
         "レジ",
         "店",
+        "イント",
+        "今回",
+        "利用",
+        "客様",
     )
 
     DEFAULT_REGEX_PATTERNS: Sequence[str] = (
