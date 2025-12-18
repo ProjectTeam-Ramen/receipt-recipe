@@ -122,6 +122,26 @@ function renderInstructions(rawInstructions, instructionsEl) {
         .map((step) => step.trim())
         .filter(Boolean);
 
+    // Merge lines where a line contains only a numeric label like "4." or "3)"
+    // with the following line to avoid empty-list items.
+    const merged = [];
+    for (let i = 0; i < steps.length; i++) {
+        const line = steps[i];
+        // matches: 1, 1., 1) , 1)、1： etc (only numbering and punctuation)
+        if (/^[0-9]+\s*(?:[\.)、．:\-:\uFF1A\)\]]?)?$/.test(line)) {
+            if (i + 1 < steps.length) {
+                // merge with next line
+                merged.push((line + ' ' + steps[i + 1]).trim());
+                i++; // skip next
+                continue;
+            }
+            // if it's the last line and only a number, skip it
+            continue;
+        }
+        merged.push(line);
+    }
+    steps = merged;
+
     // Remove accidental leading literal labels like "作り方" that may be embedded
     steps = steps.filter((s) => !/^作り方\s*[:：-]?$/i.test(s));
 
